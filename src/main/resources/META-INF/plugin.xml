@@ -43,6 +43,11 @@
     <!-- Short summary of new features and bugfixes in the latest plugin version.
       Displayed on the Plugin Page and IDE Plugin Manager. Simple HTML elements can be included between <![CDATA[  ]]> tags. -->
     <change-notes><![CDATA[
+        <h3>1.0.1</h3>
+        <ul>
+            <li>Replaced PNG plugin icon with optimized SVG (8.8KB, scalable)</li>
+        </ul>
+
         <h3>1.0.0</h3>
         <ul>
             <li>Initial release</li>
