@@ -19,7 +19,6 @@ repositories {
 dependencies {
     intellijPlatform {
         goland("2025.3")
-        bundledPlugins("com.intellij.java")
     }
 }
 

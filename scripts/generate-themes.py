@@ -94,7 +94,7 @@ def main() -> None:
     """Generate theme JSON files from palettes."""
     project_root = Path(__file__).parent.parent
     palettes_dir = project_root / "palettes"
-    themes_dir = project_root / "resources" / "themes"
+    themes_dir = project_root / "src" / "main" / "resources" / "themes"
 
     # Ensure themes directory exists
     themes_dir.mkdir(parents=True, exist_ok=True)

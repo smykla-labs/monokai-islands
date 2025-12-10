@@ -3,6 +3,7 @@ build/
 .claude/
 .gradle/
 .idea/
+.intellijPlatform/
 *.iml
 out/
 *.jar

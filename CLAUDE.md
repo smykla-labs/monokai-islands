@@ -24,7 +24,7 @@ python3 scripts/validate-contrast.py      # Check WCAG compliance
 **Automated pipeline**:
 
 1. `palette-converter.py` → `monokai-light.json` (HSL: desaturate 12%, darken 18% for accents; invert backgrounds to ~#f9f9fa)
-2. `generate-themes.py` → `resources/themes/*.theme.json` (maps palette to Islands UI keys)
+2. `generate-themes.py` → `src/main/resources/themes/*.theme.json` (maps palette to Islands UI keys)
 3. `validate-contrast.py` → WCAG AA validation (4.5:1 text, 3.0:1 UI elements)
 
 **Known contrast issues** (require manual palette adjustment):
@@ -42,7 +42,7 @@ python3 scripts/validate-contrast.py      # Check WCAG compliance
 - Transparent borders: `#00000000` for StatusBar, ToolWindow.Stripe, MainToolbar (preserves Islands design)
 - `Island.borderColor: {background}` (seamless integration)
 
-**UI mappings** (`generate-themes.py:48-104`):
+**UI mappings** (`generate-themes.py`):
 
 - Main backgrounds: `MainWindow.background` (dark1), `ToolWindow.background` (background)
 - Active accents: `EditorTabs.underlineColor` (accent1), `Button.default.focusedBorderColor` (accent5)
@@ -70,7 +70,7 @@ tasks {
 }
 ```
 
-**resources/META-INF/plugin.xml**:
+**src/main/resources/META-INF/plugin.xml**:
 
 - `id`: `com.github.smykla.monokai-islands`
 - `since-build`: `253` (GoLand 2025.3+)
