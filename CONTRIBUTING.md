@@ -20,22 +20,22 @@ Check the project's README for specific prerequisites. Common requirements inclu
 1. Fork the repository on GitHub
 2. Clone your fork:
 
-    ```bash
-    git clone https://github.com/YOUR_USERNAME/REPO_NAME.git
-    cd REPO_NAME
-    ```
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/REPO_NAME.git
+   cd REPO_NAME
+   ```
 
 3. Add upstream remote:
 
-    ```bash
-    git remote add upstream https://github.com/smykla-labs/REPO_NAME.git
-    ```
+   ```bash
+   git remote add upstream https://github.com/smykla-labs/REPO_NAME.git
+   ```
 
 4. Install dependencies (if applicable):
 
-    ```bash
-    mise install
-    ```
+   ```bash
+   mise install
+   ```
 
 ## Development Workflow
 
@@ -55,31 +55,31 @@ Valid branch types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`,
 
 1. **Create a feature branch** from `main`:
 
-    ```bash
-    git fetch upstream
-    git checkout -b feat/my-feature upstream/main
-    ```
+   ```bash
+   git fetch upstream
+   git checkout -b feat/my-feature upstream/main
+   ```
 
 2. **Make your changes**:
 
-    - Follow project-specific coding standards
-    - Keep changes focused and minimal
-    - Add comments where logic isn't self-evident
-    - Update documentation if needed
+   - Follow project-specific coding standards
+   - Keep changes focused and minimal
+   - Add comments where logic isn't self-evident
+   - Update documentation if needed
 
 3. **Run quality checks** (if applicable):
 
-    ```bash
-    make check  # or task check
-    ```
+   ```bash
+   make check  # or task check
+   ```
 
 4. **Commit your changes** (see [Commit Guidelines](#commit-guidelines))
 
 5. **Push to your fork**:
 
-    ```bash
-    git push origin feat/my-feature
-    ```
+   ```bash
+   git push origin feat/my-feature
+   ```
 
 ## Commit Guidelines
 
@@ -98,7 +98,7 @@ Lines should be ≤72 characters.
 
 - **Title**: ≤50 characters
 - **Body lines**: ≤72 characters
-- **Type**: Use the appropriate type for the change
+- **Type**: Use appropriate type for the change
 - **Scope**: Use lowercase, descriptive scope
 - **Description**: Clear, concise summary in imperative mood
 
@@ -146,28 +146,28 @@ update code              # Missing type/scope
 
 1. **Ensure your branch is up to date**:
 
-    ```bash
-    git fetch upstream
-    git rebase upstream/main
-    ```
+   ```bash
+   git fetch upstream
+   git rebase upstream/main
+   ```
 
 2. **Run quality checks** (if applicable)
 
 3. **Push your changes**:
 
-    ```bash
-    git push origin feat/my-feature
-    ```
+   ```bash
+   git push origin feat/my-feature
+   ```
 
 4. **Create PR** using semantic title:
 
-    ```bash
-    gh pr create --title "feat(scope): description" --body "..."
-    ```
+   ```bash
+   gh pr create --title "feat(scope): description" --body "..."
+   ```
 
 ### PR Title Format
 
-Use the same format as commit messages:
+Use same format as commit messages:
 
 ```text
 type(scope): description
