@@ -1,9 +1,5 @@
 plugins {
-    id("java")
-    id("dev.detekt") version "2.0.0-alpha.1"
-    id("org.jetbrains.kotlin.jvm") version "2.2.21"
     id("org.jetbrains.intellij.platform") version "2.10.5"
-    id("org.jmailen.kotlinter") version "5.2.0"
 }
 
 group = "com.github.smykla-labs"
@@ -43,6 +39,12 @@ intellijPlatform {
     publishing {
         token = providers.environmentVariable("JETBRAINS_MARKETPLACE_TOKEN")
     }
+
+    pluginVerification {
+        ides {
+            recommended()
+        }
+    }
 }
 
 tasks {
@@ -56,6 +58,11 @@ tasks {
 
     // Skip buildSearchableOptions to avoid "Only one instance can run" error
     buildSearchableOptions {
+        enabled = false
+    }
+
+    // No Java/Kotlin code to instrument (theme-only plugin)
+    instrumentCode {
         enabled = false
     }
 
