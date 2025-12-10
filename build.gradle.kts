@@ -33,6 +33,16 @@ intellijPlatform {
             untilBuild = provider { null }
         }
     }
+
+    signing {
+        certificateChain = providers.environmentVariable("JETBRAINS_CERTIFICATE_CHAIN")
+        privateKey = providers.environmentVariable("JETBRAINS_PRIVATE_KEY")
+        password = providers.environmentVariable("JETBRAINS_PRIVATE_KEY_PASSWORD")
+    }
+
+    publishing {
+        token = providers.environmentVariable("JETBRAINS_MARKETPLACE_TOKEN")
+    }
 }
 
 tasks {
@@ -50,8 +60,10 @@ tasks {
     }
 
     runIde {
-        // Auto-open project
-        args = listOf(project.file("../klaudiush").absolutePath)
+        // Auto-open project from RUNIDE_PROJECT_PATH env var (optional)
+        providers.environmentVariable("RUNIDE_PROJECT_PATH").orNull?.let { projectPath ->
+            args = listOf(project.file(projectPath).absolutePath)
+        }
 
         // Set Monokai Islands Dark as default theme
         systemProperty("idea.is.internal", "true")
