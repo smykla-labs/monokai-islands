@@ -1,4 +1,8 @@
-out
+tmp/
+build/
+.gradle/
+.idea/
+*.iml
+out/
 *.jar
-tmp
-.idea
+Contents
