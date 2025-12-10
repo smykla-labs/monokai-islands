@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-JetBrains GoLand theme plugin combining Monokai color palette with Islands UI aesthetics. Gradle-based IntelliJ Platform plugin (since build 253, GoLand 2025.3+). Dark and light variants with automated generation from JSON palette definitions.
+JetBrains GoLand theme plugin combining Monokai color palette with Islands UI aesthetics. Gradle-based IntelliJ Platform plugin (since build 253, GoLand 2025.3+). Dark variant with automated generation from JSON palette definition.
 
 ## Build & Workflow
 
@@ -10,8 +10,7 @@ JetBrains GoLand theme plugin combining Monokai color palette with Islands UI ae
 mise run lint                             # Run all linters (Python, Kotlin, editorconfig, Markdown)
 ./gradlew buildPlugin                     # Build plugin (auto-runs generateThemes task)
 ./gradlew runIde                          # Test in a GoLand instance
-python3 scripts/palette-converter.py      # Generate light palette
-python3 scripts/generate-themes.py        # Generate theme JSONs
+python3 scripts/generate-themes.py        # Generate theme JSON
 python3 scripts/validate-contrast.py      # Check WCAG compliance
 ```
 
@@ -23,20 +22,18 @@ python3 scripts/validate-contrast.py      # Check WCAG compliance
 
 **Automated pipeline**:
 
-1. `palette-converter.py` → `monokai-light.json` (HSL: desaturate 12%, darken 18% for accents; invert backgrounds to ~#f9f9fa)
-2. `generate-themes.py` → `src/main/resources/themes/*.theme.json` (maps palette to Islands UI keys)
-3. `validate-contrast.py` → WCAG AA validation (4.5:1 text, 3.0:1 UI elements)
+1. `generate-themes.py` → `src/main/resources/themes/monokai-islands-dark.theme.json` (maps palette to Islands UI keys)
+2. `validate-contrast.py` → WCAG AA validation (4.5:1 text, 3.0:1 UI elements)
 
 **Known contrast issues** (require manual palette adjustment):
 
 - Dark: `dimmed3` (comments) 2.88:1 vs 4.5:1 required
-- Light: `accent3` 1.71:1, `accent4` 2.34:1, `accent5` 2.18:1 vs. 3.0:1 required
 
 ### Islands Theme Integration
 
 **Critical properties** for Islands aesthetic:
 
-- `"parent": "Islands Dark"` or `"Islands Light"` (inherit base styling)
+- `"parent": "Islands Dark"` (inherit base styling)
 - `"islands": 1` (enable Islands mode)
 - `"Island.arc": 20, "Island.borderWidth": 5` (rounded corners)
 - Transparent borders: `#00000000` for StatusBar, ToolWindow.Stripe, MainToolbar (preserves Islands design)
@@ -52,10 +49,10 @@ python3 scripts/validate-contrast.py      # Check WCAG compliance
 
 Manual export workflow (automated templating not yet implemented):
 
-1. GoLand Settings → Editor → Color Scheme → Duplicate base (Darcula/IntelliJ Light)
+1. GoLand Settings → Editor → Color Scheme → Duplicate base (Darcula)
 2. Map syntax: Keywords=accent1, Strings=accent3, Functions=accent4, Classes=accent5, Constants=accent2, Annotations=accent6, Comments=dimmed3
 3. Export via File → Manage IDE Settings → Export Settings
-4. Extract `.xml`, place in `editor-schemes/`, reference in theme JSON: `"editorScheme": "/editor-schemes/monokai-islands-{variant}.xml"`
+4. Extract `.xml`, place in `editor-schemes/`, reference in theme JSON: `"editorScheme": "/editor-schemes/monokai-islands-dark.xml"`
 
 ## Plugin Configuration
 
@@ -74,17 +71,16 @@ tasks {
 
 - `id`: `com.github.smykla.monokai-islands`
 - `since-build`: `253` (GoLand 2025.3+)
-- `themeProvider` declarations for both variants
+- `themeProvider` declaration for dark variant
 
 ## Development Patterns
 
 ### Color Modifications
 
 1. Edit `palettes/monokai-dark.json` (source of truth)
-2. Run `palette-converter.py` (regenerates light palette)
-3. Run `generate-themes.py` (updates theme JSONs)
-4. Run `validate-contrast.py` (check accessibility)
-5. `./gradlew buildPlugin && ./gradlew runIde` (test visually)
+2. Run `generate-themes.py` (updates theme JSON)
+3. Run `validate-contrast.py` (check accessibility)
+4. `./gradlew buildPlugin && ./gradlew runIde` (test visually)
 
 ### Adding UI Properties
 

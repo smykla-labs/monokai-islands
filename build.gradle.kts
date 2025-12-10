@@ -1,8 +1,8 @@
 plugins {
     id("java")
-    id("org.jetbrains.kotlin.jvm") version "2.1.0"
-    id("org.jetbrains.intellij.platform") version "2.3.0"
     id("dev.detekt") version "2.0.0-alpha.1"
+    id("org.jetbrains.kotlin.jvm") version "2.2.21"
+    id("org.jetbrains.intellij.platform") version "2.10.5"
     id("org.jmailen.kotlinter") version "5.2.0"
 }
 
@@ -42,5 +42,22 @@ tasks {
 
     buildPlugin {
         dependsOn("generateThemes")
+    }
+
+    // Skip buildSearchableOptions to avoid "Only one instance can run" error
+    buildSearchableOptions {
+        enabled = false
+    }
+
+    runIde {
+        // Auto-open project
+        args = listOf(project.file("../klaudiush").absolutePath)
+
+        // Set Monokai Islands Dark as default theme
+        systemProperty("idea.is.internal", "true")
+        systemProperty("idea.trust.all.projects", "true")
+        jvmArgs = listOf(
+            "-Didea.theme.id=com.github.smykla-labs.monokai-islands-dark"
+        )
     }
 }

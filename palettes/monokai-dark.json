@@ -1,7 +1,7 @@
 {
-  "background": "#2d2a2e",
-  "dark1": "#221f22",
-  "dark2": "#19181a",
+  "background": "#221f22",
+  "dark1": "#19181a",
+  "dark2": "#0f0e10",
   "text": "#fcfcfa",
   "accent1": "#ff6188",
   "accent2": "#fc9867",
@@ -11,7 +11,7 @@
   "accent6": "#ab9df2",
   "dimmed1": "#c1c0c0",
   "dimmed2": "#939293",
-  "dimmed3": "#727072",
+  "dimmed3": "#8b888b",
   "dimmed4": "#5b595c",
   "dimmed5": "#403e41"
 }

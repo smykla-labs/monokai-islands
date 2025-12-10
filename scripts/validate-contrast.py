@@ -83,7 +83,6 @@ def main() -> None:
         palettes_dir = project_root / "palettes"
         palettes_to_check = [
             (palettes_dir / "monokai-dark.json", "monokai-dark"),
-            (palettes_dir / "monokai-light.json", "monokai-light"),
         ]
 
     all_issues = []
