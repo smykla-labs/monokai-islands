@@ -22,17 +22,20 @@ python3 scripts/validate-contrast.py      # Check WCAG compliance
 **Single source of truth**: `palettes/monokai-dark.json` (17 colors: background, dark1-2, text, accent1-6, dimmed1-5)
 
 **Automated pipeline**:
+
 1. `palette-converter.py` → `monokai-light.json` (HSL: desaturate 12%, darken 18% for accents; invert backgrounds to ~#f9f9fa)
 2. `generate-themes.py` → `resources/themes/*.theme.json` (maps palette to Islands UI keys)
 3. `validate-contrast.py` → WCAG AA validation (4.5:1 text, 3.0:1 UI elements)
 
 **Known contrast issues** (require manual palette adjustment):
+
 - Dark: `dimmed3` (comments) 2.88:1 vs 4.5:1 required
 - Light: `accent3` 1.71:1, `accent4` 2.34:1, `accent5` 2.18:1 vs. 3.0:1 required
 
 ### Islands Theme Integration
 
 **Critical properties** for Islands aesthetic:
+
 - `"parent": "Islands Dark"` or `"Islands Light"` (inherit base styling)
 - `"islands": 1` (enable Islands mode)
 - `"Island.arc": 20, "Island.borderWidth": 5` (rounded corners)
@@ -40,6 +43,7 @@ python3 scripts/validate-contrast.py      # Check WCAG compliance
 - `Island.borderColor: {background}` (seamless integration)
 
 **UI mappings** (`generate-themes.py:48-104`):
+
 - Main backgrounds: `MainWindow.background` (dark1), `ToolWindow.background` (background)
 - Active accents: `EditorTabs.underlineColor` (accent1), `Button.default.focusedBorderColor` (accent5)
 - Selections: `Tree.selectionBackground` (dimmed5 + 80% alpha)
@@ -47,6 +51,7 @@ python3 scripts/validate-contrast.py      # Check WCAG compliance
 ### Editor Schemes
 
 Manual export workflow (automated templating not yet implemented):
+
 1. GoLand Settings → Editor → Color Scheme → Duplicate base (Darcula/IntelliJ Light)
 2. Map syntax: Keywords=accent1, Strings=accent3, Functions=accent4, Classes=accent5, Constants=accent2, Annotations=accent6, Comments=dimmed3
 3. Export via File → Manage IDE Settings → Export Settings
@@ -55,6 +60,7 @@ Manual export workflow (automated templating not yet implemented):
 ## Plugin Configuration
 
 **build.gradle.kts** (`generateThemes` task dependency):
+
 ```kotlin
 tasks {
     register("generateThemes", Exec::class) {
@@ -65,6 +71,7 @@ tasks {
 ```
 
 **resources/META-INF/plugin.xml**:
+
 - `id`: `com.github.smykla.monokai-islands`
 - `since-build`: `253` (GoLand 2025.3+)
 - `themeProvider` declarations for both variants
