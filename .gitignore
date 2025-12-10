@@ -1,5 +1,6 @@
 tmp/
 build/
+.claude/
 .gradle/
 .idea/
 *.iml

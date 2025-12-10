@@ -2,6 +2,8 @@ plugins {
     id("java")
     id("org.jetbrains.kotlin.jvm") version "2.1.0"
     id("org.jetbrains.intellij.platform") version "2.3.0"
+    id("io.gitlab.arturbosch.detekt") version "1.23.8"
+    id("org.jmailen.kotlinter") version "5.2.0"
 }
 
 group = "com.github.smykla-labs"

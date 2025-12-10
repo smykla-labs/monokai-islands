@@ -1,4 +1,79 @@
 [tools]
-python = "3.14.2"
-java = "25"
+editorconfig-checker = "3.3.0"
 gradle = "9.2.1"
+java = "25"
+jq = "1.8.1"
+markdownlint-cli2 = "0.19.1"
+python = "3.14.2"
+ruff = "0.14.8"
+
+[tasks.lint]
+description = "Run all linters"
+depends = [
+  "lint:editorconfig",
+  "lint:kotlin",
+  "lint:detekt",
+  "lint:python",
+  "lint:markdown",
+  "lint:json"
+]
+
+[tasks."lint:editorconfig"]
+description = "Check EditorConfig compliance"
+run = "ec"
+
+[tasks."lint:kotlin"]
+description = "Lint Kotlin code with ktlint"
+run = "./gradlew lintKotlin"
+
+[tasks."lint:detekt"]
+description = "Run detekt static analysis"
+run = "./gradlew detekt"
+
+[tasks."lint:python"]
+description = "Lint Python code with ruff"
+run = "ruff check ."
+
+[tasks."lint:markdown"]
+description = "Lint Markdown files"
+run = "markdownlint-cli2 '**/*.md'"
+
+[tasks."lint:json"]
+description = "Validate JSON files"
+run = "find . -name '*.json' -not -path './.*' -not -path './build/*' -not -path './tmp/*' -exec jq empty {} \\;"
+
+[tasks."lint:kotlin:fix"]
+description = "Auto-fix Kotlin code style issues"
+run = "./gradlew formatKotlin"
+
+[tasks."lint:detekt:fix"]
+description = "Auto-fix detekt issues"
+run = "./gradlew detekt --auto-correct"
+
+[tasks."lint:python:fix"]
+description = "Auto-fix Python linting issues"
+run = "ruff check --fix ."
+
+[tasks."lint:markdown:fix"]
+description = "Auto-fix Markdown issues"
+run = "markdownlint-cli2 --fix '**/*.md'"
+
+[tasks."lint:fix"]
+description = "Auto-fix all linting issues"
+depends = ["lint:kotlin:fix", "lint:detekt:fix", "lint:python:fix", "lint:markdown:fix"]
+
+[tasks.format]
+description = "Format all code"
+depends = ["format:kotlin", "format:python"]
+
+[tasks."format:kotlin"]
+description = "Format Kotlin code with ktlint"
+run = "./gradlew formatKotlin"
+
+[tasks."format:python"]
+description = "Format Python code with ruff"
+run = "ruff format ."
+
+[tasks.check]
+description = "Run all linters and formatters"
+depends = ["lint", "format"]
