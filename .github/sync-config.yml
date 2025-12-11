@@ -12,10 +12,20 @@ sync:
       - path: "renovate.json"
         strategy: "deep-merge"
         arrayStrategies:
-          "$.packageRules": "append"  # Org rules first, then repo rules
+          "$.customManagers": "append"
+          "$.packageRules": "append"
         overrides:
+          customManagers:
+            - customType: "regex"
+              description: "Update Temurin Java in mise config"
+              fileMatch: ["^\\.mise\\.toml$"]
+              matchStrings: ["java\\s*=\\s*\"temurin-(?<currentValue>[^\"]+)\""]
+              autoReplaceStringTemplate: "java = \"temurin-{{{newValue}}}\""
+              depNameTemplate: "java"
+              datasourceTemplate: "java-version"
+              versioningTemplate: "loose"
           packageRules:
-            - description: "Use semver versioning for Java to strip build metadata"
+            - description: "Disable mise manager for Java (handled by customManager for temurin)"
+              enabled: false
               matchManagers: ["mise"]
               matchPackageNames: ["java"]
-              versioning: "semver"

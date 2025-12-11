@@ -1,6 +1,18 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "automergeStrategy": "squash",
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Update Temurin Java in mise config",
+      "fileMatch": ["^\\.mise\\.toml$"],
+      "matchStrings": ["java\\s*=\\s*\"temurin-(?<currentValue>[^\"]+)\""],
+      "autoReplaceStringTemplate": "java = \"temurin-{{{newValue}}}\"",
+      "depNameTemplate": "java",
+      "datasourceTemplate": "java-version",
+      "versioningTemplate": "loose"
+    }
+  ],
   "extends": [
     "config:best-practices",
     ":semanticCommits",
@@ -69,10 +81,10 @@
       "matchPackageNames": ["smykla-labs/smyklot"]
     },
     {
-      "description": "Use semver versioning for Java to strip build metadata",
+      "description": "Disable mise manager for Java (handled by customManager for temurin)",
+      "enabled": false,
       "matchManagers": ["mise"],
-      "matchPackageNames": ["java"],
-      "versioning": "semver"
+      "matchPackageNames": ["java"]
     }
   ],
   "vulnerabilityAlerts": {
