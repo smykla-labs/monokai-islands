@@ -1,7 +1,7 @@
 [tools]
 editorconfig-checker = "3.6.0"
 gradle = "9.2.1"
-java = "25.0.1"
+java = "21.0.2"
 jq = "1.8.1"
 lefthook = "2.0.9"
 markdownlint-cli2 = "0.20.0"
@@ -14,7 +14,8 @@ depends = [
   "lint:editorconfig",
   "lint:python",
   "lint:markdown",
-  "lint:json"
+  "lint:json",
+  "lint:kotlin"
 ]
 
 [tasks."lint:editorconfig"]
@@ -32,6 +33,10 @@ run = "markdownlint-cli2 '**/*.md'"
 [tasks."lint:json"]
 description = "Validate JSON files"
 run = "find . -name '*.json' -not -path './.*' -not -path './build/*' -not -path './tmp/*' -exec jq empty {} \\;"
+
+[tasks."lint:kotlin"]
+description = "Lint Kotlin code with detekt"
+run = "./gradlew detekt"
 
 [tasks."lint:python:fix"]
 description = "Auto-fix Python linting issues"
