@@ -3,13 +3,13 @@
   "automergeStrategy": "squash",
   "customManagers": [
     {
+      "autoReplaceStringTemplate": "java = \"temurin-{{{newValue}}}\"",
       "customType": "regex",
+      "datasourceTemplate": "java-version",
+      "depNameTemplate": "java",
       "description": "Update Temurin Java in mise config",
       "fileMatch": ["^\\.mise\\.toml$"],
       "matchStrings": ["java\\s*=\\s*\"temurin-(?<currentValue>[^\"]+)\""],
-      "autoReplaceStringTemplate": "java = \"temurin-{{{newValue}}}\"",
-      "depNameTemplate": "java",
-      "datasourceTemplate": "java-version",
       "versioningTemplate": "loose"
     }
   ],
