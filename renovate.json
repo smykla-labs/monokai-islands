@@ -27,6 +27,48 @@
   "osvVulnerabilityAlerts": true,
   "packageRules": [
     {
+      "addLabels": ["area/ci"],
+      "commitMessageTopic": "{{depName}} action",
+      "description": "GitHub Actions dependencies",
+      "matchManagers": ["github-actions"],
+      "semanticCommitType": "ci"
+    },
+    {
+      "description": "Group Go tool dependencies",
+      "groupName": "Go tooling",
+      "matchDepTypes": ["require"],
+      "matchManagers": ["gomod"],
+      "matchPackageNames": ["/^golang.org/x/tools/"]
+    },
+    {
+      "description": [
+        " Group dependency bumps from selected GitHub sources into a single PR across managers",
+        " (e.g., mise and gomod) to avoid separate PRs per manager"
+      ],
+      "groupName": "{{{replace 'https://github\\.com/[a-z-]+/' '' sourceUrl}}}",
+      "matchSourceUrls": [
+        "https://github.com/{onsi/ginkgo,golangci/golangci-lint}"
+      ]
+    },
+    {
+      "description": "Enable Go version updates in go.mod",
+      "matchDepNames": ["go"],
+      "matchManagers": ["gomod"],
+      "rangeStrategy": "bump"
+    },
+    {
+      "description": "Group Go version updates across mise and go.mod",
+      "groupName": "Go",
+      "matchDatasources": ["golang-version"],
+      "matchPackageNames": ["go"]
+    },
+    {
+      "description": "Smyklot action managed by sync-smyklot workflow",
+      "enabled": false,
+      "matchManagers": ["github-actions"],
+      "matchPackageNames": ["smykla-labs/smyklot"]
+    },
+    {
       "description": "Extract only semantic version for Java (strip build metadata)",
       "extractVersion": "^(?<version>\\d+\\.\\d+\\.\\d+)",
       "matchManagers": ["mise"],
