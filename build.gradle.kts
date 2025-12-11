@@ -65,7 +65,7 @@ intellijPlatform {
             // Verify against multiple IDEs to ensure theme works everywhere
             recommended()
             create(IntelliJPlatformType.GoLand, "2025.3")
-            create(IntelliJPlatformType.PyCharmCommunity, "2025.3")
+            create(IntelliJPlatformType.PyCharm, "2025.3")
             create(IntelliJPlatformType.WebStorm, "2025.3")
             create(IntelliJPlatformType.RustRover, "2025.3")
             create(IntelliJPlatformType.CLion, "2025.3")
@@ -344,7 +344,7 @@ intellijPlatformTesting {
         }
 
         register("runPyCharm") {
-            type = IntelliJPlatformType.PyCharmCommunity
+            type = IntelliJPlatformType.PyCharm
             version = "2025.3"
             task {
                 jvmArgumentProviders += CommandLineArgumentProvider {
