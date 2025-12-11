@@ -101,7 +101,29 @@ Version pinned: 9.2.1 (per project creation). Upgrade via `./gradlew wrapper --g
 
 ## References
 
+### UI Theme Structure
+
 - [Supporting Islands Theme](https://plugins.jetbrains.com/docs/intellij/supporting-islands-theme.html)
 - [Theme Structure](https://plugins.jetbrains.com/docs/intellij/themes-metadata.html)
+- [Platform Theme Colors](https://plugins.jetbrains.com/docs/intellij/platform-theme-colors.html)
 - [WCAG Contrast Guidelines](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html)
 - Monokai color palette: `palettes/monokai-dark.json` (canonical)
+
+### Editor Color Schemes
+
+**Official Documentation:**
+
+- [Themes - Editor Schemes and Background Images](https://plugins.jetbrains.com/docs/intellij/themes-extras.html) - Editor scheme integration
+- [Color Scheme Management](https://plugins.jetbrains.com/docs/intellij/color-scheme-management.html) - API and structure
+- [EditorColors.java](https://github.com/JetBrains/intellij-community/blob/master/platform/editor-ui-api/src/com/intellij/openapi/editor/colors/EditorColors.java) - Color key definitions (SELECTION_BACKGROUND, CARET_COLOR, etc.)
+
+**Reference Color Schemes:**
+
+- [Darcula.icls](https://github.com/phillipjohnson/intellij-colorblind-settings/blob/master/Darcula.icls) - Official dark theme reference
+- [GitHub.icls](https://github.com/orrsella/intellij-github-scheme/blob/master/GitHub.icls) - Light theme example
+- [Solarized Dark.icls](https://raw.githubusercontent.com/jkaving/intellij-colors-solarized/master/Solarized%20Dark.icls) - Diff attributes reference
+
+**Community Resources:**
+
+- [Diff viewer colors explained](https://intellij-support.jetbrains.com/hc/en-us/community/posts/360000243060-What-do-the-colors-in-the-Diff-viewer-mean-) - DIFF_INSERTED, DIFF_DELETED, DIFF_MODIFIED
+- [Editor selection color configuration](https://intellij-support.jetbrains.com/hc/en-us/community/posts/206801025-Help-with-Editor-Selection-Color-Font-Scheme) - SELECTION_BACKGROUND usage

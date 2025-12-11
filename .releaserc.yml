@@ -1,0 +1,91 @@
+# Semantic Release configuration for Monokai Islands Theme
+# See https://semantic-release.gitbook.io for documentation
+
+branches:
+  - main
+
+plugins:
+  # Analyze commits to determine version bump
+  - - '@semantic-release/commit-analyzer'
+    - preset: conventionalcommits
+      # noinspection YAMLIncompatibleTypes
+      releaseRules:
+        - type: feat
+          release: minor
+        - type: fix
+          release: patch
+        - type: perf
+          release: patch
+        - type: chore
+          scope: deps
+          release: patch
+        - type: docs
+          release: false
+        - type: style
+          release: false
+        - type: chore
+          release: false
+        - type: test
+          release: false
+        - type: ci
+          release: false
+        - type: build
+          release: false
+        # Breaking changes always trigger major release
+        - breaking: true
+          release: major
+
+  # Generate release notes
+  - - '@semantic-release/release-notes-generator'
+    - preset: conventionalcommits
+      presetConfig:
+        types:
+          - type: feat
+            section: Features
+          - type: fix
+            section: Bug Fixes
+          - type: perf
+            section: Performance Improvements
+          - type: docs
+            section: Documentation
+            hidden: true
+          - type: style
+            section: Styles
+            hidden: true
+          - type: chore
+            section: Maintenance
+            hidden: true
+          - type: test
+            section: Tests
+            hidden: true
+          - type: ci
+            section: CI/CD
+            hidden: true
+          - type: build
+            section: Build System
+            hidden: true
+
+  # Update CHANGELOG.md
+  - - '@semantic-release/changelog'
+    - changelogFile: CHANGELOG.md
+      changelogTitle: |-
+        # Changelog
+
+        All notable changes to the Monokai Islands Theme will be documented in this file.
+
+        The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+        and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+  # Update version in gradle.properties
+  - - '@semantic-release/exec'
+    - prepareCmd: perl -i -pe 's/^version=.*/version=${nextRelease.version}/' gradle.properties
+      publishCmd: ./gradlew buildPlugin signPlugin publishPlugin
+
+  # NOTE: @semantic-release/git removed - using verified-bot-commit action in workflow instead
+  # This enables automatic GPG signing via GitHub API
+
+  # Create GitHub release with plugin artifact
+  - - '@semantic-release/github'
+    - assets:
+        - path: 'build/distributions/*-signed.zip'
+          label: 'Signed Plugin (${nextRelease.version})'

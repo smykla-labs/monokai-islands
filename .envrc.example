@@ -1,0 +1,20 @@
+# JetBrains Plugin Signing and Publishing
+# Copy this file to .envrc and fill in your actual values
+# Note: .envrc is gitignored for security
+
+# Certificate chain for plugin signing (PEM format, multiline)
+# export JETBRAINS_CERTIFICATE_CHAIN="-----BEGIN CERTIFICATE-----
+# ... your certificate chain ...
+# -----END CERTIFICATE-----"
+
+# Private key for plugin signing (PEM format, multiline)
+# export JETBRAINS_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----
+# ... your private key ...
+# -----END PRIVATE KEY-----"
+
+# Private key password (use empty string if no password)
+export JETBRAINS_PRIVATE_KEY_PASSWORD=""
+
+# JetBrains Marketplace token for publishing
+# Get from: https://plugins.jetbrains.com/ → Profile → Tokens
+export JETBRAINS_MARKETPLACE_TOKEN="your-marketplace-token-here"

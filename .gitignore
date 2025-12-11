@@ -1,12 +1,32 @@
+# Project-specific
 tmp/
+
+# Build outputs
 build/
-.claude/
+out/
+*.jar
+
+# Gradle
 .gradle/
+gradle-app.setting
+!gradle-wrapper.jar
+
+# JetBrains IDEs
 .idea/
 .intellijPlatform/
 *.iml
-out/
-*.jar
-Contents
-.envrc
+*.ipr
+*.iws
+
+# macOS
 .DS_Store
+.AppleDouble
+.LSOverride
+Contents
+
+# Development tools
+.claude/
+.envrc
+
+# Design files
+*.graffle
