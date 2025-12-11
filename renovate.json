@@ -8,8 +8,12 @@
       "datasourceTemplate": "java-version",
       "depNameTemplate": "java",
       "description": "Update Temurin Java in mise config",
-      "fileMatch": ["^\\.mise\\.toml$"],
-      "matchStrings": ["java\\s*=\\s*\"temurin-(?<currentValue>[^\"]+)\""],
+      "managerFilePatterns": [
+        "/^\\.mise\\.toml$/"
+      ],
+      "matchStrings": [
+        "java\\s*=\\s*\"temurin-(?<currentValue>[^\"]+)\""
+      ],
       "versioningTemplate": "loose"
     }
   ],
@@ -30,7 +34,9 @@
     "security:openssf-scorecard",
     "group:linters"
   ],
-  "gitIgnoredAuthors": ["205507218+smyklot[bot]@users.noreply.github.com"],
+  "gitIgnoredAuthors": [
+    "205507218+smyklot[bot]@users.noreply.github.com"
+  ],
   "ignorePaths": [
     "**/tmp/**",
     ".github/workflows/smyklot-pr-commands.yml",
@@ -39,18 +45,28 @@
   "osvVulnerabilityAlerts": true,
   "packageRules": [
     {
-      "addLabels": ["area/ci"],
+      "addLabels": [
+        "area/ci"
+      ],
       "commitMessageTopic": "{{depName}} action",
       "description": "GitHub Actions dependencies",
-      "matchManagers": ["github-actions"],
+      "matchManagers": [
+        "github-actions"
+      ],
       "semanticCommitType": "ci"
     },
     {
       "description": "Group Go tool dependencies",
       "groupName": "Go tooling",
-      "matchDepTypes": ["require"],
-      "matchManagers": ["gomod"],
-      "matchPackageNames": ["/^golang.org/x/tools/"]
+      "matchDepTypes": [
+        "require"
+      ],
+      "matchManagers": [
+        "gomod"
+      ],
+      "matchPackageNames": [
+        "/^golang.org/x/tools/"
+      ]
     },
     {
       "description": [
@@ -64,27 +80,43 @@
     },
     {
       "description": "Enable Go version updates in go.mod",
-      "matchDepNames": ["go"],
-      "matchManagers": ["gomod"],
+      "matchDepNames": [
+        "go"
+      ],
+      "matchManagers": [
+        "gomod"
+      ],
       "rangeStrategy": "bump"
     },
     {
       "description": "Group Go version updates across mise and go.mod",
       "groupName": "Go",
-      "matchDatasources": ["golang-version"],
-      "matchPackageNames": ["go"]
+      "matchDatasources": [
+        "golang-version"
+      ],
+      "matchPackageNames": [
+        "go"
+      ]
     },
     {
       "description": "Smyklot action managed by sync-smyklot workflow",
       "enabled": false,
-      "matchManagers": ["github-actions"],
-      "matchPackageNames": ["smykla-labs/smyklot"]
+      "matchManagers": [
+        "github-actions"
+      ],
+      "matchPackageNames": [
+        "smykla-labs/smyklot"
+      ]
     },
     {
       "description": "Disable mise manager for Java (handled by customManager for temurin)",
       "enabled": false,
-      "matchManagers": ["mise"],
-      "matchPackageNames": ["java"]
+      "matchManagers": [
+        "mise"
+      ],
+      "matchPackageNames": [
+        "java"
+      ]
     }
   ],
   "vulnerabilityAlerts": {
