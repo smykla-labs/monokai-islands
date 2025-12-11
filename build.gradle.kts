@@ -37,6 +37,10 @@ intellijPlatform {
             sinceBuild = "253"
             untilBuild = provider { null }
         }
+
+        changeNotes = provider {
+            parseChangelogToHtml(project.version.toString())
+        }
     }
 
     signing {
@@ -60,6 +64,58 @@ detekt {
     toolVersion = "1.23.8"
     config.setFrom("$projectDir/detekt.yml")
     buildUponDefaultConfig = true
+}
+
+/**
+ * Parses CHANGELOG.md (conventional-changelog format from semantic-release) and extracts
+ * the latest version's content as HTML for plugin.xml change-notes.
+ */
+fun parseChangelogToHtml(version: String): String {
+    val changelogFile = file("CHANGELOG.md")
+    if (!changelogFile.exists()) {
+        return "<p>See <a href=\"https://github.com/smykla-labs/monokai-islands/releases\">GitHub Releases</a></p>"
+    }
+
+    val content = changelogFile.readText()
+    val versionPattern = """^#+ \[?${Regex.escape(version)}]?""".toRegex(RegexOption.MULTILINE)
+    val nextVersionPattern = """^#+ \[?\d+\.\d+\.\d+]?""".toRegex(RegexOption.MULTILINE)
+
+    val versionMatch = versionPattern.find(content) ?: return "<p>Version $version</p>"
+    val startIndex = versionMatch.range.first
+    val remainingContent = content.substring(versionMatch.range.last + 1)
+    val nextMatch = nextVersionPattern.find(remainingContent)
+    val endIndex = if (nextMatch != null) {
+        versionMatch.range.last + 1 + nextMatch.range.first
+    } else {
+        content.length
+    }
+
+    val versionContent = content.substring(startIndex, endIndex).trim()
+
+    // Convert markdown to simple HTML
+    // Pattern: * **scope:** description (scope may or may not include trailing colon)
+    val boldItemPattern = Regex("""^\* \*\*([^*:]+):?\*\* (.+)$""", RegexOption.MULTILINE)
+
+    return versionContent
+        .lines()
+        .drop(1) // Skip version header
+        .joinToString("\n")
+        .trim()
+        .replace(Regex("""^### (.+)$""", RegexOption.MULTILINE)) {
+            "<h3>${it.groupValues[1]}</h3>"
+        }
+        .replace(boldItemPattern) {
+            "<li><b>${it.groupValues[1]}</b>: ${it.groupValues[2]}</li>"
+        }
+        .replace(Regex("""^\* (.+)$""", RegexOption.MULTILINE)) {
+            "<li>${it.groupValues[1]}</li>"
+        }
+        .replace(Regex("""^- (.+)$""", RegexOption.MULTILINE)) {
+            "<li>${it.groupValues[1]}</li>"
+        }
+        .replace(Regex("""(<li>.*</li>\n?)+""")) { "<ul>${it.value}</ul>" }
+        .replace(Regex("""\[([^\]]+)\]\([^)]+\)""")) { it.groupValues[1] }
+        .trim()
 }
 
 tasks {

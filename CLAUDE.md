@@ -77,6 +77,33 @@ tasks {
 - `since-build`: `253` (GoLand 2025.3+)
 - `themeProvider` declaration for dark variant
 
+## Changelog & Release Notes
+
+**Fully automated** from conventional commits via semantic-release.
+
+**Pipeline**:
+
+1. `@semantic-release/changelog` generates `CHANGELOG.md` from conventional commits
+2. `parseChangelogToHtml()` in `build.gradle.kts` reads CHANGELOG.md and converts to HTML
+3. `patchPluginXml` injects HTML into plugin.xml `<change-notes>`
+4. GitHub release created with same notes
+
+**Commit message format** (determines version bump):
+
+- `feat(scope): description` → minor version bump, appears in "Features"
+- `fix(scope): description` → patch version bump, appears in "Bug Fixes"
+- `perf(scope): description` → patch version bump, appears in "Performance"
+- `feat!:` or `BREAKING CHANGE:` → major version bump
+
+**Release automation** (semantic-release):
+
+1. Analyzes commits to determine version bump
+2. Generates CHANGELOG.md from commit messages
+3. Updates `gradle.properties` with new version
+4. Builds, signs, and publishes plugin to JetBrains Marketplace
+5. Commits CHANGELOG.md and gradle.properties
+6. Creates GitHub release with artifacts
+
 ## Development Patterns
 
 ### Color Modifications

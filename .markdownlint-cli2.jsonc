@@ -4,6 +4,9 @@
     "default": true,
     "MD013": false,  // Line length - disabled as it's too restrictive
     "MD022": true,   // Blank lines around headings
+    // MD024: Allow duplicate headings - CHANGELOG.md uses same section names
+    // (Features, Bug Fixes) for each version per conventional-changelog format
+    "MD024": false,
     "MD033": false,  // Allow inline HTML
     "MD041": false   // First line in file doesn't need to be a top-level heading
   },
