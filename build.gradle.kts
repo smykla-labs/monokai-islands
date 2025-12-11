@@ -1,3 +1,5 @@
+import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
+
 plugins {
     id("org.jetbrains.intellij.platform") version "2.10.5"
     kotlin("jvm") version "2.2.21"
@@ -20,6 +22,8 @@ repositories {
 
 dependencies {
     intellijPlatform {
+        // Use GoLand as target IDE for development/testing
+        // Theme still works across ALL JetBrains IDEs via com.intellij.modules.platform dependency
         goland("2025.3")
     }
 }
@@ -32,6 +36,9 @@ intellijPlatform {
         id = "com.github.smykla-labs.monokai-islands"
         name = "Monokai Islands Theme"
         version = project.property("version") as String
+
+        // Extract description from README.md between <!-- Plugin description --> markers
+        description = provider { extractPluginDescription() }
 
         ideaVersion {
             sinceBuild = "253"
@@ -55,7 +62,8 @@ intellijPlatform {
 
     pluginVerification {
         ides {
-            recommended()
+            // Verify against GoLand only to avoid CI disk space issues
+            create(IntelliJPlatformType.GoLand, "2025.3")
         }
     }
 }
@@ -64,6 +72,47 @@ detekt {
     toolVersion = "1.23.8"
     config.setFrom("$projectDir/detekt.yml")
     buildUponDefaultConfig = true
+}
+
+/**
+ * Extracts plugin description from README.md between <!-- Plugin description --> markers
+ * and converts Markdown to simple HTML.
+ */
+fun extractPluginDescription(): String {
+    val readmeFile = file("README.md")
+    if (!readmeFile.exists()) {
+        return "<p>A dark theme for JetBrains IDEs combining Monokai colors with Islands UI.</p>"
+    }
+
+    val content = readmeFile.readText()
+    val startMarker = "<!-- Plugin description -->"
+    val endMarker = "<!-- Plugin description end -->"
+
+    val startIndex = content.indexOf(startMarker)
+    val endIndex = content.indexOf(endMarker)
+
+    if (startIndex == -1 || endIndex == -1 || startIndex >= endIndex) {
+        return "<p>A dark theme for JetBrains IDEs combining Monokai colors with Islands UI.</p>"
+    }
+
+    val description = content.substring(startIndex + startMarker.length, endIndex).trim()
+
+    // Convert Markdown to simple HTML
+    return description
+        .replace(Regex("""^### (.+)$""", RegexOption.MULTILINE)) { "<h3>${it.groupValues[1]}</h3>" }
+        .replace(Regex("""^## (.+)$""", RegexOption.MULTILINE)) { "<h2>${it.groupValues[1]}</h2>" }
+        .replace(Regex("""\*\*([^*]+)\*\*""")) { "<b>${it.groupValues[1]}</b>" }
+        .replace(Regex("""^\s*-\s+(.+)$""", RegexOption.MULTILINE)) { "<li>${it.groupValues[1]}</li>" }
+        .replace(Regex("""(<li>.*</li>\n?)+""")) { "<ul>${it.value}</ul>" }
+        .replace(Regex("""\n\n+""")) { "</p><p>" }
+        .let { "<p>$it</p>" }
+        .replace("<p></p>", "")
+        .replace("<p><h", "<h")
+        .replace("</h2></p>", "</h2>")
+        .replace("</h3></p>", "</h3>")
+        .replace("<p><ul>", "<ul>")
+        .replace("</ul></p>", "</ul>")
+        .trim()
 }
 
 /**
@@ -135,10 +184,134 @@ tasks {
         dependsOn("generateThemes")
     }
 
+    prepareSandbox {
+        outputs.upToDateWhen { false }  // Always run to ensure sandbox config is fresh
+        doLast {
+            val configDir = sandboxConfigDirectory.get().asFile.resolve("options")
+            configDir.mkdirs()
+
+            // Configure sandbox to auto-open projects in new window (0=new window, 1=same window, -1=ask)
+            configDir.resolve("ide.general.xml").writeText("""
+                <application>
+                    <component name="GeneralSettings">
+                        <option name="confirmOpenNewProject2" value="0" />
+                    </component>
+                </application>
+            """.trimIndent())
+
+            // Set Monokai Islands Dark as default theme
+            configDir.resolve("laf.xml").writeText("""
+                <application>
+                    <component name="LafManager">
+                        <laf themeId="com.github.smykla-labs.monokai-islands-dark" />
+                    </component>
+                </application>
+            """.trimIndent())
+
+            // Maximize IDE window on startup
+            configDir.resolve("window.manager.xml").writeText("""
+                <application>
+                    <component name="WindowManager">
+                        <frame x="0" y="0" width="1920" height="1080" extendedState="6" />
+                    </component>
+                </application>
+            """.trimIndent())
+
+            // Also set window.state.xml to ensure maximized state
+            configDir.resolve("window.state.xml").writeText("""
+                <application>
+                    <component name="WindowManager">
+                        <frame x="0" y="0" width="1920" height="1080" extendedState="6" />
+                    </component>
+                </application>
+            """.trimIndent())
+
+            // UI settings: tabs at bottom, hide tool window bars, etc.
+            configDir.resolve("ui.lnf.xml").writeText("""
+                <application>
+                    <component name="UISettings">
+                        <option name="EDITOR_TAB_PLACEMENT" value="4" />
+                        <option name="HIDE_TOOL_STRIPES" value="false" />
+                        <option name="SHOW_MAIN_TOOLBAR" value="true" />
+                    </component>
+                </application>
+            """.trimIndent())
+
+            // Editor color scheme selection
+            configDir.resolve("colors.scheme.xml").writeText("""
+                <application>
+                    <component name="EditorColorsManagerImpl">
+                        <global_color_scheme name="Monokai Islands Dark" />
+                    </component>
+                </application>
+            """.trimIndent())
+
+            // Tool window layout: Project pane width
+            configDir.resolve("window.info.xml").writeText("""
+                <application>
+                    <component name="WindowInfo">
+                        <window_info id="Project" active="true" anchor="left" auto_hide="false"
+                            internal_type="DOCKED" type="DOCKED" visible="true"
+                            weight="0.15" sideWeight="0.5" order="0" side_tool="false" />
+                    </component>
+                </application>
+            """.trimIndent())
+
+            // Configure registry settings for UI development
+            configDir.resolve("registry.xml").writeText("""
+                <application>
+                    <component name="Registry">
+                        <entry key="ui.inspector.save.stacktraces" value="true" />
+                        <entry key="ui.inspector.accessibility.audit" value="true" />
+                        <entry key="ide.debugMode" value="true" />
+                    </component>
+                </application>
+            """.trimIndent())
+
+            // Enable internal mode for additional IDE features
+            sandboxConfigDirectory.get().asFile.resolve("idea.properties").writeText("""
+                idea.is.internal=true
+            """.trimIndent())
+
+            // Disable unnecessary plugins for faster dev startup
+            // Note: Git4Idea and yaml required by other bundled plugins (Kubernetes, GitLab, Backup and Sync)
+            sandboxConfigDirectory.get().asFile.resolve("disabled_plugins.txt").writeText(
+                listOf(
+                    "com.intellij.copyright",
+                    "org.intellij.plugins.markdown",
+                    "com.intellij.database",
+                    "com.intellij.httpClient",
+                    "org.jetbrains.plugins.terminal",
+                    "com.jetbrains.sh",
+                    "org.jetbrains.plugins.github",
+                    "com.intellij.tasks",
+                    "org.intellij.intelliLang",
+                    "com.goide.golinter",
+                ).joinToString("\n")
+            )
+        }
+    }
+
     runIde {
-        // Auto-open project from RUNIDE_PROJECT_PATH env var (optional)
-        providers.environmentVariable("RUNIDE_PROJECT_PATH").orNull?.let { projectPath ->
-            args = listOf(project.file(projectPath).absolutePath)
+        // Auto-open projects/files from env vars (comma-separated, optional)
+        // Example: RUNIDE_PROJECT_PATHS="~/project1" RUNIDE_FILES="~/project1/main.go" ./gradlew runIde
+        val projectPaths = providers.environmentVariable("RUNIDE_PROJECT_PATHS").orNull
+            ?.split(",")
+            ?.map { it.trim() }
+            ?.filter { it.isNotEmpty() }
+            ?.map { file(it).absolutePath }
+            ?: emptyList()
+
+        val filePaths = providers.environmentVariable("RUNIDE_FILES").orNull
+            ?.split(",")
+            ?.map { it.trim() }
+            ?.filter { it.isNotEmpty() }
+            ?.map { file(it).absolutePath }
+            ?: emptyList()
+
+        val allArgs = projectPaths + filePaths
+        if (allArgs.isNotEmpty()) {
+            args = allArgs
         }
 
         systemProperty("idea.is.internal", "true")
@@ -148,5 +321,61 @@ tasks {
         jvmArgs = listOf(
             "-Didea.theme.id=com.github.smykla-labs.monokai-islands-dark"
         )
+    }
+}
+
+// Additional runIde tasks for testing in different IDEs
+// Usage: ./gradlew runGoLand, ./gradlew runPyCharm, etc.
+intellijPlatformTesting {
+    runIde {
+        register("runGoLand") {
+            type = IntelliJPlatformType.GoLand
+            version = "2025.3"
+            task {
+                jvmArgumentProviders += CommandLineArgumentProvider {
+                    listOf("-Didea.theme.id=com.github.smykla-labs.monokai-islands-dark")
+                }
+            }
+        }
+
+        register("runPyCharm") {
+            type = IntelliJPlatformType.PyCharm
+            version = "2025.3"
+            task {
+                jvmArgumentProviders += CommandLineArgumentProvider {
+                    listOf("-Didea.theme.id=com.github.smykla-labs.monokai-islands-dark")
+                }
+            }
+        }
+
+        register("runWebStorm") {
+            type = IntelliJPlatformType.WebStorm
+            version = "2025.3"
+            task {
+                jvmArgumentProviders += CommandLineArgumentProvider {
+                    listOf("-Didea.theme.id=com.github.smykla-labs.monokai-islands-dark")
+                }
+            }
+        }
+
+        register("runRustRover") {
+            type = IntelliJPlatformType.RustRover
+            version = "2025.3"
+            task {
+                jvmArgumentProviders += CommandLineArgumentProvider {
+                    listOf("-Didea.theme.id=com.github.smykla-labs.monokai-islands-dark")
+                }
+            }
+        }
+
+        register("runCLion") {
+            type = IntelliJPlatformType.CLion
+            version = "2025.3"
+            task {
+                jvmArgumentProviders += CommandLineArgumentProvider {
+                    listOf("-Didea.theme.id=com.github.smykla-labs.monokai-islands-dark")
+                }
+            }
+        }
     }
 }

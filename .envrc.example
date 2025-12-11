@@ -18,3 +18,8 @@ export JETBRAINS_PRIVATE_KEY_PASSWORD=""
 # JetBrains Marketplace token for publishing
 # Get from: https://plugins.jetbrains.com/ → Profile → Tokens
 export JETBRAINS_MARKETPLACE_TOKEN="your-marketplace-token-here"
+
+# RunIde: Projects and files to auto-open (comma-separated, optional)
+# These paths are relative to the project root or absolute
+export RUNIDE_PROJECT_PATHS="../my-project,../another-project"
+export RUNIDE_FILES="../my-project/main.go,../my-project/config.yaml"
