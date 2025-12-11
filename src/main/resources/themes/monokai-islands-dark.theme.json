@@ -252,6 +252,8 @@
     "ActionButton.pressedBorderColor": "input_border",
     "HelpButton.background": "background",
     "HelpButton.borderColor": "input_border",
+    "Counter.background": "accent1",
+    "Counter.foreground": "dark1",
     "ToggleButton.on.background": "tab_active_bg",
     "ToggleButton.on.foreground": "text",
     "ToggleButton.on.borderColor": "tab_active_border",

@@ -315,6 +315,9 @@ def generate_theme_json(palette: dict, variant: str) -> dict:
         # Help button specifically
         "HelpButton.background": "background",
         "HelpButton.borderColor": "input_border",
+        # Counter badges (notification counts on tabs, trees, etc.)
+        "Counter.background": "accent1",
+        "Counter.foreground": "dark1",
         # Toggle buttons and segmented buttons (for plugin manager, tabs, etc.)
         "ToggleButton.on.background": "tab_active_bg",
         "ToggleButton.on.foreground": "text",
