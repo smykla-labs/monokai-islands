@@ -1,5 +1,6 @@
 # Monokai Islands Theme
 
+<!-- Plugin description -->
 A dark theme for JetBrains IDEs combining the iconic **Monokai** color palette with the modern **Islands** UI design language.
 
 ## Features
@@ -8,6 +9,7 @@ A dark theme for JetBrains IDEs combining the iconic **Monokai** color palette w
 - **Islands UI Integration** - Rounded corners, subtle borders, and modern aesthetic
 - **Go-Optimized Syntax Highlighting** - Carefully tuned colors for Go development with semantic differentiation
 - **Warm Purple-Tinted UI** - Consistent warm tones throughout the interface
+<!-- Plugin description end -->
 
 ## Installation
 
