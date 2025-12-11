@@ -71,23 +71,91 @@ def validate_palette(palette: dict) -> list[str]:
     return issues
 
 
+def validate_diff_colors(diff_colors: dict, line_numbers: str, text: str) -> list[str]:
+    """Validate contrast for diff backgrounds.
+
+    Args:
+        diff_colors: Dict of diff color names to hex values
+        line_numbers: Hex color for line numbers
+        text: Hex color for main text
+    """
+    issues = []
+
+    # Diff backgrounds should have good text contrast (8:1+ recommended, 4.5:1 minimum)
+    for name, bg_color in diff_colors.items():
+        text_ratio = calculate_contrast_ratio(text, bg_color)
+        if text_ratio < 4.5:
+            issues.append(
+                f"  ❌ text on {name}: {text_ratio:.2f}:1 "
+                f"(required: 4.5:1)"
+            )
+        elif text_ratio < 7.0:
+            issues.append(
+                f"  ⚠️  text on {name}: {text_ratio:.2f}:1 "
+                f"(recommended: 7.0:1)"
+            )
+
+        # Line numbers need 2.0:1 minimum on diff backgrounds
+        line_ratio = calculate_contrast_ratio(line_numbers, bg_color)
+        if line_ratio < 2.0:
+            issues.append(
+                f"  ❌ line_numbers on {name}: {line_ratio:.2f}:1 "
+                f"(required: 2.0:1)"
+            )
+
+    return issues
+
+
+def validate_selection_colors(selection_bg: str, syntax_colors: dict) -> list[str]:
+    """Validate contrast for selection background against syntax colors.
+
+    Args:
+        selection_bg: Hex color for selection background
+        syntax_colors: Dict of syntax color names to hex values
+    """
+    issues = []
+
+    for name, color in syntax_colors.items():
+        ratio = calculate_contrast_ratio(color, selection_bg)
+        # Comments are intentionally faded, so lower threshold
+        min_ratio = 2.0 if "comment" in name.lower() else 3.0
+
+        if ratio < min_ratio:
+            issues.append(
+                f"  ❌ {name} on selection: {ratio:.2f}:1 "
+                f"(required: {min_ratio}:1)"
+            )
+
+    return issues
+
+
+def print_validation_result(section: str, issues: list[str]) -> None:
+    """Print validation results for a section."""
+    print(f"\n{section}:")
+    if issues:
+        for issue in issues:
+            print(issue)
+    else:
+        print(f"  ✅ {section} meet contrast requirements")
+
+
+def get_palettes_to_check() -> list[tuple[Path, str]]:
+    """Get list of palettes to validate."""
+    if len(sys.argv) > 1:
+        palette_path = Path(sys.argv[1])
+        return [(palette_path, palette_path.stem)]
+
+    project_root = Path(__file__).parent.parent
+    palettes_dir = project_root / "palettes"
+    return [(palettes_dir / "monokai-dark.json", "monokai-dark")]
+
+
 def main() -> None:
     """Validate contrast ratios for all palettes."""
-    if len(sys.argv) > 1:
-        # Validate specific palette
-        palette_path = Path(sys.argv[1])
-        palettes_to_check = [(palette_path, palette_path.stem)]
-    else:
-        # Validate all palettes
-        project_root = Path(__file__).parent.parent
-        palettes_dir = project_root / "palettes"
-        palettes_to_check = [
-            (palettes_dir / "monokai-dark.json", "monokai-dark"),
-        ]
+    all_issues: list[str] = []
 
-    all_issues = []
-
-    for palette_path, palette_name in palettes_to_check:
+    # Validate palettes
+    for palette_path, palette_name in get_palettes_to_check():
         if not palette_path.exists():
             print(f"⚠️  Skipping {palette_name}: file not found")
             continue
@@ -95,22 +163,43 @@ def main() -> None:
         with palette_path.open() as f:
             palette = json.load(f)
 
-        print(f"\n{palette_name}:")
         issues = validate_palette(palette)
+        print_validation_result(palette_name, issues)
+        all_issues.extend(issues)
 
-        if issues:
-            all_issues.extend(issues)
-            for issue in issues:
-                print(issue)
-        else:
-            print("  ✅ All contrast ratios meet WCAG AA requirements")
+    # Validate diff colors
+    diff_colors = {
+        "diff_inserted": "#2d5038",
+        "diff_deleted": "#582838",
+        "diff_modified": "#2d4858",
+        "diff_conflict": "#583825",
+    }
+    diff_issues = validate_diff_colors(diff_colors, "#7B8590", "#fcfcfa")
+    print_validation_result("Diff backgrounds", diff_issues)
+    all_issues.extend(diff_issues)
+
+    # Validate selection background
+    syntax_colors = {
+        "white_text": "#fcfcfa",
+        "normal_text": "#bcbec4",
+        "keywords_pink": "#ff6188",
+        "strings_yellow": "#ffd866",
+        "functions_green": "#a9dc76",
+        "types_cyan": "#78dce8",
+        "constants_purple": "#ab9df2",
+        "numbers_orange": "#fc9867",
+        "comments_gray": "#727072",
+    }
+    selection_issues = validate_selection_colors("#454045", syntax_colors)
+    print_validation_result("Selection background", selection_issues)
+    all_issues.extend(selection_issues)
 
     # Exit with error if any issues found
     if all_issues:
         print(f"\n❌ Found {len(all_issues)} contrast issues")
         sys.exit(1)
-    else:
-        print("\n✅ All palettes pass WCAG AA validation")
+
+    print("\n✅ All validations pass")
 
 
 if __name__ == "__main__":
