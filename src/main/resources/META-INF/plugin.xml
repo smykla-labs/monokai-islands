@@ -61,8 +61,15 @@
     <!-- Product and plugin compatibility requirements.
       Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
+    <depends optional="true" config-file="markdown.xml">org.intellij.plugins.markdown</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <themeProvider id="com.github.smykla-labs.monokai-islands-dark" path="/themes/monokai-islands-dark.theme.json"/>
+        <postStartupActivity implementation="com.github.smykla.monokaiislands.startup.ThemeStartupActivity"/>
     </extensions>
+
+    <applicationListeners>
+        <listener class="com.github.smykla.monokaiislands.listeners.ThemeChangeListener"
+                  topic="com.intellij.ide.ui.LafManagerListener"/>
+    </applicationListeners>
 </idea-plugin>

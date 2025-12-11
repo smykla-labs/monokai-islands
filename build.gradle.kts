@@ -1,5 +1,11 @@
 plugins {
     id("org.jetbrains.intellij.platform") version "2.10.5"
+    kotlin("jvm") version "2.2.21"
+    id("io.gitlab.arturbosch.detekt") version "1.23.8"
+}
+
+kotlin {
+    jvmToolchain(21)
 }
 
 group = "com.github.smykla-labs"
@@ -50,18 +56,27 @@ intellijPlatform {
     }
 }
 
+detekt {
+    toolVersion = "1.23.8"
+    config.setFrom("$projectDir/detekt.yml")
+    buildUponDefaultConfig = true
+}
+
 tasks {
+    withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+        jvmTarget = "21"
+    }
+
+    withType<io.gitlab.arturbosch.detekt.DetektCreateBaselineTask>().configureEach {
+        jvmTarget = "21"
+    }
+
     register("generateThemes", Exec::class) {
         commandLine("python3", "scripts/generate-themes.py")
     }
 
     buildPlugin {
         dependsOn("generateThemes")
-    }
-
-    // No Java/Kotlin code to instrument (theme-only plugin)
-    instrumentCode {
-        enabled = false
     }
 
     runIde {

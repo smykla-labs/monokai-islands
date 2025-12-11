@@ -37,7 +37,7 @@ complexity:
     threshold: 60
   LargeClass:
     threshold: 600
-  ComplexMethod:
+  CyclomaticComplexMethod:
     threshold: 15
   TooManyFunctions:
     thresholdInFiles: 11
