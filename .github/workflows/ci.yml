@@ -9,58 +9,142 @@ on:
 
 permissions:
   contents: read
+  pull-requests: read  # Required for dorny/paths-filter
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
+  changes:
+    name: Detect Changes
+    runs-on: ubuntu-24.04
+    outputs:
+      plugin: ${{ steps.filter.outputs.plugin }}
+      kotlin: ${{ steps.filter.outputs.kotlin }}
+      python: ${{ steps.filter.outputs.python }}
+      markdown: ${{ steps.filter.outputs.markdown }}
+      json: ${{ steps.filter.outputs.json }}
+      any-lintable: ${{ steps.filter.outputs.any-lintable }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+
+      - name: Detect file changes
+        id: filter
+        uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
+        with:
+          filters: |
+            plugin:
+              - 'src/**'
+              - 'palettes/**'
+              - 'build.gradle.kts'
+              - 'settings.gradle.kts'
+              - 'gradle.properties'
+              - 'scripts/generate-themes.py'
+              - 'detekt.yml'
+            kotlin:
+              - 'src/**/*.kt'
+              - 'detekt.yml'
+              - 'build.gradle.kts'
+            python:
+              - 'scripts/**/*.py'
+              - 'ruff.toml'
+            markdown:
+              - '**/*.md'
+              - '.markdownlint-cli2.jsonc'
+            json:
+              - '*.json'
+              - 'palettes/**/*.json'
+              - 'src/**/*.json'
+            any-lintable:
+              - '**'
+
   lint:
     name: Lint
     runs-on: ubuntu-24.04
+    needs: changes
 
     steps:
       - name: Checkout
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
 
       - name: Setup mise
+        if: needs.changes.outputs.any-lintable == 'true'
         uses: jdx/mise-action@146a28175021df8ca24f8ee1828cc2a60f980bd5 # v3.5.1
         with:
           install: true
           cache: true
 
-      - name: Run linters
-        run: mise run lint
+      - name: Lint EditorConfig
+        if: needs.changes.outputs.any-lintable == 'true'
+        run: ec
+
+      - name: Lint Python
+        if: needs.changes.outputs.python == 'true'
+        run: ruff check .
+
+      - name: Lint Markdown
+        if: needs.changes.outputs.markdown == 'true'
+        run: markdownlint-cli2 '**/*.md'
+
+      - name: Lint JSON
+        if: needs.changes.outputs.json == 'true'
+        run: find . -name '*.json' -not -path './.*' -not -path './build/*' -not -path './tmp/*' -exec jq empty {} \;
+
+      - name: Setup Gradle (for Kotlin linting)
+        if: needs.changes.outputs.kotlin == 'true'
+        uses: gradle/actions/setup-gradle@4d9f0ba0025fe599b4ebab900eb7f3a1d93ef4c2 # v5.0.0
+        with:
+          cache-read-only: true
+
+      - name: Lint Kotlin
+        if: needs.changes.outputs.kotlin == 'true'
+        run: ./gradlew detekt
+
+      - name: No linting required
+        if: needs.changes.outputs.any-lintable == 'false'
+        run: echo "No lintable files changed - skipping all linters"
 
   build:
     name: Build and Verify
     runs-on: ubuntu-24.04
-    needs: lint
+    needs: [changes, lint]
 
     steps:
       - name: Checkout
+        if: needs.changes.outputs.plugin == 'true'
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
 
       - name: Setup mise
+        if: needs.changes.outputs.plugin == 'true'
         uses: jdx/mise-action@146a28175021df8ca24f8ee1828cc2a60f980bd5 # v3.5.1
         with:
           install: true
           cache: true
 
       - name: Setup Gradle
+        if: needs.changes.outputs.plugin == 'true'
         uses: gradle/actions/setup-gradle@4d9f0ba0025fe599b4ebab900eb7f3a1d93ef4c2 # v5.0.0
         with:
           cache-read-only: false
 
       - name: Verify plugin
+        if: needs.changes.outputs.plugin == 'true'
         run: ./gradlew verifyPlugin
 
       - name: Build plugin
+        if: needs.changes.outputs.plugin == 'true'
         run: ./gradlew buildPlugin
 
       - name: Upload plugin artifact
+        if: needs.changes.outputs.plugin == 'true'
         uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
           name: monokai-islands-theme
           path: build/distributions/*.zip
           retention-days: 7
+
+      - name: Build not required
+        if: needs.changes.outputs.plugin == 'false'
+        run: echo "No plugin-affecting files changed - skipping build"
