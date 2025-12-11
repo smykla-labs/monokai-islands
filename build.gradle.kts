@@ -62,13 +62,8 @@ intellijPlatform {
 
     pluginVerification {
         ides {
-            // Verify against multiple IDEs to ensure theme works everywhere
-            recommended()
+            // Verify against GoLand only to avoid CI disk space issues
             create(IntelliJPlatformType.GoLand, "2025.3")
-            create(IntelliJPlatformType.PyCharm, "2025.3")
-            create(IntelliJPlatformType.WebStorm, "2025.3")
-            create(IntelliJPlatformType.RustRover, "2025.3")
-            create(IntelliJPlatformType.CLion, "2025.3")
         }
     }
 }
