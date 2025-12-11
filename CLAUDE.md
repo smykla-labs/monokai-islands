@@ -47,12 +47,16 @@ python3 scripts/validate-contrast.py      # Check WCAG compliance
 
 ### Editor Schemes
 
-Manual export workflow (automated templating not yet implemented):
+**Location**: `src/main/resources/editor-schemes/monokai-islands-dark.xml`
 
-1. GoLand Settings → Editor → Color Scheme → Duplicate base (Darcula)
-2. Map syntax: Keywords=accent1, Strings=accent3, Functions=accent4, Classes=accent5, Constants=accent2, Annotations=accent6, Comments=dimmed3
-3. Export via File → Manage IDE Settings → Export Settings
-4. Extract `.xml`, place in `editor-schemes/`, reference in theme JSON: `"editorScheme": "/editor-schemes/monokai-islands-dark.xml"`
+Manual editing workflow:
+
+1. Edit the XML directly in `src/main/resources/editor-schemes/`
+2. Key sections:
+   - `<colors>`: Simple color values (SELECTION_BACKGROUND, CARET_COLOR, etc.)
+   - `<attributes>`: TextAttributes with nested values (DIFF_INSERTED, syntax highlighting, etc.)
+3. Reference in theme JSON: `"editorScheme": "/editor-schemes/monokai-islands-dark.xml"`
+4. Rebuild with `./gradlew clean buildPlugin` to pick up changes
 
 ## Plugin Configuration
 
