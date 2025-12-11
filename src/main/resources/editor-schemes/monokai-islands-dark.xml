@@ -9,8 +9,8 @@
     <option name="ANNOTATIONS_COLOR" value="8D9199" />
     <option name="ANNOTATIONS_LAST_COMMIT_COLOR" value="CED0D6" />
     <option name="CARET_COLOR" value="CED0D6" />
-    <option name="CARET_ROW_COLOR" value="2d2a2c" />
-    <option name="CONSOLE_BACKGROUND_KEY" value="221F22" />
+    <option name="CARET_ROW_COLOR" value="2a2729" />
+    <option name="CONSOLE_BACKGROUND_KEY" value="221f22" />
     <option name="DELETED_LINES_COLOR" value="868A91" />
     <option name="DIFF_SEPARATORS_BACKGROUND" value="2B2D30" />
     <option name="DOCUMENTATION_COLOR" value="27282B" />
@@ -56,15 +56,15 @@
     <option name="RECENT_LOCATIONS_SELECTION" value="2B2D30" />
     <option name="RIGHT_MARGIN_COLOR" value="323438" />
     <option name="SELECTED_INDENT_GUIDE" value="4E5157" />
-    <option name="SELECTION_BACKGROUND" value="454045" />
+    <option name="SELECTION_BACKGROUND" value="353035" />
     <option name="SELECTION_FOREGROUND" value="" />
     <option name="ScrollBar.Mac.hoverThumbColor" value="FFFFFF4D" />
     <option name="ScrollBar.Mac.thumbColor" value="FFFFFF26" />
-    <option name="VCS_ANNOTATIONS_COLOR_1" value="2F5194" />
-    <option name="VCS_ANNOTATIONS_COLOR_2" value="2D416B" />
-    <option name="VCS_ANNOTATIONS_COLOR_3" value="283754" />
-    <option name="VCS_ANNOTATIONS_COLOR_4" value="242D42" />
-    <option name="VCS_ANNOTATIONS_COLOR_5" value="22252E" />
+    <option name="VCS_ANNOTATIONS_COLOR_1" value="453545" />
+    <option name="VCS_ANNOTATIONS_COLOR_2" value="382d38" />
+    <option name="VCS_ANNOTATIONS_COLOR_3" value="2d262d" />
+    <option name="VCS_ANNOTATIONS_COLOR_4" value="262025" />
+    <option name="VCS_ANNOTATIONS_COLOR_5" value="221f22" />
     <option name="VISUAL_INDENT_GUIDE" value="2B2D30" />
     <option name="WHITESPACES" value="6F737A" />
     <option name="WHITESPACES_MODIFIED_LINES_COLOR" value="52433D" />
@@ -189,26 +189,26 @@
     </option>
     <option name="DIFF_CONFLICT">
       <value>
-        <option name="BACKGROUND" value="583825" />
-        <option name="ERROR_STRIPE_COLOR" value="fc9867" />
+        <option name="BACKGROUND" value="302820" />
+        <option name="ERROR_STRIPE_COLOR" value="a07050" />
       </value>
     </option>
     <option name="DIFF_DELETED">
       <value>
-        <option name="BACKGROUND" value="582838" />
-        <option name="ERROR_STRIPE_COLOR" value="ff6188" />
+        <option name="BACKGROUND" value="2d2228" />
+        <option name="ERROR_STRIPE_COLOR" value="904858" />
       </value>
     </option>
     <option name="DIFF_INSERTED">
       <value>
-        <option name="BACKGROUND" value="2d5038" />
-        <option name="ERROR_STRIPE_COLOR" value="a9dc76" />
+        <option name="BACKGROUND" value="263328" />
+        <option name="ERROR_STRIPE_COLOR" value="709060" />
       </value>
     </option>
     <option name="DIFF_MODIFIED">
       <value>
-        <option name="BACKGROUND" value="2d4858" />
-        <option name="ERROR_STRIPE_COLOR" value="78dce8" />
+        <option name="BACKGROUND" value="252a30" />
+        <option name="ERROR_STRIPE_COLOR" value="608090" />
       </value>
     </option>
     <option name="BAD_CHARACTER">
