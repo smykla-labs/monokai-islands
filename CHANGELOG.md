@@ -2,6 +2,12 @@
 
 All notable changes to the Monokai Islands Theme will be documented in this file.
 
+## [1.1.0](https://github.com/smykla-labs/monokai-islands/compare/v1.0.0...v1.1.0) (2025-12-11)
+
+### Features
+
+* **theme:** improve UI and dev workflow ([#21](https://github.com/smykla-labs/monokai-islands/issues/21)) ([4f06d10](https://github.com/smykla-labs/monokai-islands/commit/4f06d10d122fde2672f3b41a8c3c79a6dc512711))
+
 ## 1.0.0 (2025-12-11)
 
 ### Features
