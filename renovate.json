@@ -69,10 +69,10 @@
       "matchPackageNames": ["smykla-labs/smyklot"]
     },
     {
-      "description": "Extract only semantic version for Java (strip build metadata)",
-      "extractVersion": "^(?<version>\\d+\\.\\d+\\.\\d+)",
+      "description": "Use semver versioning for Java to strip build metadata",
       "matchManagers": ["mise"],
-      "matchPackageNames": ["java"]
+      "matchPackageNames": ["java"],
+      "versioning": "semver"
     }
   ],
   "vulnerabilityAlerts": {
