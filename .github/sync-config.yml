@@ -16,13 +16,13 @@ sync:
           "$.packageRules": "append"
         overrides:
           customManagers:
-            - customType: "regex"
-              description: "Update Temurin Java in mise config"
-              fileMatch: ["^\\.mise\\.toml$"]
-              matchStrings: ["java\\s*=\\s*\"temurin-(?<currentValue>[^\"]+)\""]
-              autoReplaceStringTemplate: "java = \"temurin-{{{newValue}}}\""
-              depNameTemplate: "java"
+            - autoReplaceStringTemplate: "java = \"temurin-{{{newValue}}}\""
+              customType: "regex"
               datasourceTemplate: "java-version"
+              depNameTemplate: "java"
+              description: "Update Temurin Java in mise config"
+              managerFilePatterns: ["/^\\.mise\\.toml$/"]
+              matchStrings: ["java\\s*=\\s*\"temurin-(?<currentValue>[^\"]+)\""]
               versioningTemplate: "loose"
           packageRules:
             - description: "Disable mise manager for Java (handled by customManager for temurin)"

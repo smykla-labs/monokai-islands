@@ -8,7 +8,7 @@
       "datasourceTemplate": "java-version",
       "depNameTemplate": "java",
       "description": "Update Temurin Java in mise config",
-      "fileMatch": ["^\\.mise\\.toml$"],
+      "managerFilePatterns": ["/^\\.mise\\.toml$/"],
       "matchStrings": ["java\\s*=\\s*\"temurin-(?<currentValue>[^\"]+)\""],
       "versioningTemplate": "loose"
     }
