@@ -3,11 +3,11 @@ package com.github.smykla.monokaiislands.startup
 import com.github.smykla.monokaiislands.listeners.ThemeChangeListener
 import com.intellij.ide.ui.LafManager
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.startup.ProjectActivity
+import com.intellij.openapi.startup.StartupActivity
 
-class ThemeStartupActivity : ProjectActivity {
+class ThemeStartupActivity : StartupActivity {
 
-    override suspend fun execute(project: Project) {
+    override fun runActivity(project: Project) {
         val currentThemeId = LafManager.getInstance().currentUIThemeLookAndFeel?.id
         val isMonokaiTheme = currentThemeId == ThemeChangeListener.THEME_ID
 

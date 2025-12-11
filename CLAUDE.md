@@ -136,12 +136,6 @@ The `prepareSandbox` task auto-configures the IDE sandbox for theme development:
 - `disabled_plugins.txt` — Faster startup (disables Copyright, Database, Terminal, etc.)
 - `idea.properties` — `idea.is.internal=true` for dev features
 
-**DevModeStartupActivity** (`src/main/kotlin/.../startup/DevModeStartupActivity.kt`):
-
-- Only runs when `idea.is.internal=true` (exits immediately in production)
-- Programmatically sets theme + color scheme (XML configs unreliable on first launch)
-- Maximizes window
-
 **Environment variables** (`.envrc`):
 
 ```bash

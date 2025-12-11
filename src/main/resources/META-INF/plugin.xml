@@ -50,8 +50,6 @@
     <extensions defaultExtensionNs="com.intellij">
         <themeProvider id="com.github.smykla-labs.monokai-islands-dark" path="/themes/monokai-islands-dark.theme.json"/>
         <postStartupActivity implementation="com.github.smykla.monokaiislands.startup.ThemeStartupActivity"/>
-        <!-- Dev-only: exits immediately when idea.is.internal != true -->
-        <postStartupActivity implementation="com.github.smykla.monokaiislands.startup.DevModeStartupActivity"/>
     </extensions>
 
     <applicationListeners>
