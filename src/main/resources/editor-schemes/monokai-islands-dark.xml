@@ -44,7 +44,7 @@
     <option name="INLINE_REFACTORING_SETTINGS_DEFAULT" value="393B40" />
     <option name="INLINE_REFACTORING_SETTINGS_FOCUSED" value="393B40" />
     <option name="INLINE_REFACTORING_SETTINGS_HOVERED" value="393B40" />
-    <option name="LINE_NUMBERS_COLOR" value="4B5059" />
+    <option name="LINE_NUMBERS_COLOR" value="7B8590" />
     <option name="LINE_NUMBER_ON_CARET_ROW_COLOR" value="A1A3AB" />
     <option name="LOOKUP_COLOR" value="27282B" />
     <option name="MATCHED_BRACES_INDENT_GUIDE_COLOR" value="4E5157" />
@@ -56,6 +56,8 @@
     <option name="RECENT_LOCATIONS_SELECTION" value="2B2D30" />
     <option name="RIGHT_MARGIN_COLOR" value="323438" />
     <option name="SELECTED_INDENT_GUIDE" value="4E5157" />
+    <option name="SELECTION_BACKGROUND" value="454045" />
+    <option name="SELECTION_FOREGROUND" value="" />
     <option name="ScrollBar.Mac.hoverThumbColor" value="FFFFFF4D" />
     <option name="ScrollBar.Mac.thumbColor" value="FFFFFF26" />
     <option name="VCS_ANNOTATIONS_COLOR_1" value="2F5194" />
@@ -74,6 +76,141 @@
       </value>
     </option>
     <option name="ANNOTATION_NAME_ATTRIBUTES" baseAttributes="" />
+    <!-- Bash/Shell syntax highlighting with Monokai colors -->
+    <option name="BASH.BAD_CHARACTER">
+      <value>
+        <option name="EFFECT_COLOR" value="ff6188" />
+        <option name="EFFECT_TYPE" value="2" />
+      </value>
+    </option>
+    <option name="BASH.BACKQUOTE">
+      <value>
+        <option name="FOREGROUND" value="a9dc76" />
+      </value>
+    </option>
+    <option name="BASH.EXTERNAL_COMMAND">
+      <value>
+        <option name="FOREGROUND" value="a9dc76" />
+      </value>
+    </option>
+    <option name="BASH.FUNCTION_CALL">
+      <value>
+        <option name="FOREGROUND" value="a9dc76" />
+      </value>
+    </option>
+    <option name="BASH.FUNCTION_DEF_NAME">
+      <value>
+        <option name="FOREGROUND" value="a9dc76" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="BASH.HERE_DOC">
+      <value>
+        <option name="FOREGROUND" value="ffd866" />
+      </value>
+    </option>
+    <option name="BASH.HERE_DOC_END">
+      <value>
+        <option name="FOREGROUND" value="ff6188" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="BASH.HERE_DOC_START">
+      <value>
+        <option name="FOREGROUND" value="ff6188" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="BASH.INTERNAL_COMMAND">
+      <value>
+        <option name="FOREGROUND" value="78dce8" />
+      </value>
+    </option>
+    <option name="BASH.KEYWORD">
+      <value>
+        <option name="FOREGROUND" value="ff6188" />
+      </value>
+    </option>
+    <option name="BASH.NUMBER">
+      <value>
+        <option name="FOREGROUND" value="ab9df2" />
+      </value>
+    </option>
+    <option name="BASH.PAREN">
+      <value>
+        <option name="FOREGROUND" value="bcbec4" />
+      </value>
+    </option>
+    <option name="BASH.REDIRECT">
+      <value>
+        <option name="FOREGROUND" value="ff6188" />
+      </value>
+    </option>
+    <option name="BASH.SHEBANG">
+      <value>
+        <option name="FOREGROUND" value="727072" />
+        <option name="FONT_TYPE" value="2" />
+      </value>
+    </option>
+    <option name="BASH.STRING">
+      <value>
+        <option name="FOREGROUND" value="ffd866" />
+      </value>
+    </option>
+    <option name="BASH.STRING2">
+      <value>
+        <option name="FOREGROUND" value="ffd866" />
+      </value>
+    </option>
+    <option name="BASH.SUBSHELL_COMMAND">
+      <value>
+        <option name="FOREGROUND" value="a9dc76" />
+      </value>
+    </option>
+    <option name="BASH.VAR_DEF">
+      <value>
+        <option name="FOREGROUND" value="fcfcfa" />
+      </value>
+    </option>
+    <option name="BASH.VAR_USE">
+      <value>
+        <option name="FOREGROUND" value="fc9867" />
+      </value>
+    </option>
+    <option name="BASH.VAR_USE_BUILTIN">
+      <value>
+        <option name="FOREGROUND" value="fc9867" />
+      </value>
+    </option>
+    <option name="BASH.VAR_USE_COMPOSED">
+      <value>
+        <option name="FOREGROUND" value="fc9867" />
+      </value>
+    </option>
+    <option name="DIFF_CONFLICT">
+      <value>
+        <option name="BACKGROUND" value="583825" />
+        <option name="ERROR_STRIPE_COLOR" value="fc9867" />
+      </value>
+    </option>
+    <option name="DIFF_DELETED">
+      <value>
+        <option name="BACKGROUND" value="582838" />
+        <option name="ERROR_STRIPE_COLOR" value="ff6188" />
+      </value>
+    </option>
+    <option name="DIFF_INSERTED">
+      <value>
+        <option name="BACKGROUND" value="2d5038" />
+        <option name="ERROR_STRIPE_COLOR" value="a9dc76" />
+      </value>
+    </option>
+    <option name="DIFF_MODIFIED">
+      <value>
+        <option name="BACKGROUND" value="2d4858" />
+        <option name="ERROR_STRIPE_COLOR" value="78dce8" />
+      </value>
+    </option>
     <option name="BAD_CHARACTER">
       <value>
         <option name="FOREGROUND" value="f75464" />
@@ -660,7 +797,7 @@
     </option>
     <option name="INJECTED_LANGUAGE_FRAGMENT">
       <value>
-        <option name="BACKGROUND" value="293c40" />
+        <option name="BACKGROUND" value="2d2a30" />
       </value>
     </option>
     <option name="INLAY_DEFAULT">
@@ -797,21 +934,143 @@
         <option name="FOREGROUND" value="56a8f5" />
       </value>
     </option>
-    <option name="MARKDOWN_AUTO_LINK">
+    <!-- Markdown styling with Monokai colors -->
+    <option name="MARKDOWN.AUTO_LINK">
       <value>
-        <option name="FOREGROUND" value="56a8f5" />
-        <option name="EFFECT_COLOR" value="56a8f5" />
+        <option name="FOREGROUND" value="78dce8" />
+        <option name="EFFECT_COLOR" value="78dce8" />
         <option name="EFFECT_TYPE" value="1" />
       </value>
     </option>
-    <option name="MARKDOWN_IMAGE">
-      <value />
-    </option>
-    <option name="MARKDOWN_LINK_TEXT">
+    <option name="MARKDOWN.BLOCK_QUOTE">
       <value>
-        <option name="FOREGROUND" value="56a8f5" />
-        <option name="EFFECT_COLOR" value="56a8f5" />
+        <option name="FOREGROUND" value="727072" />
+        <option name="BACKGROUND" value="2d2a30" />
+      </value>
+    </option>
+    <option name="MARKDOWN.BOLD_TEXT">
+      <value>
+        <option name="FOREGROUND" value="fcfcfa" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="MARKDOWN.CODE_BLOCK">
+      <value>
+        <option name="FOREGROUND" value="a9dc76" />
+        <option name="BACKGROUND" value="2d2a30" />
+      </value>
+    </option>
+    <option name="MARKDOWN.CODE_FENCE">
+      <value>
+        <option name="FOREGROUND" value="727072" />
+        <option name="BACKGROUND" value="2d2a30" />
+      </value>
+    </option>
+    <option name="MARKDOWN.CODE_SPAN">
+      <value>
+        <option name="FOREGROUND" value="a9dc76" />
+        <option name="BACKGROUND" value="2d2a30" />
+      </value>
+    </option>
+    <option name="MARKDOWN.EXPLICIT_LINK">
+      <value>
+        <option name="FOREGROUND" value="78dce8" />
+        <option name="EFFECT_COLOR" value="78dce8" />
         <option name="EFFECT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="MARKDOWN.HEADER_LEVEL_1">
+      <value>
+        <option name="FOREGROUND" value="ff6188" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="MARKDOWN.HEADER_LEVEL_2">
+      <value>
+        <option name="FOREGROUND" value="fc9867" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="MARKDOWN.HEADER_LEVEL_3">
+      <value>
+        <option name="FOREGROUND" value="ffd866" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="MARKDOWN.HEADER_LEVEL_4">
+      <value>
+        <option name="FOREGROUND" value="a9dc76" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="MARKDOWN.HEADER_LEVEL_5">
+      <value>
+        <option name="FOREGROUND" value="78dce8" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="MARKDOWN.HEADER_LEVEL_6">
+      <value>
+        <option name="FOREGROUND" value="ab9df2" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="MARKDOWN.HRULE">
+      <value>
+        <option name="FOREGROUND" value="727072" />
+      </value>
+    </option>
+    <option name="MARKDOWN.IMAGE">
+      <value>
+        <option name="FOREGROUND" value="a9dc76" />
+      </value>
+    </option>
+    <option name="MARKDOWN.ITALIC_TEXT">
+      <value>
+        <option name="FOREGROUND" value="fcfcfa" />
+        <option name="FONT_TYPE" value="2" />
+      </value>
+    </option>
+    <option name="MARKDOWN.LINK_DESTINATION">
+      <value>
+        <option name="FOREGROUND" value="ffd866" />
+      </value>
+    </option>
+    <option name="MARKDOWN.LINK_LABEL">
+      <value>
+        <option name="FOREGROUND" value="ab9df2" />
+      </value>
+    </option>
+    <option name="MARKDOWN.LINK_TEXT">
+      <value>
+        <option name="FOREGROUND" value="78dce8" />
+        <option name="EFFECT_COLOR" value="78dce8" />
+        <option name="EFFECT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="MARKDOWN.LIST_MARKER">
+      <value>
+        <option name="FOREGROUND" value="ff6188" />
+      </value>
+    </option>
+    <option name="MARKDOWN.REFERENCE_LINK">
+      <value>
+        <option name="FOREGROUND" value="78dce8" />
+      </value>
+    </option>
+    <option name="MARKDOWN.TABLE_SEPARATOR">
+      <value>
+        <option name="FOREGROUND" value="727072" />
+      </value>
+    </option>
+    <option name="MARKDOWN.TEXT">
+      <value>
+        <option name="FOREGROUND" value="e0e2e8" />
+      </value>
+    </option>
+    <option name="MARKDOWN.UNORDERED_LIST">
+      <value>
+        <option name="FOREGROUND" value="ff6188" />
       </value>
     </option>
     <option name="MARKED_FOR_REMOVAL_ATTRIBUTES">
