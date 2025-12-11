@@ -65,7 +65,8 @@ plugins:
             section: Build System
             hidden: true
 
-  # Update CHANGELOG.md
+  # Auto-generate CHANGELOG.md from conventional commits
+  # Gradle reads this file and converts to HTML for plugin.xml change-notes
   - - '@semantic-release/changelog'
     - changelogFile: CHANGELOG.md
       changelogTitle: |-
@@ -73,10 +74,7 @@ plugins:
 
         All notable changes to the Monokai Islands Theme will be documented in this file.
 
-        The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-        and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
-  # Update version in gradle.properties
+  # Update version in gradle.properties and build/publish plugin
   - - '@semantic-release/exec'
     - prepareCmd: perl -i -pe 's/^version=.*/version=${nextRelease.version}/' gradle.properties
       publishCmd: ./gradlew buildPlugin signPlugin publishPlugin

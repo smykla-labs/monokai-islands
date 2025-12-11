@@ -40,23 +40,7 @@
         <p>Designed for <b>GoLand 2025.3+</b> with full support for the Islands theme system.</p>
     ]]></description>
 
-    <!-- Short summary of new features and bugfixes in the latest plugin version.
-      Displayed on the Plugin Page and IDE Plugin Manager. Simple HTML elements can be included between <![CDATA[  ]]> tags. -->
-    <change-notes><![CDATA[
-        <h3>1.0.1</h3>
-        <ul>
-            <li>Replaced PNG plugin icon with optimized SVG (8.8KB, scalable)</li>
-        </ul>
-
-        <h3>1.0.0</h3>
-        <ul>
-            <li>Initial release</li>
-            <li>Dark theme with Monokai colors</li>
-            <li>Islands UI design integration</li>
-            <li>Go-specific semantic syntax highlighting</li>
-            <li>Comprehensive editor color scheme with 50+ Go attributes</li>
-        </ul>
-    ]]></change-notes>
+    <!-- Change notes are injected by Gradle from CHANGELOG.md via patchPluginXml -->
 
     <!-- Product and plugin compatibility requirements.
       Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
