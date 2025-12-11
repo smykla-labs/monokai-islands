@@ -65,6 +65,12 @@
       "enabled": false,
       "matchManagers": ["github-actions"],
       "matchPackageNames": ["smykla-labs/smyklot"]
+    },
+    {
+      "description": "Extract only semantic version for Java (strip build metadata)",
+      "matchManagers": ["mise"],
+      "matchPackageNames": ["java"],
+      "extractVersion": "^(?<version>\\d+\\.\\d+\\.\\d+)"
     }
   ],
   "vulnerabilityAlerts": {
