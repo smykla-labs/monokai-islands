@@ -1,0 +1,39 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "automergeStrategy": "squash",
+  "extends": [
+    "config:best-practices",
+    ":semanticCommits",
+    ":gitSignOff",
+    ":dependencyDashboard",
+    ":label(dependencies)",
+    ":rebaseStalePrs",
+    ":enableVulnerabilityAlertsWithAdditionalLabel(kind/security)",
+    ":automergeMinor",
+    ":automergeDigest",
+    ":automergeLinters",
+    ":automergeTesters",
+    ":prConcurrentLimit20",
+    "helpers:pinGitHubActionDigests",
+    "security:openssf-scorecard",
+    "group:linters"
+  ],
+  "gitIgnoredAuthors": ["205507218+smyklot[bot]@users.noreply.github.com"],
+  "ignorePaths": [
+    "**/tmp/**",
+    ".github/workflows/smyklot-pr-commands.yml",
+    ".github/workflows/smyklot-poll.yml"
+  ],
+  "osvVulnerabilityAlerts": true,
+  "packageRules": [
+    {
+      "description": "Extract only semantic version for Java (strip build metadata)",
+      "extractVersion": "^(?<version>\\d+\\.\\d+\\.\\d+)",
+      "matchManagers": ["mise"],
+      "matchPackageNames": ["java"]
+    }
+  ],
+  "vulnerabilityAlerts": {
+    "automerge": true
+  }
+}
