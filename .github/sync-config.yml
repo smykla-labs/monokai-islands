@@ -1,0 +1,21 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/smykla-labs/.github/main/schemas/sync-config.schema.json
+# Unified Sync Configuration
+
+sync:
+  # Enable label removal to keep labels in sync with central config
+  labels:
+    allow_removal: true
+
+  files:
+    merge:
+      - path: "renovate.json"
+        strategy: "deep-merge"
+        arrayStrategies:
+          "$.packageRules": "append"  # Org rules first, then repo rules
+        overrides:
+          packageRules:
+            - description: "Extract only semantic version for Java (strip build metadata)"
+              matchManagers: ["mise"]
+              matchPackageNames: ["java"]
+              extractVersion: "^(?<version>\\d+\\.\\d+\\.\\d+)"
