@@ -14,39 +14,65 @@ def generate_theme_json(palette: dict, variant: str) -> dict:
     """
     is_dark = "dark" in variant
     parent = "Islands Dark" if is_dark else "Islands Light"
-    editor_scheme = f"/editor-schemes/monokai-islands-{variant}.xml"
+    # All dark variants share the same editor scheme (only UI colors differ)
+    base_variant = "dark" if is_dark else "light"
+    editor_scheme = f"/editor-schemes/monokai-islands-{base_variant}.xml"
 
     # Build colors dictionary with base palette colors and derived colors
     colors = {}
 
-    # Add base palette colors
+    # Add base palette colors (skip _comment key)
     for key, value in palette.items():
-        colors[key] = value
+        if not key.startswith("_"):
+            colors[key] = value
 
-    # Add derived colors with alpha values
+    # === Utility colors ===
     colors["transparent"] = "#00000000"
-    colors["dimmed5_80"] = palette["dimmed5"] + "80"
-    colors["dimmed5_60"] = palette["dimmed5"] + "60"
-    colors["accent1_20"] = palette["accent1"] + "20"
-    colors["accent3_20"] = palette["accent3"] + "20"
-    colors["accent3_40"] = palette["accent3"] + "40"
-    # File colors - warm tinted versions that work with Monokai
-    colors["file_yellow"] = "#3d3528"     # Warm yellow-brown tint
-    colors["file_green"] = "#2a3230"      # Muted teal-green (harmonizes with purple selection)
-    colors["file_gray"] = "#2d2a2e"       # Subtle warm gray (close to bg)
-    colors["file_blue"] = "#282d38"       # Warm blue tint
-    colors["file_orange"] = "#3d3028"     # Warm orange tint
-    colors["file_rose"] = "#382830"       # Warm rose/pink tint
-    colors["file_violet"] = "#302838"     # Warm violet tint
-    # Warm purple-tinted UI colors (Monokai spirit, not pure grays)
-    colors["input_bg"] = "#352f38"        # Input fields - warm purple
-    colors["input_border"] = "#564b5e"    # Input borders - higher contrast purple
-    colors["input_arrow"] = "#4a4252"     # Arrow buttons - distinct purple
-    colors["input_hover"] = "#756a80"     # Hover state for dropdowns - balanced
-    colors["input_disabled"] = "#1e1b1e"  # Disabled - darker muted
-    colors["selection_bg"] = "#3d3545"    # Selection - warm purple
-    colors["error_bg"] = "#3d2830"        # Error tooltip - reddish tint
-    colors["warning_bg"] = "#3d3525"      # Warning tooltip - yellowish tint
+
+    # === Alpha variants (for overlays and transparency) ===
+    colors["dimmed5_80"] = palette["dimmed5"] + "80"  # 50% opacity
+    colors["dimmed5_60"] = palette["dimmed5"] + "60"  # 38% opacity
+    colors["accent1_20"] = palette["accent1"] + "20"  # 13% opacity
+    colors["accent3_20"] = palette["accent3"] + "20"  # 13% opacity
+    colors["accent3_40"] = palette["accent3"] + "40"  # 25% opacity
+
+    # === Active tab/button colors ===
+    colors["tab_active_bg"] = "#403044"     # Warm purple background for active tabs
+    colors["tab_active_border"] = calculate_lighter_color("#403044", 0.15)  # 15% lighter
+
+    # === Input/form colors (warm purple-tinted UI) ===
+    colors["input_bg"] = "#352f38"          # Input field background
+    colors["input_border"] = "#564b5e"      # Input border (unfocused)
+    colors["input_arrow"] = "#4a4252"       # Dropdown arrow button
+    colors["input_hover"] = "#756a80"       # Hover state
+    colors["input_disabled"] = "#1e1b1e"    # Disabled state
+
+    # === Focus colors ===
+    colors["button_focus"] = "#ffffff"      # White border for focused buttons (contrast with cyan)
+    colors["input_focus"] = palette["accent5"]  # Cyan border for focused inputs
+
+    # === Selection colors ===
+    colors["selection_bg"] = "#454045"      # Active selection (neutral gray for diffs)
+    colors["selection_inactive"] = "#2d2830"  # Inactive selection
+
+    # === Status colors ===
+    colors["error_bg"] = "#3d2830"          # Error backgrounds (reddish tint)
+    colors["warning_bg"] = "#3d3525"        # Warning backgrounds (yellowish tint)
+
+    # === Diff colors (saturated for visibility) ===
+    colors["diff_inserted"] = "#2d5038"     # Added lines (green)
+    colors["diff_deleted"] = "#582838"      # Deleted lines (red)
+    colors["diff_modified"] = "#2d4858"     # Modified lines (cyan)
+    colors["diff_conflict"] = "#583825"     # Conflict lines (orange)
+
+    # === File colors (warm tints for file tree) ===
+    colors["file_yellow"] = "#3d3528"       # Yellow-brown tint
+    colors["file_green"] = "#2a3230"        # Teal-green tint
+    colors["file_gray"] = "#2d2a2e"         # Warm gray
+    colors["file_blue"] = "#282d38"         # Blue tint
+    colors["file_orange"] = "#3d3028"       # Orange tint
+    colors["file_rose"] = "#382830"         # Rose/pink tint
+    colors["file_violet"] = "#302838"       # Violet tint
 
     # Base theme structure
     theme = {
@@ -70,10 +96,20 @@ def generate_theme_json(palette: dict, variant: str) -> dict:
         "ToolWindow.background": "background",
         "ToolWindow.Header.background": "dark1",
         "ToolWindow.Header.inactiveBackground": "dark1",
-        # Editor tabs
+        # Editor tabs - Islands theme properties
         "EditorTabs.background": "background",
-        "EditorTabs.underlineColor": "accent1",
-        "EditorTabs.underlinedBorderColor": "accent1",
+        "EditorTabs.underlineColor": "tab_active_border",
+        "EditorTabs.underlinedBorderColor": "tab_active_border",
+        "EditorTabs.inactiveUnderlinedTabBorderColor": "dimmed4",
+        "EditorTabs.underlineHeight": 2,
+        "EditorTabs.underlinedTabBackground": "tab_active_bg",
+        "EditorTabs.inactiveUnderlinedTabBackground": "background",
+        "EditorTabs.selectedBackground": "tab_active_bg",
+        "EditorTabs.selectedForeground": "text",
+        "EditorTabs.borderColor": "tab_active_border",
+        "EditorTabs.hoverBackground": "dimmed5",
+        "EditorTabs.inactiveBackground": "background",
+        "EditorTabs.inactiveForeground": "dimmed2",
         # Islands styling
         "Island.borderColor": "background",
         "Island.arc": 20,
@@ -83,10 +119,10 @@ def generate_theme_json(palette: dict, variant: str) -> dict:
         "ToolWindow.Stripe.borderColor": "transparent",
         "MainToolbar.borderColor": "transparent",
         # Selection and focus - warm purple tints (for file trees, settings)
-        "Tree.selectionBackground": "selection_bg",
+        "Tree.selectionBackground": "selection_inactive",
         "Tree.selectionForeground": "text",
         "Tree.selectionInactiveBackground": "input_bg",
-        "List.selectionBackground": "selection_bg",
+        "List.selectionBackground": "selection_inactive",
         "List.selectionForeground": "text",
         "List.selectionInactiveBackground": "input_bg",
         # Project tree and file lists
@@ -102,15 +138,17 @@ def generate_theme_json(palette: dict, variant: str) -> dict:
         "FileColor.Orange": "file_orange",
         "FileColor.Rose": "file_rose",
         "FileColor.Violet": "file_violet",
-        # Default button (primary action)
+        # Default button (primary action) - cyan for best contrast
         "Button.default.startBackground": "accent5",
         "Button.default.endBackground": "accent5",
         "Button.default.foreground": "dark1",
         "Button.default.startBorderColor": "accent5",
         "Button.default.endBorderColor": "accent5",
-        "Button.default.focusedBorderColor": "text",
-        "Button.default.focusColor": "text",
-        "Component.focusedBorderColor": "accent5",
+        "Button.default.focusedBorderColor": "button_focus",
+        "Button.default.focusColor": "button_focus",
+        "Component.focusedBorderColor": "input_focus",
+        "Component.focusColor": "input_focus",
+        "Component.focusWidth": 2,
         # Code completion
         "CompletionPopup.selectionBackground": "dimmed5",
         "CompletionPopup.selectionInactiveBackground": "dimmed5_60",
@@ -162,6 +200,8 @@ def generate_theme_json(palette: dict, variant: str) -> dict:
         "Editor.ToolTip.background": "input_bg",
         "Editor.ToolTip.borderColor": "input_border",
         "EditorPane.background": "input_bg",
+        "EditorPane.selectionBackground": "selection_bg",
+        "EditorPane.selectionForeground": "text",
         "InformationHint.background": "input_bg",
         "InformationHint.borderColor": "input_border",
         "ErrorHint.background": "error_bg",
@@ -210,7 +250,7 @@ def generate_theme_json(palette: dict, variant: str) -> dict:
         "CheckBox.background": "background",
         "CheckBox.borderColor1": "input_border",
         "CheckBox.borderColor2": "input_border",
-        "CheckBox.focusedBorderColor": "accent5",
+        "CheckBox.focusedBorderColor": "input_focus",
         "CheckBox.disabledBackground": "background",
         "CheckBox.disabledBorderColor1": "input_bg",
         "CheckBox.disabledBorderColor2": "input_bg",
@@ -229,9 +269,13 @@ def generate_theme_json(palette: dict, variant: str) -> dict:
         "ComboBox.disabledForeground": "dimmed4",
         "TextField.background": "input_bg",
         "TextField.borderColor": "input_border",
+        "TextField.selectionBackground": "selection_bg",
+        "TextField.selectionForeground": "text",
         "TextField.disabledForeground": "dimmed4",
         "TextArea.background": "input_bg",
         "TextArea.borderColor": "input_border",
+        "TextArea.selectionBackground": "selection_bg",
+        "TextArea.selectionForeground": "text",
         "TextArea.disabledBackground": "input_disabled",
         "SearchField.background": "input_bg",
         "SearchField.borderColor": "input_border",
@@ -271,6 +315,26 @@ def generate_theme_json(palette: dict, variant: str) -> dict:
         # Help button specifically
         "HelpButton.background": "background",
         "HelpButton.borderColor": "input_border",
+        # Counter badges (notification counts on tabs, trees, etc.)
+        "Counter.background": "accent1",
+        "Counter.foreground": "dark1",
+        # Toggle buttons and segmented buttons (for plugin manager, tabs, etc.)
+        "ToggleButton.on.background": "tab_active_bg",
+        "ToggleButton.on.foreground": "text",
+        "ToggleButton.on.borderColor": "tab_active_border",
+        "ToggleButton.off.background": "background",
+        "ToggleButton.off.foreground": "dimmed1",
+        "ToggleButton.off.borderColor": "input_border",
+        "SegmentedButton.selected.startBackground": "tab_active_bg",
+        "SegmentedButton.selected.endBackground": "tab_active_bg",
+        "SegmentedButton.selected.foreground": "text",
+        "SegmentedButton.selected.startBorderColor": "tab_active_border",
+        "SegmentedButton.selected.endBorderColor": "tab_active_border",
+        "SegmentedButton.unselected.startBackground": "background",
+        "SegmentedButton.unselected.endBackground": "background",
+        "SegmentedButton.unselected.foreground": "dimmed1",
+        "SegmentedButton.unselected.startBorderColor": "input_border",
+        "SegmentedButton.unselected.endBorderColor": "input_border",
         # Settings/Preferences panel
         "Settings.background": "background",
         "OptionPane.background": "background",
@@ -285,6 +349,30 @@ def generate_theme_json(palette: dict, variant: str) -> dict:
     return theme
 
 
+def calculate_lighter_color(hex_color: str, factor: float) -> str:
+    """Calculate a lighter version of a hex color.
+
+    Args:
+        hex_color: Hex color string (e.g., "#3d3548")
+        factor: Lightness factor (0.0 to 1.0, where 0.15 = 15% lighter)
+
+    Returns:
+        Hex color string of the lighter color
+    """
+    # Remove # if present
+    hex_color = hex_color.lstrip("#")
+    # Convert to RGB
+    r = int(hex_color[0:2], 16)
+    g = int(hex_color[2:4], 16)
+    b = int(hex_color[4:6], 16)
+    # Calculate lighter color
+    r_new = int(r + (255 - r) * factor)
+    g_new = int(g + (255 - g) * factor)
+    b_new = int(b + (255 - b) * factor)
+    # Convert back to hex
+    return f"#{r_new:02x}{g_new:02x}{b_new:02x}"
+
+
 def main() -> None:
     """Generate theme JSON files from palettes."""
     project_root = Path(__file__).parent.parent
@@ -294,23 +382,20 @@ def main() -> None:
     # Ensure themes directory exists
     themes_dir.mkdir(parents=True, exist_ok=True)
 
-    # Define theme variants with their palette files and theme names
+    # Load base palette
+    base_palette_path = palettes_dir / "monokai-dark.json"
+    with base_palette_path.open() as f:
+        base_palette = json.load(f)
+
+    # Define theme variants
     variants = [
-        ("dark", "monokai-dark.json", "Dark"),
+        ("dark", "Dark"),
     ]
 
-    for variant_id, palette_file, variant_name in variants:
-        palette_path = palettes_dir / palette_file
+    for variant_id, variant_name in variants:
+        palette = base_palette.copy()
 
-        if not palette_path.exists():
-            print(f"⚠️  Skipping {variant_name}: palette not found at {palette_path}")
-            continue
-
-        # Load palette
-        with palette_path.open() as f:
-            palette = json.load(f)
-
-        # Generate theme with custom name
+        # Generate theme
         theme = generate_theme_json(palette, variant_id)
         theme["name"] = f"Monokai Islands {variant_name}"
 

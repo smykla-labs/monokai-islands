@@ -1,4 +1,5 @@
 {
+  "_comment": "Base Monokai palette - all other colors are derived from these",
   "background": "#221f22",
   "dark1": "#19181a",
   "dark2": "#0f0e10",
