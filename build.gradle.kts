@@ -19,6 +19,9 @@ dependencies {
 }
 
 intellijPlatform {
+    // Theme-only plugin has no searchable options (settings UI)
+    buildSearchableOptions = false
+
     pluginConfiguration {
         id = "com.github.smykla-labs.monokai-islands"
         name = "Monokai Islands Theme"
@@ -56,11 +59,6 @@ tasks {
         dependsOn("generateThemes")
     }
 
-    // Skip buildSearchableOptions to avoid "Only one instance can run" error
-    buildSearchableOptions {
-        enabled = false
-    }
-
     // No Java/Kotlin code to instrument (theme-only plugin)
     instrumentCode {
         enabled = false
@@ -72,9 +70,10 @@ tasks {
             args = listOf(project.file(projectPath).absolutePath)
         }
 
-        // Set Monokai Islands Dark as default theme
         systemProperty("idea.is.internal", "true")
         systemProperty("idea.trust.all.projects", "true")
+
+        // Set Monokai Islands Dark as default theme
         jvmArgs = listOf(
             "-Didea.theme.id=com.github.smykla-labs.monokai-islands-dark"
         )
