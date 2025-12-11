@@ -121,6 +121,35 @@ Edit `generate-themes.py:ui_colors` dict. Reference [IntelliJ Theme Structure](h
 
 Version pinned: 9.2.1 (per project creation). Upgrade via `./gradlew wrapper --gradle-version X.Y.Z`.
 
+### Development Sandbox
+
+The `prepareSandbox` task auto-configures the IDE sandbox for theme development:
+
+**Config files** (in `build/idea-sandbox/GO-2025.3/config/options/`):
+
+- `laf.xml` — UI theme selection (Monokai Islands Dark)
+- `colors.scheme.xml` — Editor color scheme
+- `ui.lnf.xml` — Tab placement (right side), toolbar visibility
+- `window.manager.xml`, `window.state.xml` — Window maximization
+- `window.info.xml` — Tool window layout (Project pane width)
+- `registry.xml` — UI inspector settings
+- `disabled_plugins.txt` — Faster startup (disables Copyright, Database, Terminal, etc.)
+- `idea.properties` — `idea.is.internal=true` for dev features
+
+**DevModeStartupActivity** (`src/main/kotlin/.../startup/DevModeStartupActivity.kt`):
+
+- Only runs when `idea.is.internal=true` (exits immediately in production)
+- Programmatically sets theme + color scheme (XML configs unreliable on first launch)
+- Maximizes window
+
+**Environment variables** (`.envrc`):
+
+```bash
+# Auto-open projects/files in sandbox IDE
+export RUNIDE_PROJECT_PATHS="../project1,../project2"
+export RUNIDE_FILES="../project1/main.go"
+```
+
 ## Gotchas
 
 - **Python linting**: Avoid `l` as variable name (E741). Use `lightness` for HLS color space values.
