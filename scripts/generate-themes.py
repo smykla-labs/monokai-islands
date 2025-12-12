@@ -412,8 +412,45 @@ def generate_theme_json(palette: dict, variant: str) -> dict:  # noqa: PLR0915
         "Viewport.background": "background",
     }
 
-    theme["ui"] = ui_colors
+    theme["ui"] = flatten_to_nested(ui_colors)
     return theme
+
+
+def flatten_to_nested(flat_dict: dict) -> dict:
+    """Convert flat dot-notation keys to nested dictionary structure.
+
+    Args:
+        flat_dict: Dictionary with dot-notation keys
+            (e.g., "ToolWindow.Header.background")
+
+    Returns:
+        Nested dictionary structure matching JetBrains theme format
+    """
+    nested = {}
+
+    for key, value in flat_dict.items():
+        parts = key.split(".")
+        current = nested
+
+        # Navigate/create nested structure for all but the last part
+        for part in parts[:-1]:
+            if part not in current:
+                current[part] = {}
+            elif not isinstance(current[part], dict):
+                # Handle case where a key is both a value and a parent
+                # e.g., "Button.background" and "Button.default.background"
+                current[part] = {"": current[part]}
+            current = current[part]
+
+        # Set the final value
+        final_key = parts[-1]
+        if final_key in current and isinstance(current[final_key], dict):
+            # Value already exists as a dict, store value at empty key
+            current[final_key][""] = value
+        else:
+            current[final_key] = value
+
+    return nested
 
 
 def calculate_lighter_color(hex_color: str, factor: float) -> str:
