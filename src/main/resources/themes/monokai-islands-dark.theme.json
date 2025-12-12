@@ -40,7 +40,9 @@
     "input_hover": "#4a4255",
     "input_disabled": "#181618",
     "button_focus": "#ffffff",
-    "input_focus": "#fc9867",
+    "tree_selection_fg": "#fcfcfacc",
+    "button_default_focus": "#4a9ba8",
+    "input_focus": "#78dce8",
     "selection_bg": "#3d3540",
     "selection_inactive": "#4a3a4a",
     "list_selection": "#382d38",
@@ -52,6 +54,10 @@
     "popup_border": "#2d282d",
     "notification_bg": "#2d282d",
     "notification_border": "#403840",
+    "notification_bg_90": "#3a363ae5",
+    "notification_border_90": "#5a5460e5",
+    "error_bg_90": "#4d3540e5",
+    "warning_bg_90": "#4d4530e5",
     "diff_inserted": "#263328",
     "diff_deleted": "#2d2330",
     "diff_modified": "#252a30",
@@ -167,14 +173,16 @@
       "borderColor": "transparent"
     },
     "Tree": {
+      "foreground": "text",
       "selectionBackground": "list_selection_alpha",
-      "selectionForeground": "text",
+      "selectionForeground": "tree_selection_fg",
       "selectionInactiveBackground": "selection_inactive",
       "background": "background"
     },
     "List": {
+      "foreground": "text",
       "selectionBackground": "list_selection_alpha",
-      "selectionForeground": "text",
+      "selectionForeground": "tree_selection_fg",
       "selectionInactiveBackground": "selection_inactive",
       "background": "background",
       "hoverBackground": "input_hover",
@@ -200,11 +208,11 @@
       "default": {
         "startBackground": "accent5",
         "endBackground": "accent5",
-        "foreground": "dark2",
+        "foreground": "dark1",
         "startBorderColor": "accent5",
         "endBorderColor": "accent5",
-        "focusedBorderColor": "button_focus",
-        "focusColor": "button_focus"
+        "focusedBorderColor": "button_default_focus",
+        "focusColor": "button_default_focus"
       },
       "startBackground": "background",
       "endBackground": "background",
@@ -215,7 +223,8 @@
       "borderColor": "input_border",
       "shadowColor": "transparent",
       "shadowWidth": 0,
-      "arc": 8
+      "arc": 8,
+      "margin": "4,14,4,14"
     },
     "Component": {
       "focusedBorderColor": "input_focus",
@@ -249,32 +258,34 @@
       }
     },
     "Notification": {
-      "background": "notification_bg",
-      "borderColor": "notification_border",
-      "errorBackground": "error_bg",
+      "background": "notification_bg_90",
+      "borderColor": "notification_border_90",
+      "borderInsets": "3,3,1,3",
+      "arc": 12,
+      "errorBackground": "error_bg_90",
       "errorBorderColor": "accent1",
-      "warningBackground": "warning_bg",
+      "warningBackground": "warning_bg_90",
       "warningBorderColor": "accent3",
       "ToolWindow": {
-        "background": "notification_bg",
-        "borderColor": "notification_border",
-        "errorBackground": "error_bg",
+        "background": "notification_bg_90",
+        "borderColor": "notification_border_90",
+        "errorBackground": "error_bg_90",
         "errorBorderColor": "accent1",
-        "warningBackground": "warning_bg",
+        "warningBackground": "warning_bg_90",
         "warningBorderColor": "accent3",
         "linkForeground": "accent5"
       },
       "linkForeground": "accent5"
     },
     "Balloon": {
-      "background": "notification_bg",
-      "borderColor": "notification_border",
+      "background": "notification_bg_90",
+      "borderColor": "notification_border_90",
       "error": {
-        "background": "error_bg",
+        "background": "error_bg_90",
         "borderColor": "accent1"
       },
       "warning": {
-        "background": "warning_bg",
+        "background": "warning_bg_90",
         "borderColor": "accent3"
       }
     },
@@ -414,7 +425,7 @@
       "foreground": "text"
     },
     "TextField": {
-      "background": "input_bg",
+      "background": "background",
       "borderColor": "input_border",
       "selectionBackground": "selection_bg",
       "selectionForeground": "text",
@@ -462,7 +473,7 @@
     },
     "Counter": {
       "background": "accent1",
-      "foreground": "dark1"
+      "foreground": "text"
     },
     "ToggleButton": {
       "on": {
@@ -490,7 +501,11 @@
         "foreground": "dimmed1",
         "startBorderColor": "input_border",
         "endBorderColor": "input_border"
-      }
+      },
+      "selectedButtonColor": "tab_active_bg",
+      "focusedSelectedButtonColor": "tab_active_bg",
+      "selectedStartBorderColor": "tab_active_border",
+      "selectedEndBorderColor": "tab_active_border"
     },
     "Settings": {
       "background": "background"
