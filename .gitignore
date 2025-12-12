@@ -31,3 +31,7 @@ Contents
 
 # Design files
 *.graffle
+
+# Klaudiush
+.klaudiush/
+

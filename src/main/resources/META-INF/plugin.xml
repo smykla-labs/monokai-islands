@@ -49,15 +49,11 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <themeProvider id="com.github.smykla-labs.monokai-islands-dark" path="/themes/monokai-islands-dark.theme.json"/>
-        @@PRODUCTION_FEATURES_START@@
-        <postStartupActivity implementation="com.github.smykla.monokaiislands.startup.ThemeStartupActivity"/>
-        @@PRODUCTION_FEATURES_END@@
+        <postStartupActivity implementation="com.github.smykla.monokaiislands.listeners.ThemeProjectActivity"/>
     </extensions>
 
-    @@PRODUCTION_FEATURES_START@@
     <applicationListeners>
         <listener class="com.github.smykla.monokaiislands.listeners.ThemeChangeListener"
                   topic="com.intellij.ide.ui.LafManagerListener"/>
     </applicationListeners>
-    @@PRODUCTION_FEATURES_END@@
 </idea-plugin>
