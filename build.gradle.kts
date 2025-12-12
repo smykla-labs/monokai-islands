@@ -3,7 +3,7 @@ import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
 plugins {
     id("org.jetbrains.intellij.platform") version "2.10.5"
     kotlin("jvm") version "2.2.21"
-    id("io.gitlab.arturbosch.detekt") version "1.23.8"
+    id("dev.detekt") version "2.0.0-alpha.1"
 }
 
 kotlin {
@@ -79,7 +79,7 @@ intellijPlatform {
 }
 
 detekt {
-    toolVersion = "1.23.8"
+    toolVersion = "2.0.0-alpha.1"
     config.setFrom("$projectDir/detekt.yml")
     buildUponDefaultConfig = true
 }
@@ -178,49 +178,9 @@ fun parseChangelogToHtml(version: String): String {
 }
 
 tasks {
-    withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
-        jvmTarget = "21"
-    }
-
-    withType<io.gitlab.arturbosch.detekt.DetektCreateBaselineTask>().configureEach {
-        jvmTarget = "21"
-    }
-
     register("generateThemes", Exec::class) {
         commandLine("python3", "scripts/generate-themes.py")
     }
-
-    // Process plugin.xml based on build mode (dev vs production)
-    processResources {
-        doLast {
-            // Dev mode: running sandbox tasks (runIde, prepareSandbox) or has devMode property
-            // Production mode: buildPlugin, verifyPlugin, publishPlugin
-            val requestedTasks = gradle.startParameter.taskNames
-            val isDevMode = requestedTasks.any { task ->
-                task.contains("runIde") ||
-                task.contains("prepareSandbox") ||
-                task.contains("dev")
-            } || project.hasProperty("devMode")
-
-            val pluginXml = File(destinationDir, "META-INF/plugin.xml")
-            if (pluginXml.exists()) {
-                val content = pluginXml.readText()
-                val processed = if (isDevMode) {
-                    // Dev mode: comment out production features for hot reload support
-                    content
-                        .replace("@@PRODUCTION_FEATURES_START@@", "<!-- Production features disabled in dev mode")
-                        .replace("@@PRODUCTION_FEATURES_END@@", "-->")
-                } else {
-                    // Production mode: include all features (Markdown CSS customization)
-                    content
-                        .replace("@@PRODUCTION_FEATURES_START@@", "")
-                        .replace("@@PRODUCTION_FEATURES_END@@", "")
-                }
-                pluginXml.writeText(processed)
-            }
-        }
-    }
-
 
     buildPlugin {
         dependsOn("generateThemes")
@@ -331,20 +291,18 @@ tasks {
                 </application>
             """.trimIndent())
 
-            // Enable internal mode for additional IDE features
+            // Enable internal mode for development tools (UI Inspector, etc.)
             sandboxConfigDirectory.get().asFile.resolve("idea.properties").writeText("""
                 idea.is.internal=true
             """.trimIndent())
 
             // Disable unnecessary plugins for faster dev startup
-            // Note: Git4Idea and yaml required by other bundled plugins (Kubernetes, GitLab, Backup and Sync)
+            // Note: Markdown and Terminal kept enabled (required by our plugin and other features)
             sandboxConfigDirectory.get().asFile.resolve("disabled_plugins.txt").writeText(
                 listOf(
                     "com.intellij.copyright",
-                    "org.intellij.plugins.markdown",
                     "com.intellij.database",
                     "com.intellij.httpClient",
-                    "org.jetbrains.plugins.terminal",
                     "com.jetbrains.sh",
                     "org.jetbrains.plugins.github",
                     "com.intellij.tasks",
@@ -354,40 +312,6 @@ tasks {
             )
 
             println("✓ Sandbox configured (select theme manually on first run)")
-
-            // In dev mode, strip production classes from plugin JAR (smaller dev builds)
-            val requestedTasks = gradle.startParameter.taskNames
-            val isDevMode = requestedTasks.any { task ->
-                task.contains("runIde") ||
-                task.contains("prepareSandbox") ||
-                task.contains("dev")
-            } || project.hasProperty("devMode")
-
-            if (isDevMode) {
-                val pluginLib = sandboxPluginsDirectory.get().asFile
-                    .resolve("monokai-islands/lib")
-                val jarFile = pluginLib.listFiles()?.firstOrNull { it.name.endsWith(".jar") }
-
-                if (jarFile != null && jarFile.exists()) {
-                    // Remove Kotlin classes and metadata for pure theme-only dev JAR (~10KB vs ~19KB)
-                    val patterns = listOf(
-                        "com/github/smykla/monokaiislands/listeners/*",
-                        "com/github/smykla/monokaiislands/startup/*",
-                        "com/github/smykla/*",
-                        "com/github/*",
-                        "com/*",
-                        "META-INF/*.kotlin_module"
-                    )
-                    patterns.forEach { pattern ->
-                        ProcessBuilder("zip", "-d", jarFile.name, pattern)
-                            .directory(jarFile.parentFile)
-                            .redirectErrorStream(true)
-                            .start()
-                            .waitFor()
-                    }
-                    println("🗑️ Stripped production classes from dev JAR")
-                }
-            }
         }
     }
 
@@ -415,13 +339,6 @@ tasks {
 
         systemProperty("idea.is.internal", "true")
         systemProperty("idea.trust.all.projects", "true")
-    }
-
-    // Theme development workflow helper
-    register<Exec>("dev") {
-        group = "development"
-        description = "Start theme development with auto-rebuild"
-        commandLine("bash", "scripts/dev.sh")
     }
 }
 
