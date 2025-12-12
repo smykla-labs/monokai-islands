@@ -26,6 +26,16 @@ dependencies {
         // Theme still works across ALL JetBrains IDEs via com.intellij.modules.platform dependency
         goland("2025.3")
     }
+
+    // Exclude Kotlin stdlib from runtime classpath only (keep for compilation)
+    // Production features use only Java reflection APIs, don't need Kotlin at runtime
+    configurations.named("runtimeClasspath") {
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-common")
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-jdk8")
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-jdk7")
+        exclude(group = "org.jetbrains", module = "annotations")
+    }
 }
 
 intellijPlatform {
@@ -211,20 +221,6 @@ tasks {
         }
     }
 
-    // Exclude production-only classes from JAR in dev mode
-    jar {
-        val requestedTasks = gradle.startParameter.taskNames
-        val isDevMode = requestedTasks.any { task ->
-            task.contains("runIde") ||
-            task.contains("prepareSandbox") ||
-            task.contains("dev")
-        } || project.hasProperty("devMode")
-
-        if (isDevMode) {
-            exclude("com/github/smykla/monokaiislands/listeners/**")
-            exclude("com/github/smykla/monokaiislands/startup/**")
-        }
-    }
 
     buildPlugin {
         dependsOn("generateThemes")
@@ -358,6 +354,40 @@ tasks {
             )
 
             println("✓ Sandbox configured (select theme manually on first run)")
+
+            // In dev mode, strip production classes from plugin JAR (smaller dev builds)
+            val requestedTasks = gradle.startParameter.taskNames
+            val isDevMode = requestedTasks.any { task ->
+                task.contains("runIde") ||
+                task.contains("prepareSandbox") ||
+                task.contains("dev")
+            } || project.hasProperty("devMode")
+
+            if (isDevMode) {
+                val pluginLib = sandboxPluginsDirectory.get().asFile
+                    .resolve("monokai-islands/lib")
+                val jarFile = pluginLib.listFiles()?.firstOrNull { it.name.endsWith(".jar") }
+
+                if (jarFile != null && jarFile.exists()) {
+                    // Remove Kotlin classes and metadata for pure theme-only dev JAR (~10KB vs ~19KB)
+                    val patterns = listOf(
+                        "com/github/smykla/monokaiislands/listeners/*",
+                        "com/github/smykla/monokaiislands/startup/*",
+                        "com/github/smykla/*",
+                        "com/github/*",
+                        "com/*",
+                        "META-INF/*.kotlin_module"
+                    )
+                    patterns.forEach { pattern ->
+                        ProcessBuilder("zip", "-d", jarFile.name, pattern)
+                            .directory(jarFile.parentFile)
+                            .redirectErrorStream(true)
+                            .start()
+                            .waitFor()
+                    }
+                    println("🗑️ Stripped production classes from dev JAR")
+                }
+            }
         }
     }
 
@@ -383,8 +413,6 @@ tasks {
             args = allArgs
         }
 
-        // Enable hot reload (disabled in debug mode - use 'Run' not 'Debug')
-        systemProperty("idea.auto.reload.plugins", "true")
         systemProperty("idea.is.internal", "true")
         systemProperty("idea.trust.all.projects", "true")
     }
@@ -392,7 +420,7 @@ tasks {
     // Theme development workflow helper
     register<Exec>("dev") {
         group = "development"
-        description = "Start theme development with hot reload"
+        description = "Start theme development with auto-rebuild"
         commandLine("bash", "scripts/dev.sh")
     }
 }

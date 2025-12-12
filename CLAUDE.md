@@ -27,9 +27,11 @@ python3 scripts/generate-themes.py        # Generate theme JSON
 python3 scripts/validate-contrast.py      # Check WCAG compliance
 ```
 
-### Hot Reload Development Workflow
+### Development Workflow
 
-**Theme changes auto-reload without IDE restart:**
+**Theme plugins cannot hot reload** in IntelliJ Platform - even pure resource JARs have classloader retention issues due to UIDefaults caching, component references, and LafManager state.
+
+**Recommended workflow:**
 
 ```bash
 ./gradlew dev
@@ -39,11 +41,11 @@ python3 scripts/validate-contrast.py      # Check WCAG compliance
 
 **What happens:**
 
-1. Starts sandbox IDE with `-PdevMode` flag (disables production features for hot reload)
+1. Starts sandbox IDE with `-PdevMode` flag (produces pure theme JAR, no Kotlin classes)
 2. Starts palette file watcher (auto-runs `generate-themes.py` on changes)
 3. Starts continuous build watcher (auto-runs `buildPlugin` on changes)
-4. Edit `palettes/monokai-dark.json` → theme regenerates + rebuilds
-5. Switch focus to sandbox IDE → theme reloads automatically!
+4. Edit `palettes/monokai-dark.json` → theme regenerates + rebuilds automatically
+5. **Manual IDE restart required** to see theme changes (Cmd+Q, then re-run script)
 
 **First-time setup (one-time per sandbox):**
 
@@ -57,9 +59,9 @@ python3 scripts/validate-contrast.py      # Check WCAG compliance
 
 **Technical details:**
 
-- **Dev mode** (`-PdevMode` flag): Comments out `postStartupActivity` and `applicationListeners` in plugin.xml, excludes related .class files from JAR → enables hot reload
+- **Dev mode** (`-PdevMode` flag): Comments out `postStartupActivity` and `applicationListeners` in plugin.xml, strips Kotlin classes/metadata from JAR → produces pure 9.9K theme-only JAR
 - **Production mode**: Includes all features (Markdown CSS customization via ThemeChangeListener)
-- Auto-reload **disabled in debug mode** - script uses normal `runIde`
+- **Why hot reload fails**: Theme resources cached in Swing UIDefaults hold classloader references; even theme-only plugins cannot be unloaded by GC
 - Cross-platform stat detection: handles BSD `stat`, GNU `gstat`, Linux `stat`
 - Three concurrent processes: runIde (bg), palette watcher (bg), buildPlugin --continuous (fg)
 - Cleanup on Ctrl+C kills all processes
@@ -204,7 +206,7 @@ export RUNIDE_FILES="../project1/main.go"
 
 ## Conditional Build System (Dev vs Production)
 
-**Purpose:** Enable hot reload in dev mode while keeping production features (Markdown CSS) in releases.
+**Purpose:** Produce minimal theme-only JAR in dev mode while keeping production features (Markdown CSS) in releases.
 
 **Mechanism:**
 
@@ -230,11 +232,12 @@ export RUNIDE_FILES="../project1/main.go"
    - Dev: `@@PRODUCTION_FEATURES_START@@` → `<!-- Production features disabled`
    - Prod: Both markers → `` (removed)
 
-4. **JAR exclusion** (`jar` task):
-   - Dev: Excludes `listeners/**` and `startup/**` .class files
-   - Prod: Includes all files
+4. **JAR stripping** (`prepareSandbox.doLast`):
+   - Dev: Uses `zip -d` to remove Kotlin classes, empty directories, and module metadata from sandbox JAR
+   - Prod: JAR unchanged (includes all production features)
+   - Result: Dev JAR ~9.9K (pure resources), Prod JAR ~19K (includes classes)
 
-**Why this matters:** Theme-only plugins are dynamic by default, but `postStartupActivity` and `applicationListeners` are non-dynamic extension points. Even if not referenced in plugin.xml, compiled .class files in JAR cause classloader lock → prevent hot reload.
+**Note:** Even with pure theme-only JARs, hot reload doesn't work due to IntelliJ Platform's UIDefaults caching holding classloader references. The build optimization reduces JAR size and simplifies dev builds but doesn't enable hot reload.
 
 ## Anti-Patterns
 
