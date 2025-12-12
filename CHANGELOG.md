@@ -2,6 +2,13 @@
 
 All notable changes to the Monokai Islands Theme will be documented in this file.
 
+## [1.2.0](https://github.com/smykla-labs/monokai-islands/compare/v1.1.1...v1.2.0) (2025-12-12)
+
+### Features
+
+* **dev:** add hot reload workflow and docs ([#25](https://github.com/smykla-labs/monokai-islands/issues/25)) ([c4ae89c](https://github.com/smykla-labs/monokai-islands/commit/c4ae89cef9dc21d4ac514a9bb0fe8c913c3db597))
+* **theme:** refine tree and notification colors ([#29](https://github.com/smykla-labs/monokai-islands/issues/29)) ([a18f28e](https://github.com/smykla-labs/monokai-islands/commit/a18f28e2e7d72983b3e3ba55a9b30d34acd720a0))
+
 ## [1.1.1](https://github.com/smykla-labs/monokai-islands/compare/v1.1.0...v1.1.1) (2025-12-11)
 
 ### Bug Fixes
