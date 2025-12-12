@@ -55,8 +55,12 @@ def generate_theme_json(palette: dict, variant: str) -> dict:  # noqa: PLR0915
     colors["input_disabled"] = "#181618"    # Disabled state
 
     # === Focus colors ===
-    colors["button_focus"] = "#ffffff"      # White border for focused buttons
-    colors["input_focus"] = palette["accent2"]  # Orange border for focused inputs (warm)
+    colors["button_focus"] = "#ffffff"      # White border for focused regular buttons
+
+    # === Tree selection with alpha transparency ===
+    colors["tree_selection_fg"] = palette["text"] + "cc"  # 80% opacity white
+    colors["button_default_focus"] = "#4a9ba8"  # Deep cyan for default button focus
+    colors["input_focus"] = palette["accent5"]  # Cyan border for focused inputs (industry standard)
 
     # === Selection colors ===
     colors["selection_bg"] = "#3d3540"      # More visible selection
@@ -76,6 +80,11 @@ def generate_theme_json(palette: dict, variant: str) -> dict:  # noqa: PLR0915
     colors["popup_border"] = "#2d282d"      # Very subtle border, nearly the same as popup_bg
     colors["notification_bg"] = "#2d282d"   # Neutral, not too purple
     colors["notification_border"] = "#403840"  # Visible border for notifications
+    # Transparent notification backgrounds (90% opacity, lighter for visibility)
+    colors["notification_bg_90"] = "#3a363ae5"  # 90% opacity, lighter gray
+    colors["notification_border_90"] = "#5a5460e5"  # 90% opacity border, more visible
+    colors["error_bg_90"] = "#4d3540e5"  # Error with 90% opacity, more saturated
+    colors["warning_bg_90"] = "#4d4530e5"  # Warning with 90% opacity, more saturated
 
     # === Diff colors (subtler for a darker background, good text contrast) ===
     colors["diff_inserted"] = "#263328"     # Added lines (green) - subtle, warm
@@ -181,13 +190,15 @@ def generate_theme_json(palette: dict, variant: str) -> dict:  # noqa: PLR0915
         "ToolWindow.Stripe.borderColor": "transparent",
         "MainToolbar.borderColor": "transparent",
         # Selection and focus - warm purple tints (for file trees, settings)
+        "Tree.foreground": "text",  # Normal files use default text color (white)
         "Tree.selectionBackground": "list_selection_alpha",
-        "Tree.selectionForeground": "text",
+        "Tree.selectionForeground": "tree_selection_fg",  # 80% opacity white
         "Tree.selectionInactiveBackground": "selection_inactive",
+        "List.foreground": "text",
         "List.selectionBackground": "list_selection_alpha",
-        "List.selectionForeground": "text",
+        "List.selectionForeground": "tree_selection_fg",
         "List.selectionInactiveBackground": "selection_inactive",
-        # Project tree and file lists
+        # Project tree and file lists (with subtle transparency)
         "Tree.background": "background",
         "ProjectViewTree.selectionBackground": "list_selection",
         "ProjectViewTree.selectionInactiveBackground": "selection_inactive",
@@ -200,14 +211,14 @@ def generate_theme_json(palette: dict, variant: str) -> dict:  # noqa: PLR0915
         "FileColor.Orange": "file_orange",
         "FileColor.Rose": "file_rose",
         "FileColor.Violet": "file_violet",
-        # Default button (primary action) - cyan for good contrast
+        # Default button (primary action) - teal/cyan with dark text
         "Button.default.startBackground": "accent5",
         "Button.default.endBackground": "accent5",
-        "Button.default.foreground": "dark2",
+        "Button.default.foreground": "dark1",
         "Button.default.startBorderColor": "accent5",
         "Button.default.endBorderColor": "accent5",
-        "Button.default.focusedBorderColor": "button_focus",
-        "Button.default.focusColor": "button_focus",
+        "Button.default.focusedBorderColor": "button_default_focus",
+        "Button.default.focusColor": "button_default_focus",
         "Component.focusedBorderColor": "input_focus",
         "Component.focusColor": "input_focus",
         "Component.focusWidth": 2,
@@ -222,27 +233,29 @@ def generate_theme_json(palette: dict, variant: str) -> dict:  # noqa: PLR0915
         "VersionControl.GitLog.localBranchIconColor": "accent4",
         "VersionControl.GitLog.remoteBranchIconColor": "accent5",
         "VersionControl.GitLog.tagIconColor": "accent2",
-        # Notifications and balloons
-        "Notification.background": "notification_bg",
-        "Notification.borderColor": "notification_border",
-        "Notification.errorBackground": "error_bg",
+        # Notifications and balloons (with transparency)
+        "Notification.background": "notification_bg_90",
+        "Notification.borderColor": "notification_border_90",
+        "Notification.borderInsets": "3,3,1,3",  # top,left,bottom,right
+        "Notification.arc": 12,  # Rounded corners
+        "Notification.errorBackground": "error_bg_90",
         "Notification.errorBorderColor": "accent1",
-        "Notification.warningBackground": "warning_bg",
+        "Notification.warningBackground": "warning_bg_90",
         "Notification.warningBorderColor": "accent3",
-        "Notification.ToolWindow.background": "notification_bg",
-        "Notification.ToolWindow.borderColor": "notification_border",
-        "Notification.ToolWindow.errorBackground": "error_bg",
+        "Notification.ToolWindow.background": "notification_bg_90",
+        "Notification.ToolWindow.borderColor": "notification_border_90",
+        "Notification.ToolWindow.errorBackground": "error_bg_90",
         "Notification.ToolWindow.errorBorderColor": "accent1",
-        "Notification.ToolWindow.warningBackground": "warning_bg",
+        "Notification.ToolWindow.warningBackground": "warning_bg_90",
         "Notification.ToolWindow.warningBorderColor": "accent3",
         "Notification.linkForeground": "accent5",
         "Notification.ToolWindow.linkForeground": "accent5",
-        # Balloon popups
-        "Balloon.background": "notification_bg",
-        "Balloon.borderColor": "notification_border",
-        "Balloon.error.background": "error_bg",
+        # Balloon popups (with transparency)
+        "Balloon.background": "notification_bg_90",
+        "Balloon.borderColor": "notification_border_90",
+        "Balloon.error.background": "error_bg_90",
         "Balloon.error.borderColor": "accent1",
-        "Balloon.warning.background": "warning_bg",
+        "Balloon.warning.background": "warning_bg_90",
         "Balloon.warning.borderColor": "accent3",
         # Editor notifications (banners)
         "EditorNotification.background": "input_bg",
@@ -335,7 +348,7 @@ def generate_theme_json(palette: dict, variant: str) -> dict:  # noqa: PLR0915
         "ComboBox.ArrowButton.disabledBackground": "input_disabled",
         "ComboBox.ArrowButton.disabledIconColor": "dimmed4",
         "ComboBox.disabledForeground": "dimmed4",
-        "TextField.background": "input_bg",
+        "TextField.background": "background",
         "TextField.borderColor": "input_border",
         "TextField.selectionBackground": "selection_bg",
         "TextField.selectionForeground": "text",
@@ -374,6 +387,7 @@ def generate_theme_json(palette: dict, variant: str) -> dict:  # noqa: PLR0915
         "Button.shadowColor": "transparent",
         "Button.shadowWidth": 0,
         "Button.arc": 8,
+        "Button.margin": "4,14,4,14",
         # Action buttons (icon buttons like help ?)
         "ActionButton.background": "background",
         "ActionButton.hoverBackground": "input_hover",
@@ -384,8 +398,9 @@ def generate_theme_json(palette: dict, variant: str) -> dict:  # noqa: PLR0915
         "HelpButton.background": "background",
         "HelpButton.borderColor": "input_border",
         # Counter badges (notification counts on tabs, trees, etc.)
+        # Note: Counter shape is hardcoded as oval - only colors can be customized
         "Counter.background": "accent1",
-        "Counter.foreground": "dark1",
+        "Counter.foreground": "text",
         # Toggle buttons and segmented buttons (for plugin manager, tabs, etc.)
         "ToggleButton.on.background": "tab_active_bg",
         "ToggleButton.on.foreground": "text",
@@ -393,6 +408,7 @@ def generate_theme_json(palette: dict, variant: str) -> dict:  # noqa: PLR0915
         "ToggleButton.off.background": "background",
         "ToggleButton.off.foreground": "dimmed1",
         "ToggleButton.off.borderColor": "input_border",
+        # Segmented buttons (Plugin tabs, etc.) - ensure consistent padding
         "SegmentedButton.selected.startBackground": "tab_active_bg",
         "SegmentedButton.selected.endBackground": "tab_active_bg",
         "SegmentedButton.selected.foreground": "text",
@@ -403,6 +419,11 @@ def generate_theme_json(palette: dict, variant: str) -> dict:  # noqa: PLR0915
         "SegmentedButton.unselected.foreground": "dimmed1",
         "SegmentedButton.unselected.startBorderColor": "input_border",
         "SegmentedButton.unselected.endBorderColor": "input_border",
+        # New-style SegmentedButton properties for consistency
+        "SegmentedButton.selectedButtonColor": "tab_active_bg",
+        "SegmentedButton.focusedSelectedButtonColor": "tab_active_bg",
+        "SegmentedButton.selectedStartBorderColor": "tab_active_border",
+        "SegmentedButton.selectedEndBorderColor": "tab_active_border",
         # Settings/Preferences panel
         "Settings.background": "background",
         "OptionPane.background": "background",

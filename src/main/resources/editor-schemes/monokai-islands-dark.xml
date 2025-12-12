@@ -15,13 +15,13 @@
     <option name="DIFF_SEPARATORS_BACKGROUND" value="2B2D30" />
     <option name="DOCUMENTATION_COLOR" value="27282B" />
     <option name="DOC_COMMENT_GUIDE" value="394D3F" />
-    <option name="DOC_COMMENT_LINK" value="78DCE8" />
+    <option name="DOC_COMMENT_LINK" value="9a96a0" />
     <option name="ERROR_HINT" value="3d2830" />
     <option name="FILESTATUS_ADDED" value="73BD79" />
     <option name="FILESTATUS_COPIED" value="73BD79" />
     <option name="FILESTATUS_DELETED" value="6F737A" />
     <option name="FILESTATUS_IDEA_FILESTATUS_DELETED_FROM_FILE_SYSTEM" value="6F737A" />
-    <option name="FILESTATUS_IDEA_FILESTATUS_IGNORED" value="D69A6B" />
+    <option name="FILESTATUS_IDEA_FILESTATUS_IGNORED" value="5B595C" />
     <option name="FILESTATUS_IDEA_FILESTATUS_MERGED_WITH_BOTH_CONFLICTS" value="DE6A66" />
     <option name="FILESTATUS_IDEA_FILESTATUS_MERGED_WITH_CONFLICTS" value="DE6A66" />
     <option name="FILESTATUS_IDEA_FILESTATUS_MERGED_WITH_PROPERTY_CONFLICTS" value="DE6A66" />
@@ -723,8 +723,8 @@
     </option>
     <option name="GO_COMMENT_REFERENCE">
       <value>
-        <option name="FOREGROUND" value="78dce8" />
-        <option name="EFFECT_COLOR" value="78dce8" />
+        <option name="FOREGROUND" value="9a96a0" />
+        <option name="EFFECT_COLOR" value="9a96a0" />
         <option name="EFFECT_TYPE" value="1" />
       </value>
     </option>
