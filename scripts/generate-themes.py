@@ -17,7 +17,7 @@ def generate_theme_json(palette: dict, variant: str) -> dict:  # noqa: PLR0915
     # Each variant has its own editor scheme to sync background colors
     editor_scheme = f"/editor-schemes/monokai-islands-{variant}.xml"
 
-    # Build colors dictionary with base palette colors and derived colors
+    # Build a colors dictionary with base palette colors and derived colors
     colors = {}
 
     # Add base palette colors (skip _comment key)
@@ -73,17 +73,17 @@ def generate_theme_json(palette: dict, variant: str) -> dict:  # noqa: PLR0915
 
     # === Popup/notification backgrounds (lighter than editor for distinction) ===
     colors["popup_bg"] = "#2a262a"          # Slightly lighter, warm gray
-    colors["popup_border"] = "#2d282d"      # Very subtle border, nearly same as popup_bg
+    colors["popup_border"] = "#2d282d"      # Very subtle border, nearly the same as popup_bg
     colors["notification_bg"] = "#2d282d"   # Neutral, not too purple
     colors["notification_border"] = "#403840"  # Visible border for notifications
 
-    # === Diff colors (subtler for darker background, good text contrast) ===
+    # === Diff colors (subtler for a darker background, good text contrast) ===
     colors["diff_inserted"] = "#263328"     # Added lines (green) - subtle, warm
     colors["diff_deleted"] = "#2d2330"      # Deleted lines (pink-red) - Monokai warm
     colors["diff_modified"] = "#252a30"     # Modified lines (cyan) - subtle
     colors["diff_conflict"] = "#302820"     # Conflict lines (orange) - subtle
 
-    # === File colors (warm tints for file tree) ===
+    # === File colors (warm tints for a file tree) ===
     colors["file_yellow"] = "#3d3528"       # Yellow-brown tint
     colors["file_green"] = "#2a3230"        # Teal-green tint
     colors["file_gray"] = "#2d2a2e"         # Warm gray
