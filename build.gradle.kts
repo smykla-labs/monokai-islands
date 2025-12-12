@@ -180,6 +180,52 @@ tasks {
         commandLine("python3", "scripts/generate-themes.py")
     }
 
+    // Process plugin.xml based on build mode (dev vs production)
+    processResources {
+        doLast {
+            // Dev mode: running sandbox tasks (runIde, prepareSandbox) or has devMode property
+            // Production mode: buildPlugin, verifyPlugin, publishPlugin
+            val requestedTasks = gradle.startParameter.taskNames
+            val isDevMode = requestedTasks.any { task ->
+                task.contains("runIde") ||
+                task.contains("prepareSandbox") ||
+                task.contains("dev")
+            } || project.hasProperty("devMode")
+
+            val pluginXml = File(destinationDir, "META-INF/plugin.xml")
+            if (pluginXml.exists()) {
+                val content = pluginXml.readText()
+                val processed = if (isDevMode) {
+                    // Dev mode: comment out production features for hot reload support
+                    content
+                        .replace("@@PRODUCTION_FEATURES_START@@", "<!-- Production features disabled in dev mode")
+                        .replace("@@PRODUCTION_FEATURES_END@@", "-->")
+                } else {
+                    // Production mode: include all features (Markdown CSS customization)
+                    content
+                        .replace("@@PRODUCTION_FEATURES_START@@", "")
+                        .replace("@@PRODUCTION_FEATURES_END@@", "")
+                }
+                pluginXml.writeText(processed)
+            }
+        }
+    }
+
+    // Exclude production-only classes from JAR in dev mode
+    jar {
+        val requestedTasks = gradle.startParameter.taskNames
+        val isDevMode = requestedTasks.any { task ->
+            task.contains("runIde") ||
+            task.contains("prepareSandbox") ||
+            task.contains("dev")
+        } || project.hasProperty("devMode")
+
+        if (isDevMode) {
+            exclude("com/github/smykla/monokaiislands/listeners/**")
+            exclude("com/github/smykla/monokaiislands/startup/**")
+        }
+    }
+
     buildPlugin {
         dependsOn("generateThemes")
     }
@@ -190,6 +236,8 @@ tasks {
             val configDir = sandboxConfigDirectory.get().asFile.resolve("options")
             configDir.mkdirs()
 
+            println("🎨 Configuring sandbox IDE theme and fonts...")
+
             // Configure sandbox to auto-open projects in new window (0=new window, 1=same window, -1=ask)
             configDir.resolve("ide.general.xml").writeText("""
                 <application>
@@ -199,40 +247,33 @@ tasks {
                 </application>
             """.trimIndent())
 
-            // Set Monokai Islands Dark as default theme
+            // Set theme in laf.xml (works on second run after plugin is installed)
             configDir.resolve("laf.xml").writeText("""
                 <application>
-                    <component name="LafManager">
+                    <component name="LafManager" autodetect="false">
                         <laf themeId="com.github.smykla-labs.monokai-islands-dark" />
                     </component>
                 </application>
             """.trimIndent())
 
-            // Maximize IDE window on startup
-            configDir.resolve("window.manager.xml").writeText("""
-                <application>
-                    <component name="WindowManager">
-                        <frame x="0" y="0" width="1920" height="1080" extendedState="6" />
-                    </component>
-                </application>
-            """.trimIndent())
-
-            // Also set window.state.xml to ensure maximized state
-            configDir.resolve("window.state.xml").writeText("""
-                <application>
-                    <component name="WindowManager">
-                        <frame x="0" y="0" width="1920" height="1080" extendedState="6" />
-                    </component>
-                </application>
-            """.trimIndent())
-
-            // UI settings: tabs at bottom, hide tool window bars, etc.
+            // UI settings: tabs at bottom, UI font size (default font at size 15)
             configDir.resolve("ui.lnf.xml").writeText("""
                 <application>
                     <component name="UISettings">
                         <option name="EDITOR_TAB_PLACEMENT" value="4" />
                         <option name="HIDE_TOOL_STRIPES" value="false" />
                         <option name="SHOW_MAIN_TOOLBAR" value="true" />
+                        <option name="overrideLafFonts" value="true" />
+                    </component>
+                </application>
+            """.trimIndent())
+
+            // UI font settings: default font (Inter) at size 15
+            configDir.resolve("other.xml").writeText("""
+                <application>
+                    <component name="NotRoamableUiSettings">
+                        <option name="overrideLafFonts" value="true" />
+                        <option name="fontSize" value="15.0" />
                     </component>
                 </application>
             """.trimIndent())
@@ -242,6 +283,32 @@ tasks {
                 <application>
                     <component name="EditorColorsManagerImpl">
                         <global_color_scheme name="Monokai Islands Dark" />
+                    </component>
+                </application>
+            """.trimIndent())
+
+            // Editor font settings (Fira Code with ligatures)
+            configDir.resolve("editor.xml").writeText("""
+                <application>
+                    <component name="EditorSettings">
+                        <option name="IS_ENSURE_NEWLINE_AT_EOF" value="true" />
+                    </component>
+                    <component name="DefaultFont">
+                        <option name="FONT_FAMILY" value="Fira Code" />
+                        <option name="FONT_SIZE" value="15" />
+                        <option name="FONT_SIZE_2D" value="15.0" />
+                        <option name="LINE_SPACING" value="1.2" />
+                        <option name="FONT_LIGATURES" value="true" />
+                    </component>
+                </application>
+            """.trimIndent())
+
+            // Terminal font settings (even though plugin is disabled, config ready if enabled)
+            configDir.resolve("terminal.xml").writeText("""
+                <application>
+                    <component name="TerminalOptionsProvider">
+                        <option name="myFontFace" value="Fira Code" />
+                        <option name="myFontSize" value="15" />
                     </component>
                 </application>
             """.trimIndent())
@@ -289,6 +356,8 @@ tasks {
                     "com.goide.golinter",
                 ).joinToString("\n")
             )
+
+            println("✓ Sandbox configured (select theme manually on first run)")
         }
     }
 
@@ -314,13 +383,17 @@ tasks {
             args = allArgs
         }
 
+        // Enable hot reload (disabled in debug mode - use 'Run' not 'Debug')
+        systemProperty("idea.auto.reload.plugins", "true")
         systemProperty("idea.is.internal", "true")
         systemProperty("idea.trust.all.projects", "true")
+    }
 
-        // Set Monokai Islands Dark as default theme
-        jvmArgs = listOf(
-            "-Didea.theme.id=com.github.smykla-labs.monokai-islands-dark"
-        )
+    // Theme development workflow helper
+    register<Exec>("dev") {
+        group = "development"
+        description = "Start theme development with hot reload"
+        commandLine("bash", "scripts/dev.sh")
     }
 }
 
