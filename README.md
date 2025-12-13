@@ -1,5 +1,10 @@
 # Monokai Islands Theme
 
+[![JetBrains Plugin](https://img.shields.io/jetbrains/plugin/v/com.github.smykla.monokai-islands?label=JetBrains%20Marketplace&logo=jetbrains)](https://plugins.jetbrains.com/plugin/com.github.smykla.monokai-islands)
+[![Downloads](https://img.shields.io/jetbrains/plugin/d/com.github.smykla.monokai-islands)](https://plugins.jetbrains.com/plugin/com.github.smykla.monokai-islands)
+[![Rating](https://img.shields.io/jetbrains/plugin/r/rating/com.github.smykla.monokai-islands)](https://plugins.jetbrains.com/plugin/com.github.smykla.monokai-islands)
+[![License](https://img.shields.io/github/license/smykla-labs/monokai-islands)](LICENSE)
+
 <!-- Plugin description -->
 A dark theme for JetBrains IDEs combining the iconic **Monokai** color palette with the modern **Islands** UI design language.
 
@@ -7,7 +12,7 @@ A dark theme for JetBrains IDEs combining the iconic **Monokai** color palette w
 
 - **Monokai Colors** - Classic warm palette with pink keywords, green functions, yellow strings, and purple constants
 - **Islands UI Integration** - Rounded corners, subtle borders, and modern aesthetic
-- **Go-Optimized Syntax Highlighting** - Carefully tuned colors for Go development with semantic differentiation
+- **Semantic Syntax Highlighting** - Carefully tuned colors for enhanced code readability across multiple languages
 - **Warm Purple-Tinted UI** - Consistent warm tones throughout the interface
 - **Custom Markdown Preview Styling** - Optional custom styling for Markdown preview with Monokai theme colors (disabled by default)
 <!-- Plugin description end -->
@@ -44,16 +49,57 @@ When enabled, the Markdown preview will use Monokai-themed colors for code block
 
 ## Color Palette
 
-| Color                                                                      | Hex       | Usage                                    |
-|----------------------------------------------------------------------------|-----------|------------------------------------------|
-| ![#ff6188](https://via.placeholder.com/16/ff6188/ff6188?text=+) Pink       | `#ff6188` | Keywords (`func`, `var`, `if`, `return`) |
-| ![#a9dc76](https://via.placeholder.com/16/a9dc76/a9dc76?text=+) Green      | `#a9dc76` | Function declarations and calls          |
-| ![#ffd866](https://via.placeholder.com/16/ffd866/ffd866?text=+) Yellow     | `#ffd866` | Strings                                  |
-| ![#fc9867](https://via.placeholder.com/16/fc9867/fc9867?text=+) Orange     | `#fc9867` | Numbers, parameters                      |
-| ![#78dce8](https://via.placeholder.com/16/78dce8/78dce8?text=+) Cyan       | `#78dce8` | Types, packages, method calls, builtins  |
-| ![#ab9df2](https://via.placeholder.com/16/ab9df2/ab9df2?text=+) Purple     | `#ab9df2` | Constants, struct fields                 |
-| ![#fcfcfa](https://via.placeholder.com/16/fcfcfa/fcfcfa?text=+) White      | `#fcfcfa` | Text                                     |
-| ![#221f22](https://via.placeholder.com/16/221f22/221f22?text=+) Background | `#221f22` | Editor background                        |
+<table>
+  <thead>
+    <tr>
+      <th>Color</th>
+      <th>Hex</th>
+      <th>Usage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><img src="https://img.shields.io/badge/Pink-ff6188?style=flat&color=ff6188" alt="Pink"/></td>
+      <td><code>#ff6188</code></td>
+      <td>Keywords (<code>func</code>, <code>var</code>, <code>if</code>, <code>return</code>)</td>
+    </tr>
+    <tr>
+      <td><img src="https://img.shields.io/badge/Green-a9dc76?style=flat&color=a9dc76" alt="Green"/></td>
+      <td><code>#a9dc76</code></td>
+      <td>Function declarations and calls</td>
+    </tr>
+    <tr>
+      <td><img src="https://img.shields.io/badge/Yellow-ffd866?style=flat&color=ffd866" alt="Yellow"/></td>
+      <td><code>#ffd866</code></td>
+      <td>Strings</td>
+    </tr>
+    <tr>
+      <td><img src="https://img.shields.io/badge/Orange-fc9867?style=flat&color=fc9867" alt="Orange"/></td>
+      <td><code>#fc9867</code></td>
+      <td>Numbers, parameters</td>
+    </tr>
+    <tr>
+      <td><img src="https://img.shields.io/badge/Cyan-78dce8?style=flat&color=78dce8" alt="Cyan"/></td>
+      <td><code>#78dce8</code></td>
+      <td>Types, packages, method calls, builtins</td>
+    </tr>
+    <tr>
+      <td><img src="https://img.shields.io/badge/Purple-ab9df2?style=flat&color=ab9df2" alt="Purple"/></td>
+      <td><code>#ab9df2</code></td>
+      <td>Constants, struct fields</td>
+    </tr>
+    <tr>
+      <td><img src="https://img.shields.io/badge/White-fcfcfa?style=flat&color=fcfcfa" alt="White"/></td>
+      <td><code>#fcfcfa</code></td>
+      <td>Text</td>
+    </tr>
+    <tr>
+      <td><img src="https://img.shields.io/badge/Background-221f22?style=flat&color=221f22" alt="Background"/></td>
+      <td><code>#221f22</code></td>
+      <td>Editor background</td>
+    </tr>
+  </tbody>
+</table>
 
 ## Compatibility
 
