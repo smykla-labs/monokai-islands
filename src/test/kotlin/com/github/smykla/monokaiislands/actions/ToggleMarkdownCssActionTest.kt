@@ -15,6 +15,15 @@ import org.junit.jupiter.api.Test
 class ToggleMarkdownCssActionTest {
 
     @Test
+    fun `action can be instantiated without errors`() {
+        // Verify basic instantiation works without throwing exceptions
+        val action = ToggleMarkdownCssAction()
+
+        // Action should be a ToggleAction
+        action shouldBe io.kotest.matchers.types.instanceOf<com.intellij.openapi.actionSystem.ToggleAction>()
+    }
+
+    @Test
     fun `action has correct update thread`() {
         val action = ToggleMarkdownCssAction()
 

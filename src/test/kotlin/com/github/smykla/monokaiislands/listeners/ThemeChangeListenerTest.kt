@@ -6,7 +6,7 @@ import io.kotest.matchers.string.shouldNotBeEmpty
 import io.kotest.matchers.types.instanceOf
 import org.junit.jupiter.api.Test
 
-class ThemeChangeListenerIntegrationTest {
+class ThemeChangeListenerTest {
 
     @Test
     fun `THEME_ID constant is correct`() {

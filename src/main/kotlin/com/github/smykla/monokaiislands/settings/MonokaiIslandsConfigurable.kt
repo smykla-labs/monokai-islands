@@ -18,8 +18,7 @@ class MonokaiIslandsConfigurable : SearchableConfigurable {
         if (settingsComponent == null) {
             settingsComponent = MonokaiIslandsSettingsComponent()
         }
-        reset()
-        return settingsComponent!!.panel
+        return settingsComponent?.panel ?: error("settingsComponent should not be null after initialization")
     }
 
     override fun isModified(): Boolean {

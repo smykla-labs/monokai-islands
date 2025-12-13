@@ -13,15 +13,20 @@ class MonokaiIslandsSettingsTest {
     }
 
     @Test
-    fun `getState returns settings instance`() {
+    fun `getState returns settings instance with correct values`() {
         val settings = MonokaiIslandsSettings()
+
+        // Test with false
         settings.enableMarkdownCss = false
-
-        val state = settings.getState()
-
-        state shouldNotBe null
+        var state = settings.getState()
         state shouldBe settings
-        state?.enableMarkdownCss shouldBe false
+        state.enableMarkdownCss shouldBe false
+
+        // Test with true
+        settings.enableMarkdownCss = true
+        state = settings.getState()
+        state shouldBe settings
+        state.enableMarkdownCss shouldBe true
     }
 
     @Test
