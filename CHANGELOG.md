@@ -2,6 +2,20 @@
 
 All notable changes to the Monokai Islands Theme will be documented in this file.
 
+## [1.3.0](https://github.com/smykla-labs/monokai-islands/compare/v1.2.0...v1.3.0) (2025-12-13)
+
+### Features
+
+* **settings:** add Markdown CSS toggle ([#31](https://github.com/smykla-labs/monokai-islands/issues/31)) ([2f1a8b5](https://github.com/smykla-labs/monokai-islands/commit/2f1a8b59edcdff82f432cd176606c022529c4c47))
+* **theme:** add kotlin syntax highlighting ([#32](https://github.com/smykla-labs/monokai-islands/issues/32)) ([567c396](https://github.com/smykla-labs/monokai-islands/commit/567c3966288666b2e7ca386d759d2eb508f149d7))
+
+### Bug Fixes
+
+* **deps:** update dependency io.kotest:kotest-assertions-core to v5.9.1 ([#34](https://github.com/smykla-labs/monokai-islands/issues/34)) ([27c356c](https://github.com/smykla-labs/monokai-islands/commit/27c356ce8c832d3bf44fde15b9b4bff95ae6e80a))
+* **deps:** update dependency io.kotest:kotest-assertions-core to v6 ([#36](https://github.com/smykla-labs/monokai-islands/issues/36)) ([090bfa2](https://github.com/smykla-labs/monokai-islands/commit/090bfa2ccb53527d3bacdcad6b768f05f7999dc2))
+* **deps:** update junit-framework monorepo to v6 ([#37](https://github.com/smykla-labs/monokai-islands/issues/37)) ([8678e27](https://github.com/smykla-labs/monokai-islands/commit/8678e274afe33d5f55d3860b1739f7b215e4ff09))
+* **theme:** add ColorPalette for SVG icon contrast ([#33](https://github.com/smykla-labs/monokai-islands/issues/33)) ([761e552](https://github.com/smykla-labs/monokai-islands/commit/761e5528c16444eaf3105fbf66d310ca2ab0700d)), closes [#19181a](https://github.com/smykla-labs/monokai-islands/issues/19181a)
+
 ## [1.2.0](https://github.com/smykla-labs/monokai-islands/compare/v1.1.1...v1.2.0) (2025-12-12)
 
 ### Features
