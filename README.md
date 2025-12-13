@@ -1,6 +1,5 @@
 # Monokai Islands Theme
 
-[![CI](https://img.shields.io/github/actions/workflow/status/smykla-labs/monokai-islands/ci.yml?branch=main&label=CI&logo=github)](https://github.com/smykla-labs/monokai-islands/actions/workflows/ci.yml)
 [![JetBrains Plugin](https://img.shields.io/jetbrains/plugin/v/29325?label=JetBrains%20Marketplace&logo=jetbrains)](https://plugins.jetbrains.com/plugin/29325-monokai-islands-theme)
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/29325)](https://plugins.jetbrains.com/plugin/29325-monokai-islands-theme)
 [![Rating](https://img.shields.io/jetbrains/plugin/r/rating/29325)](https://plugins.jetbrains.com/plugin/29325-monokai-islands-theme)
@@ -53,49 +52,49 @@ When enabled, the Markdown preview will use Monokai-themed colors for code block
 <table>
   <thead>
     <tr>
-      <th>Color</th>
+      <th align="center">Color</th>
       <th>Hex</th>
       <th>Usage</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><img src="https://img.shields.io/badge/Pink-ff6188?style=flat&color=ff6188" alt="Pink"/></td>
+      <td align="center"><img src="https://img.shields.io/badge/Pink-ff6188?style=flat&color=ff6188" alt="Pink"/></td>
       <td><code>#ff6188</code></td>
       <td>Keywords (<code>func</code>, <code>var</code>, <code>if</code>, <code>return</code>)</td>
     </tr>
     <tr>
-      <td><img src="https://img.shields.io/badge/Green-a9dc76?style=flat&color=a9dc76" alt="Green"/></td>
+      <td align="center"><img src="https://img.shields.io/badge/Green-a9dc76?style=flat&color=a9dc76" alt="Green"/></td>
       <td><code>#a9dc76</code></td>
       <td>Function declarations and calls</td>
     </tr>
     <tr>
-      <td><img src="https://img.shields.io/badge/Yellow-ffd866?style=flat&color=ffd866" alt="Yellow"/></td>
+      <td align="center"><img src="https://img.shields.io/badge/Yellow-ffd866?style=flat&color=ffd866" alt="Yellow"/></td>
       <td><code>#ffd866</code></td>
       <td>Strings</td>
     </tr>
     <tr>
-      <td><img src="https://img.shields.io/badge/Orange-fc9867?style=flat&color=fc9867" alt="Orange"/></td>
+      <td align="center"><img src="https://img.shields.io/badge/Orange-fc9867?style=flat&color=fc9867" alt="Orange"/></td>
       <td><code>#fc9867</code></td>
       <td>Numbers, parameters</td>
     </tr>
     <tr>
-      <td><img src="https://img.shields.io/badge/Cyan-78dce8?style=flat&color=78dce8" alt="Cyan"/></td>
+      <td align="center"><img src="https://img.shields.io/badge/Cyan-78dce8?style=flat&color=78dce8" alt="Cyan"/></td>
       <td><code>#78dce8</code></td>
       <td>Types, packages, method calls, builtins</td>
     </tr>
     <tr>
-      <td><img src="https://img.shields.io/badge/Purple-ab9df2?style=flat&color=ab9df2" alt="Purple"/></td>
+      <td align="center"><img src="https://img.shields.io/badge/Purple-ab9df2?style=flat&color=ab9df2" alt="Purple"/></td>
       <td><code>#ab9df2</code></td>
       <td>Constants, struct fields</td>
     </tr>
     <tr>
-      <td><img src="https://img.shields.io/badge/White-fcfcfa?style=flat&color=fcfcfa" alt="White"/></td>
+      <td align="center"><img src="https://img.shields.io/badge/White-fcfcfa?style=flat&color=fcfcfa" alt="White"/></td>
       <td><code>#fcfcfa</code></td>
       <td>Text</td>
     </tr>
     <tr>
-      <td><img src="https://img.shields.io/badge/Background-221f22?style=flat&color=221f22" alt="Background"/></td>
+      <td align="center"><img src="https://img.shields.io/badge/Background-221f22?style=flat&color=221f22" alt="Background"/></td>
       <td><code>#221f22</code></td>
       <td>Editor background</td>
     </tr>
@@ -157,11 +156,11 @@ python3 scripts/validate-contrast.py
 └── build.gradle.kts               # Gradle build configuration
 ```
 
-## License
-
-[MIT](LICENSE)
-
 ## Credits
 
 - Color palette inspired by [Monokai Pro](https://monokai.pro/)
 - Built for JetBrains [Islands UI](https://plugins.jetbrains.com/docs/intellij/supporting-islands-theme.html)
+
+## License
+
+[MIT](LICENSE)
