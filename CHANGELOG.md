@@ -2,6 +2,12 @@
 
 All notable changes to the Monokai Islands Theme will be documented in this file.
 
+## [1.3.1](https://github.com/smykla-labs/monokai-islands/compare/v1.3.0...v1.3.1) (2025-12-13)
+
+### Bug Fixes
+
+* **plugin:** require IDE restart on plugin update ([#38](https://github.com/smykla-labs/monokai-islands/issues/38)) ([762c7cb](https://github.com/smykla-labs/monokai-islands/commit/762c7cbf31d7ea40ebba25ee9f9c1fbb3b78a38a))
+
 ## [1.3.0](https://github.com/smykla-labs/monokai-islands/compare/v1.2.0...v1.3.0) (2025-12-13)
 
 ### Features
