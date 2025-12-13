@@ -1,8 +1,9 @@
 # Monokai Islands Theme
 
-[![JetBrains Plugin](https://img.shields.io/jetbrains/plugin/v/com.github.smykla.monokai-islands?label=JetBrains%20Marketplace&logo=jetbrains)](https://plugins.jetbrains.com/plugin/com.github.smykla.monokai-islands)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/com.github.smykla.monokai-islands)](https://plugins.jetbrains.com/plugin/com.github.smykla.monokai-islands)
-[![Rating](https://img.shields.io/jetbrains/plugin/r/rating/com.github.smykla.monokai-islands)](https://plugins.jetbrains.com/plugin/com.github.smykla.monokai-islands)
+[![CI](https://img.shields.io/github/actions/workflow/status/smykla-labs/monokai-islands/ci.yml?branch=main&label=CI&logo=github)](https://github.com/smykla-labs/monokai-islands/actions/workflows/ci.yml)
+[![JetBrains Plugin](https://img.shields.io/jetbrains/plugin/v/29325?label=JetBrains%20Marketplace&logo=jetbrains)](https://plugins.jetbrains.com/plugin/29325-monokai-islands-theme)
+[![Downloads](https://img.shields.io/jetbrains/plugin/d/29325)](https://plugins.jetbrains.com/plugin/29325-monokai-islands-theme)
+[![Rating](https://img.shields.io/jetbrains/plugin/r/rating/29325)](https://plugins.jetbrains.com/plugin/29325-monokai-islands-theme)
 [![License](https://img.shields.io/github/license/smykla-labs/monokai-islands)](LICENSE)
 
 <!-- Plugin description -->
