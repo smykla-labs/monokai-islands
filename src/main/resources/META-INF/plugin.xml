@@ -52,7 +52,7 @@
         <postStartupActivity implementation="com.github.smykla.monokaiislands.listeners.ThemeProjectActivity"/>
         <applicationService serviceImplementation="com.github.smykla.monokaiislands.settings.MonokaiIslandsSettings"/>
         <applicationConfigurable
-          groupId="tools"
+          groupId="appearance"
           instance="com.github.smykla.monokaiislands.settings.MonokaiIslandsConfigurable"
           id="com.github.smykla.monokaiislands.settings.MonokaiIslandsConfigurable"
           displayName="Monokai Islands"/>

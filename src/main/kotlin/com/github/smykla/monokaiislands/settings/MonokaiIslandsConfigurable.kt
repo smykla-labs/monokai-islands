@@ -30,12 +30,10 @@ class MonokaiIslandsConfigurable : SearchableConfigurable {
         val settings = MonokaiIslandsSettings.getInstance()
         settings.enableMarkdownCss = settingsComponent?.enableMarkdownCss ?: false
 
-        // Immediately re-apply CSS based on new setting if Monokai theme is active
+        // Apply or remove CSS based on setting and current theme
         val lafManager = LafManager.getInstance()
         val isMonokaiTheme = lafManager.currentUIThemeLookAndFeel?.id == ThemeChangeListener.THEME_ID
-        if (isMonokaiTheme) {
-            ThemeChangeListener.applyMarkdownCss(settings.enableMarkdownCss)
-        }
+        ThemeChangeListener.applyMarkdownCss(isMonokaiTheme && settings.enableMarkdownCss)
     }
 
     override fun reset() {

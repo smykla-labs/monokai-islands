@@ -36,7 +36,7 @@ The theme includes optional custom CSS for Markdown preview that matches the Mon
 
 **To enable:**
 
-- **Via Settings**: Go to **Settings** → **Appearance & Behavior** → **Monokai Islands Theme** → Enable "Custom Markdown Preview Styling"
+- **Via Settings**: Go to **Settings** → **Appearance & Behavior** → **Monokai Islands** → Enable "Custom Markdown Preview Styling"
 - **Via Tools Menu**: Go to **Tools** → **Monokai Islands: Custom Markdown Preview Styling**
 - **Via Find Action**: Press <kbd>⌘</kbd><kbd>⇧</kbd><kbd>A</kbd> (macOS) or <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>A</kbd> (Windows/Linux) and search for "Monokai Islands"
 
