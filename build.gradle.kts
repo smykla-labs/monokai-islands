@@ -1,4 +1,5 @@
 import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
+import org.jetbrains.intellij.platform.gradle.TestFrameworkType
 
 plugins {
     kotlin("jvm") version "2.2.21"
@@ -25,13 +26,20 @@ dependencies {
         // Use GoLand as target IDE for development/testing
         // Theme still works across ALL JetBrains IDEs via com.intellij.modules.platform dependency
         goland("2025.3")
+        testFramework(TestFrameworkType.Platform)
     }
 
     // Test dependencies
     testImplementation(kotlin("test"))
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.1")
+    // Vintage engine to run JUnit 3/4 tests (BasePlatformTestCase) with JUnit Platform
+    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.10.1")
     testImplementation("io.kotest:kotest-assertions-core:5.8.0")
+    // JUnit 4 required for BasePlatformTestCase (extends JUnit 3 TestCase)
+    testImplementation("junit:junit:4.13.2")
+    // Workaround for IJPL-157292: opentest4j not resolved with TestFrameworkType.Platform
+    testImplementation("org.opentest4j:opentest4j:1.3.0")
 
     // Exclude Kotlin stdlib from runtime classpath only (keep for compilation)
     // Production features use only Java reflection APIs, don't need Kotlin at runtime
@@ -41,6 +49,13 @@ dependencies {
         exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-jdk8")
         exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-jdk7")
         exclude(group = "org.jetbrains", module = "annotations")
+    }
+
+    // Exclude kotlinx-coroutines from test classpath to use IntelliJ Platform bundled version
+    configurations.named("testRuntimeClasspath") {
+        exclude(group = "org.jetbrains.kotlinx", module = "kotlinx-coroutines-core")
+        exclude(group = "org.jetbrains.kotlinx", module = "kotlinx-coroutines-core-jvm")
+        exclude(group = "org.jetbrains.kotlinx", module = "kotlinx-coroutines-jdk8")
     }
 }
 
@@ -196,6 +211,8 @@ tasks {
         useJUnitPlatform()
         // Exclude IntelliJ Platform test session listener to avoid conflicts with JUnit 5
         systemProperty("idea.use.core.classloader.for.plugin.path", "true")
+        // Disable kotlinx.coroutines debug probes to avoid version mismatch with bundled coroutines
+        systemProperty("kotlinx.coroutines.debug", "off")
         jvmArgs("--add-opens=java.base/java.lang=ALL-UNNAMED")
         jvmArgs("--add-opens=java.base/java.util=ALL-UNNAMED")
     }

@@ -9,12 +9,9 @@ import org.junit.jupiter.api.Test
 /**
  * Unit tests for ThemeChangeListener.
  *
- * Note: Testing lookAndFeelChanged() behavior (including the enableMarkdownCss
- * setting check) requires IDE fixtures (Application context, LafManager,
- * MonokaiIslandsSettings service, and Markdown plugin) which are not available
- * in unit tests. This core functionality is verified through manual testing in
- * the sandbox IDE. Full integration testing would require LightPlatformTestCase
- * or similar IDE test harness.
+ * These tests cover basic properties and structure without IDE context.
+ * For integration tests with real IDE services (settings, LafManager),
+ * see ThemeChangeListenerIntegrationTest which uses BasePlatformTestCase.
  */
 class ThemeChangeListenerTest {
 
