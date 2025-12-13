@@ -49,6 +49,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <themeProvider id="com.github.smykla-labs.monokai-islands-dark" path="/themes/monokai-islands-dark.theme.json"/>
+        <bundledColorScheme path="/editor-schemes/monokai-islands-dark"/>
         <postStartupActivity implementation="com.github.smykla.monokaiislands.listeners.ThemeProjectActivity"/>
         <applicationService serviceImplementation="com.github.smykla.monokaiislands.settings.MonokaiIslandsSettings"/>
         <applicationConfigurable
