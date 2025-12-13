@@ -15,14 +15,15 @@ class MonokaiIslandsConfigurable : SearchableConfigurable {
     override fun getDisplayName(): String = "Monokai Islands"
 
     override fun createComponent(): JComponent {
-        val component = MonokaiIslandsSettingsComponent()
-        settingsComponent = component
-        return component.panel
+        if (settingsComponent == null) {
+            settingsComponent = MonokaiIslandsSettingsComponent()
+        }
+        return settingsComponent!!.panel
     }
 
     override fun isModified(): Boolean {
         val settings = MonokaiIslandsSettings.getInstance()
-        return settingsComponent?.enableMarkdownCss != settings.enableMarkdownCss
+        return settingsComponent?.let { it.enableMarkdownCss != settings.enableMarkdownCss } ?: false
     }
 
     override fun apply() {

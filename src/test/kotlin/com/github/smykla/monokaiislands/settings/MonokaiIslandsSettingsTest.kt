@@ -29,25 +29,14 @@ class MonokaiIslandsSettingsTest {
         val settings = MonokaiIslandsSettings()
         settings.enableMarkdownCss = true
 
-        val newState = MonokaiIslandsSettings()
-        newState.enableMarkdownCss = false
-
-        settings.loadState(newState)
-
-        settings.enableMarkdownCss shouldBe false
-    }
-
-    @Test
-    fun `loadState preserves source state values`() {
-        val settings = MonokaiIslandsSettings()
-        settings.enableMarkdownCss = true
-
         val sourceState = MonokaiIslandsSettings()
         sourceState.enableMarkdownCss = false
 
         settings.loadState(sourceState)
 
-        sourceState.enableMarkdownCss shouldBe false
+        // Target should have the value from source
         settings.enableMarkdownCss shouldBe false
+        // Source should remain unchanged
+        sourceState.enableMarkdownCss shouldBe false
     }
 }
