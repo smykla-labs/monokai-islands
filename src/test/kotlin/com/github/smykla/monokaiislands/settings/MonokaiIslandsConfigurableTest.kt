@@ -1,7 +1,9 @@
 package com.github.smykla.monokaiislands.settings
 
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.instanceOf
 import org.junit.jupiter.api.Test
+import javax.swing.JPanel
 
 class MonokaiIslandsConfigurableTest {
 
@@ -16,20 +18,7 @@ class MonokaiIslandsConfigurableTest {
         val configurable = MonokaiIslandsConfigurable()
         val component = configurable.createComponent()
 
-        component shouldBe io.kotest.matchers.types.instanceOf<javax.swing.JPanel>()
-    }
-
-    @Test
-    fun `isModified returns false when no changes made`() {
-        val configurable = MonokaiIslandsConfigurable()
-        val settings = MonokaiIslandsSettings()
-
-        // Create component to initialize settingsComponent
-        configurable.createComponent()
-
-        // No modification yet, should return false
-        // Note: This test requires Application context, will be verified in integration tests
-        // For now, we verify the logic structure
+        component shouldBe instanceOf<JPanel>()
     }
 
     @Test

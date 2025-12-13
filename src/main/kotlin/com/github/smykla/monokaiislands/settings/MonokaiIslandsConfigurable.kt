@@ -3,13 +3,11 @@ package com.github.smykla.monokaiislands.settings
 import com.github.smykla.monokaiislands.listeners.ThemeChangeListener
 import com.intellij.ide.ui.LafManager
 import com.intellij.openapi.options.SearchableConfigurable
-import com.intellij.ui.components.JBCheckBox
-import com.intellij.util.ui.FormBuilder
 import javax.swing.JComponent
 
 class MonokaiIslandsConfigurable : SearchableConfigurable {
 
-    private var enableMarkdownCssCheckBox: JBCheckBox? = null
+    private var settingsComponent: MonokaiIslandsSettingsComponent? = null
 
     override fun getId(): String =
         "com.github.smykla.monokaiislands.settings.MonokaiIslandsConfigurable"
@@ -17,21 +15,19 @@ class MonokaiIslandsConfigurable : SearchableConfigurable {
     override fun getDisplayName(): String = "Monokai Islands"
 
     override fun createComponent(): JComponent {
-        enableMarkdownCssCheckBox = JBCheckBox("Enable custom Markdown preview styling")
-        return FormBuilder.createFormBuilder()
-            .addComponent(enableMarkdownCssCheckBox!!)
-            .addComponentFillVertically(javax.swing.JPanel(), 0)
-            .panel
+        val component = MonokaiIslandsSettingsComponent()
+        settingsComponent = component
+        return component.panel
     }
 
     override fun isModified(): Boolean {
         val settings = MonokaiIslandsSettings.getInstance()
-        return enableMarkdownCssCheckBox?.isSelected != settings.enableMarkdownCss
+        return settingsComponent?.enableMarkdownCss != settings.enableMarkdownCss
     }
 
     override fun apply() {
         val settings = MonokaiIslandsSettings.getInstance()
-        settings.enableMarkdownCss = enableMarkdownCssCheckBox?.isSelected ?: true
+        settings.enableMarkdownCss = settingsComponent?.enableMarkdownCss ?: false
 
         // Immediately re-apply CSS based on new setting if Monokai theme is active
         val lafManager = LafManager.getInstance()
@@ -43,10 +39,10 @@ class MonokaiIslandsConfigurable : SearchableConfigurable {
 
     override fun reset() {
         val settings = MonokaiIslandsSettings.getInstance()
-        enableMarkdownCssCheckBox?.isSelected = settings.enableMarkdownCss
+        settingsComponent?.enableMarkdownCss = settings.enableMarkdownCss
     }
 
     override fun disposeUIResources() {
-        enableMarkdownCssCheckBox = null
+        settingsComponent = null
     }
 }
