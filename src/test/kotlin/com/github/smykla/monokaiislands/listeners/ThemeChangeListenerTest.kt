@@ -6,6 +6,16 @@ import io.kotest.matchers.string.shouldNotBeEmpty
 import io.kotest.matchers.types.instanceOf
 import org.junit.jupiter.api.Test
 
+/**
+ * Unit tests for ThemeChangeListener.
+ *
+ * Note: Testing lookAndFeelChanged() behavior (including the enableMarkdownCss
+ * setting check) requires IDE fixtures (Application context, LafManager,
+ * MonokaiIslandsSettings service, and Markdown plugin) which are not available
+ * in unit tests. This core functionality is verified through manual testing in
+ * the sandbox IDE. Full integration testing would require LightPlatformTestCase
+ * or similar IDE test harness.
+ */
 class ThemeChangeListenerTest {
 
     @Test

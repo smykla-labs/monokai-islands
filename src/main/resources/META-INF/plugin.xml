@@ -64,6 +64,10 @@
     </applicationListeners>
 
     <actions>
+        <!--
+          This action is registered in the ToolsMenu group, so it appears in the Tools menu.
+          It can also be found via the Find Action dialog (⌘⇧A / Ctrl+Shift+A).
+        -->
         <action id="MonokaiIslands.ToggleMarkdownCss"
                 class="com.github.smykla.monokaiislands.actions.ToggleMarkdownCssAction"
                 text="Monokai Islands: Custom Markdown Preview Styling"

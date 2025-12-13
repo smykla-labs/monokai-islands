@@ -8,11 +8,9 @@ import org.junit.jupiter.api.Test
  *
  * Note: Testing createComponent(), isModified(), apply(), and reset()
  * requires IDE fixtures (Application context and MonokaiIslandsSettings
- * service) which are not available in unit tests. Since createComponent()
- * calls reset() to initialize UI with current settings, it also requires
- * the Application context. These methods are verified through manual
- * testing in the sandbox IDE. Full integration testing would require
- * LightPlatformTestCase or similar IDE test harness.
+ * service) which are not available in unit tests. These methods are
+ * verified through manual testing in the sandbox IDE. Full integration
+ * testing would require LightPlatformTestCase or similar IDE test harness.
  */
 class MonokaiIslandsConfigurableTest {
 

@@ -1,7 +1,6 @@
 package com.github.smykla.monokaiislands.settings
 
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.shouldNotBe
 import org.junit.jupiter.api.Test
 
 class MonokaiIslandsSettingsTest {
