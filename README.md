@@ -9,6 +9,7 @@ A dark theme for JetBrains IDEs combining the iconic **Monokai** color palette w
 - **Islands UI Integration** - Rounded corners, subtle borders, and modern aesthetic
 - **Go-Optimized Syntax Highlighting** - Carefully tuned colors for Go development with semantic differentiation
 - **Warm Purple-Tinted UI** - Consistent warm tones throughout the interface
+- **Custom Markdown Preview Styling** - Optional custom styling for Markdown preview with Monokai theme colors (disabled by default)
 <!-- Plugin description end -->
 
 ## Installation
@@ -26,6 +27,20 @@ A dark theme for JetBrains IDEs combining the iconic **Monokai** color palette w
 2. Go to **Settings** → **Plugins** → **⚙️** → **Install Plugin from Disk...**
 3. Select the downloaded `.zip` file
 4. Restart the IDE
+
+## Configuration
+
+### Markdown Preview Styling
+
+The theme includes optional custom CSS for Markdown preview that matches the Monokai color scheme. This feature is **disabled by default** to respect your existing Markdown settings.
+
+**To enable:**
+
+- **Via Settings**: Go to **Settings** → **Appearance & Behavior** → **Monokai Islands** → Enable "Custom Markdown Preview Styling"
+- **Via Tools Menu**: Go to **Tools** → **Monokai Islands: Toggle Markdown Preview Styling**
+- **Via Find Action**: Press <kbd>⌘</kbd><kbd>⇧</kbd><kbd>A</kbd> (macOS) or <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>A</kbd> (Windows/Linux) and search for "Monokai Islands"
+
+When enabled, the Markdown preview will use Monokai-themed colors for code blocks, headings, and other elements. The setting persists across IDE restarts and automatically applies when switching to the Monokai Islands theme.
 
 ## Color Palette
 
