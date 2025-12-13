@@ -35,7 +35,7 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.1")
     // Vintage engine to run JUnit 3/4 tests (BasePlatformTestCase) with JUnit Platform
     testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.10.1")
-    testImplementation("io.kotest:kotest-assertions-core:5.8.0")
+    testImplementation("io.kotest:kotest-assertions-core:5.9.1")
     // JUnit 4 required for BasePlatformTestCase (extends JUnit 3 TestCase)
     testImplementation("junit:junit:4.13.2")
     // Workaround for IJPL-157292: opentest4j not resolved with TestFrameworkType.Platform
