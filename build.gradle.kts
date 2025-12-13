@@ -31,10 +31,10 @@ dependencies {
 
     // Test dependencies
     testImplementation(kotlin("test"))
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.14.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.14.1")
     // Vintage engine to run JUnit 3/4 tests (BasePlatformTestCase) with JUnit Platform
-    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.10.1")
+    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.14.1")
     testImplementation("io.kotest:kotest-assertions-core:5.9.1")
     // JUnit 4 required for BasePlatformTestCase (extends JUnit 3 TestCase)
     testImplementation("junit:junit:4.13.2")
