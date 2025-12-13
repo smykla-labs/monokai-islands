@@ -1,7 +1,9 @@
 package com.github.smykla.monokaiislands.actions
 
 import com.intellij.openapi.actionSystem.ActionUpdateThread
+import com.intellij.openapi.actionSystem.ToggleAction
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.instanceOf
 import org.junit.jupiter.api.Test
 
 /**
@@ -20,7 +22,7 @@ class ToggleMarkdownCssActionTest {
         val action = ToggleMarkdownCssAction()
 
         // Action should be a ToggleAction
-        action shouldBe io.kotest.matchers.types.instanceOf<com.intellij.openapi.actionSystem.ToggleAction>()
+        action shouldBe instanceOf<ToggleAction>()
     }
 
     @Test
