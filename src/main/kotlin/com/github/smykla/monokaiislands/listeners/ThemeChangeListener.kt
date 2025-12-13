@@ -1,5 +1,6 @@
 package com.github.smykla.monokaiislands.listeners
 
+import com.github.smykla.monokaiislands.settings.MonokaiIslandsSettings
 import com.intellij.ide.ui.LafManager
 import com.intellij.ide.ui.LafManagerListener
 import com.intellij.openapi.diagnostic.logger
@@ -10,8 +11,10 @@ class ThemeChangeListener : LafManagerListener {
 
     override fun lookAndFeelChanged(source: LafManager) {
         val isMonokaiTheme = source.currentUIThemeLookAndFeel?.id == THEME_ID
-        LOG.info("Theme changed. Is Monokai: $isMonokaiTheme")
-        applyMarkdownCss(isMonokaiTheme)
+        val settings = MonokaiIslandsSettings.getInstance()
+        val shouldApply = isMonokaiTheme && settings.enableMarkdownCss
+        LOG.info("Theme changed. Is Monokai: $isMonokaiTheme, CSS enabled: ${settings.enableMarkdownCss}")
+        applyMarkdownCss(shouldApply)
     }
 
     companion object {

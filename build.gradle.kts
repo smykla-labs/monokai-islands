@@ -1,8 +1,8 @@
 import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
 
 plugins {
-    id("org.jetbrains.intellij.platform") version "2.10.5"
     kotlin("jvm") version "2.2.21"
+    id("org.jetbrains.intellij.platform") version "2.10.5"
     id("dev.detekt") version "2.0.0-alpha.1"
 }
 
@@ -27,6 +27,12 @@ dependencies {
         goland("2025.3")
     }
 
+    // Test dependencies
+    testImplementation(kotlin("test"))
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.1")
+    testImplementation("io.kotest:kotest-assertions-core:5.8.0")
+
     // Exclude Kotlin stdlib from runtime classpath only (keep for compilation)
     // Production features use only Java reflection APIs, don't need Kotlin at runtime
     configurations.named("runtimeClasspath") {
@@ -39,8 +45,8 @@ dependencies {
 }
 
 intellijPlatform {
-    // Theme-only plugin has no searchable options (settings UI)
-    buildSearchableOptions = false
+    // Build searchable options for settings UI
+    buildSearchableOptions = true
 
     pluginConfiguration {
         id = "com.github.smykla-labs.monokai-islands"
@@ -186,6 +192,25 @@ tasks {
         dependsOn("generateThemes")
     }
 
+    test {
+        useJUnitPlatform()
+        // Exclude IntelliJ Platform test session listener to avoid conflicts with JUnit 5
+        systemProperty("idea.use.core.classloader.for.plugin.path", "true")
+        jvmArgs("--add-opens=java.base/java.lang=ALL-UNNAMED")
+        jvmArgs("--add-opens=java.base/java.util=ALL-UNNAMED")
+    }
+
+    // Copy searchableOptions JAR to sandbox after it's built
+    val copySearchableOptionsToSandbox by registering(Copy::class) {
+        dependsOn(jarSearchableOptions)
+        from(jarSearchableOptions.flatMap { it.archiveFile })
+        into(
+            prepareSandbox
+                .flatMap { it.sandboxPluginsDirectory }
+                .map { it.dir("${intellijPlatform.projectName.get()}/lib") }
+        )
+    }
+
     prepareSandbox {
         outputs.upToDateWhen { false }  // Always run to ensure sandbox config is fresh
         doLast {
@@ -316,6 +341,8 @@ tasks {
     }
 
     runIde {
+        dependsOn(copySearchableOptionsToSandbox)
+
         // Auto-open projects/files from env vars (comma-separated, optional)
         // Example: RUNIDE_PROJECT_PATHS="~/project1" RUNIDE_FILES="~/project1/main.go" ./gradlew runIde
         val projectPaths = providers.environmentVariable("RUNIDE_PROJECT_PATHS").orNull

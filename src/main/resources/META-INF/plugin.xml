@@ -50,10 +50,23 @@
     <extensions defaultExtensionNs="com.intellij">
         <themeProvider id="com.github.smykla-labs.monokai-islands-dark" path="/themes/monokai-islands-dark.theme.json"/>
         <postStartupActivity implementation="com.github.smykla.monokaiislands.listeners.ThemeProjectActivity"/>
+        <applicationService serviceImplementation="com.github.smykla.monokaiislands.settings.MonokaiIslandsSettings"/>
+        <applicationConfigurable
+          groupId="tools"
+          instance="com.github.smykla.monokaiislands.settings.MonokaiIslandsConfigurable"
+          id="monokai.islands.settings"
+          displayName="Monokai Islands"/>
     </extensions>
 
     <applicationListeners>
         <listener class="com.github.smykla.monokaiislands.listeners.ThemeChangeListener"
                   topic="com.intellij.ide.ui.LafManagerListener"/>
     </applicationListeners>
+
+    <actions>
+        <action id="MonokaiIslands.ToggleMarkdownCss"
+                class="com.github.smykla.monokaiislands.actions.ToggleMarkdownCssAction"
+                text="Monokai Islands: Custom Markdown Preview Styling"
+                description="Toggle custom Markdown preview CSS for Monokai Islands theme"/>
+    </actions>
 </idea-plugin>

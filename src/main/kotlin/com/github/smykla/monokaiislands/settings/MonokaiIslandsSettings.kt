@@ -14,7 +14,7 @@ import com.intellij.util.xmlb.XmlSerializerUtil
 )
 class MonokaiIslandsSettings : PersistentStateComponent<MonokaiIslandsSettings> {
 
-    var enableMarkdownCss: Boolean = true
+    var enableMarkdownCss: Boolean = false
 
     override fun getState(): MonokaiIslandsSettings = this
 
