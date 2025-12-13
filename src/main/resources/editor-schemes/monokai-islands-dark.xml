@@ -862,9 +862,7 @@
         <option name="FONT_TYPE" value="1" />
       </value>
     </option>
-    <option name="KOTLIN_LABEL">
-      <value />
-    </option>
+    <option name="KOTLIN_LABEL" baseAttributes="DEFAULT_LABEL" />
     <option name="KOTLIN_MUTABLE_VARIABLE">
       <value>
         <option name="EFFECT_COLOR" value="84868c" />
@@ -889,6 +887,82 @@
     <option name="KOTLIN_SMART_CONSTANT">
       <value>
         <option name="BACKGROUND" value="1a3b2d" />
+      </value>
+    </option>
+    <!-- Kotlin Type System -->
+    <option name="KOTLIN_CLASS" baseAttributes="DEFAULT_CLASS_REFERENCE" />
+    <option name="KOTLIN_INTERFACE" baseAttributes="DEFAULT_CLASS_REFERENCE" />
+    <option name="KOTLIN_OBJECT">
+      <value>
+        <option name="FOREGROUND" value="78dce8" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="KOTLIN_ENUM_ENTRY" baseAttributes="DEFAULT_STATIC_FIELD" />
+    <option name="KOTLIN_TYPE_PARAMETER">
+      <value>
+        <option name="FOREGROUND" value="78dce8" />
+        <option name="FONT_TYPE" value="2" />
+      </value>
+    </option>
+    <!-- Kotlin Functions & Methods -->
+    <option name="KOTLIN_FUNCTION_DECLARATION" baseAttributes="DEFAULT_FUNCTION_DECLARATION" />
+    <option name="KOTLIN_FUNCTION_CALL" baseAttributes="DEFAULT_FUNCTION_CALL" />
+    <option name="KOTLIN_CONSTRUCTOR" baseAttributes="DEFAULT_CLASS_REFERENCE" />
+    <option name="KOTLIN_DYNAMIC_FUNCTION_CALL">
+      <value>
+        <option name="FOREGROUND" value="fc9867" />
+        <option name="EFFECT_COLOR" value="f75464" />
+        <option name="EFFECT_TYPE" value="2" />
+      </value>
+    </option>
+    <!-- Kotlin Properties & Variables -->
+    <option name="KOTLIN_INSTANCE_PROPERTY" baseAttributes="DEFAULT_INSTANCE_FIELD" />
+    <option name="KOTLIN_PACKAGE_PROPERTY" baseAttributes="DEFAULT_GLOBAL_VARIABLE" />
+    <option name="KOTLIN_LOCAL_VARIABLE" baseAttributes="DEFAULT_LOCAL_VARIABLE" />
+    <option name="KOTLIN_BACKING_FIELD_VARIABLE">
+      <value>
+        <option name="FOREGROUND" value="ab9df2" />
+        <option name="EFFECT_COLOR" value="84868c" />
+        <option name="EFFECT_TYPE" value="1" />
+      </value>
+    </option>
+    <!-- Kotlin Annotations & Metadata -->
+    <option name="KOTLIN_ANNOTATION">
+      <value>
+        <option name="FOREGROUND" value="ab9df2" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <!-- Kotlin Advanced Features & Smart Casts -->
+    <option name="KOTLIN_DYNAMIC_PROPERTY_CALL">
+      <value>
+        <option name="FOREGROUND" value="fc9867" />
+        <option name="EFFECT_COLOR" value="f75464" />
+        <option name="EFFECT_TYPE" value="2" />
+      </value>
+    </option>
+    <option name="KOTLIN_AUTO_CASTED_VALUE">
+      <value>
+        <option name="BACKGROUND" value="1a3b2d" />
+      </value>
+    </option>
+    <option name="KOTLIN_IMPLICIT_EXHAUSTIVE_WHEN">
+      <value>
+        <option name="FOREGROUND" value="a9dc76" />
+        <option name="BACKGROUND" value="1a3b2d" />
+      </value>
+    </option>
+    <option name="KOTLIN_WRAPPED_INTO_REF">
+      <value>
+        <option name="EFFECT_COLOR" value="ab9df2" />
+        <option name="EFFECT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="KOTLIN_CLOSURE_DEFAULT_PARAMETER">
+      <value>
+        <option name="FOREGROUND" value="fc9867" />
+        <option name="FONT_TYPE" value="2" />
       </value>
     </option>
     <option name="LINE_FULL_COVERAGE">
