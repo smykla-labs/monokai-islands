@@ -523,5 +523,14 @@
     "Viewport": {
       "background": "background"
     }
+  },
+  "icons": {
+    "ColorPalette": {
+      "#3592C4": "#19181a",
+      "#40B6E0": "#19181a",
+      "#59A869": "#a9dc76",
+      "#DB5860": "#ff6188",
+      "#F4AF3D": "#ffd866"
+    }
   }
 }

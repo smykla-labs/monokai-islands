@@ -26,7 +26,8 @@ gradle-app.setting
 Contents
 
 # Development tools
-.claude/
+.claude/sessions/
+.claude/settings.local.json
 .envrc
 
 # Design files

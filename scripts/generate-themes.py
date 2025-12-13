@@ -434,6 +434,21 @@ def generate_theme_json(palette: dict, variant: str) -> dict:  # noqa: PLR0915
     }
 
     theme["ui"] = flatten_to_nested(ui_colors)
+
+    # === Icon color palette for SVG action icons ===
+    # Maps default icon colors to Monokai palette colors
+    theme["icons"] = {
+        "ColorPalette": {
+            # Remap default blue/cyan to dark for high contrast on cyan buttons
+            # Note: This affects ALL blue icons globally
+            "#3592C4": palette["dark1"],  # Default blue -> dark (for cyan button icons)
+            "#40B6E0": palette["dark1"],  # Default cyan -> dark (for cyan button icons)
+            "#59A869": palette["accent4"],  # Green -> Monokai green
+            "#DB5860": palette["accent1"],  # Red -> Monokai pink/red
+            "#F4AF3D": palette["accent3"],  # Yellow -> Monokai yellow
+        }
+    }
+
     return theme
 
 

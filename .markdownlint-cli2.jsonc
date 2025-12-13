@@ -17,6 +17,7 @@
     "**/node_modules/**",
     "**/.git/**",
     "**/.gradle/**",
+    "**/.claude/sessions/**",
     "**/build/**",
     "**/tmp/**"
   ]
