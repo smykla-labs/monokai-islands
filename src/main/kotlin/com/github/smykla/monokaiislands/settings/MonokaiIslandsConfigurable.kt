@@ -18,6 +18,7 @@ class MonokaiIslandsConfigurable : SearchableConfigurable {
         if (settingsComponent == null) {
             settingsComponent = MonokaiIslandsSettingsComponent()
         }
+        reset()
         return settingsComponent!!.panel
     }
 
