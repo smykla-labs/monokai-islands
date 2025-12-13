@@ -22,6 +22,10 @@ class ThemeChangeListener : LafManagerListener {
         private val LOG = logger<ThemeChangeListener>()
 
         const val THEME_ID = "com.github.smykla-labs.monokai-islands-dark"
+
+        fun isMonokaiThemeActive(): Boolean =
+            LafManager.getInstance().currentUIThemeLookAndFeel?.id == THEME_ID
+
         private const val CSS_RESOURCE_PATH = "/styles/markdown-preview.css"
         private const val MARKDOWN_SETTINGS_CLASS = "org.intellij.plugins.markdown.settings.MarkdownSettings"
         private const val MARKDOWN_COMPANION_CLASS = $$"$$MARKDOWN_SETTINGS_CLASS$Companion"

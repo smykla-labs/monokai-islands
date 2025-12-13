@@ -14,6 +14,9 @@ import io.kotest.matchers.shouldNotBe
  *
  * Note: Full theme switching behavior requires the complete IDE environment.
  * These tests focus on verifiable behavior within the test harness.
+ *
+ * Method names use backtick notation for readability but must start with "test"
+ * for JUnit 3/4 compatibility (required by BasePlatformTestCase).
  */
 class ThemeChangeListenerIntegrationTest : BasePlatformTestCase() {
 
@@ -49,41 +52,55 @@ class ThemeChangeListenerIntegrationTest : BasePlatformTestCase() {
         MonokaiIslandsSettings.getInstance().enableMarkdownCss shouldBe true
     }
 
-    fun `test lookAndFeelChanged handles real LafManager`() {
+    fun `test lookAndFeelChanged handles real LafManager without throwing`() {
         val lafManager = LafManager.getInstance()
         settings.enableMarkdownCss = true
 
-        listener.lookAndFeelChanged(lafManager)
+        // Verify method executes without throwing exceptions
+        val result = runCatching { listener.lookAndFeelChanged(lafManager) }
+
+        result.isSuccess shouldBe true
     }
 
-    fun `test lookAndFeelChanged with CSS disabled`() {
+    fun `test lookAndFeelChanged with CSS disabled completes without error`() {
         val lafManager = LafManager.getInstance()
         settings.enableMarkdownCss = false
 
-        listener.lookAndFeelChanged(lafManager)
+        // Verify method executes without throwing exceptions
+        val result = runCatching { listener.lookAndFeelChanged(lafManager) }
+
+        result.isSuccess shouldBe true
     }
 
     fun `test applyMarkdownCss gracefully handles missing Markdown plugin`() {
-        ThemeChangeListener.applyMarkdownCss(true)
-        ThemeChangeListener.applyMarkdownCss(false)
+        // Verify both enable and disable complete without throwing
+        val enableResult = runCatching { ThemeChangeListener.applyMarkdownCss(true) }
+        val disableResult = runCatching { ThemeChangeListener.applyMarkdownCss(false) }
+
+        enableResult.isSuccess shouldBe true
+        disableResult.isSuccess shouldBe true
     }
 
-    fun `test theme detection logic`() {
-        val lafManager = LafManager.getInstance()
-        val currentTheme = lafManager.currentUIThemeLookAndFeel
+    fun `test isMonokaiThemeActive returns boolean without throwing`() {
+        val result = runCatching { ThemeChangeListener.isMonokaiThemeActive() }
 
-        val isMonokaiTheme = currentTheme?.id == ThemeChangeListener.THEME_ID
+        result.isSuccess shouldBe true
+        result.getOrNull() shouldNotBe null
+    }
+
+    fun `test theme detection logic with CSS disabled`() {
+        val isMonokaiTheme = ThemeChangeListener.isMonokaiThemeActive()
+        settings.enableMarkdownCss = false
+
         val shouldApply = isMonokaiTheme && settings.enableMarkdownCss
 
         shouldApply shouldBe false
     }
 
-    fun `test theme detection with CSS enabled`() {
-        val lafManager = LafManager.getInstance()
-        val currentTheme = lafManager.currentUIThemeLookAndFeel
+    fun `test theme detection logic with CSS enabled`() {
+        val isMonokaiTheme = ThemeChangeListener.isMonokaiThemeActive()
         settings.enableMarkdownCss = true
 
-        val isMonokaiTheme = currentTheme?.id == ThemeChangeListener.THEME_ID
         val shouldApply = isMonokaiTheme && settings.enableMarkdownCss
 
         if (isMonokaiTheme) {

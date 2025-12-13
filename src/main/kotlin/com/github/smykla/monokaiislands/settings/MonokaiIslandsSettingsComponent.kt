@@ -6,7 +6,9 @@ import javax.swing.JPanel
 
 class MonokaiIslandsSettingsComponent {
 
-    private val enableMarkdownCssCheckBox = JBCheckBox("Enable custom Markdown preview styling")
+    private val enableMarkdownCssCheckBox = JBCheckBox(
+        "Enable custom Markdown preview styling (when Monokai Islands theme is active)"
+    )
 
     val panel: JPanel = FormBuilder.createFormBuilder()
         .addComponent(enableMarkdownCssCheckBox)

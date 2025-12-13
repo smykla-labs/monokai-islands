@@ -1,7 +1,6 @@
 package com.github.smykla.monokaiislands.settings
 
 import com.github.smykla.monokaiislands.listeners.ThemeChangeListener
-import com.intellij.ide.ui.LafManager
 import com.intellij.openapi.options.SearchableConfigurable
 import javax.swing.JComponent
 
@@ -31,9 +30,9 @@ class MonokaiIslandsConfigurable : SearchableConfigurable {
         settings.enableMarkdownCss = settingsComponent?.enableMarkdownCss ?: false
 
         // Apply or remove CSS based on setting and current theme
-        val lafManager = LafManager.getInstance()
-        val isMonokaiTheme = lafManager.currentUIThemeLookAndFeel?.id == ThemeChangeListener.THEME_ID
-        ThemeChangeListener.applyMarkdownCss(isMonokaiTheme && settings.enableMarkdownCss)
+        ThemeChangeListener.applyMarkdownCss(
+            ThemeChangeListener.isMonokaiThemeActive() && settings.enableMarkdownCss
+        )
     }
 
     override fun reset() {
