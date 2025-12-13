@@ -1,9 +1,7 @@
 package com.github.smykla.monokaiislands.settings
 
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.types.instanceOf
 import org.junit.jupiter.api.Test
-import javax.swing.JPanel
 
 /**
  * Unit tests for MonokaiIslandsConfigurable.
