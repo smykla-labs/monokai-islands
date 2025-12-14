@@ -2,6 +2,12 @@
 
 All notable changes to the Monokai Islands Theme will be documented in this file.
 
+## [1.3.2](https://github.com/smykla-labs/monokai-islands/compare/v1.3.1...v1.3.2) (2025-12-14)
+
+### Bug Fixes
+
+* **readme:** correct badges and add CI status ([#40](https://github.com/smykla-labs/monokai-islands/issues/40)) ([bc89481](https://github.com/smykla-labs/monokai-islands/commit/bc8948152ab9367575644e4ad10b8ff98d9a0c36))
+
 ## [1.3.1](https://github.com/smykla-labs/monokai-islands/compare/v1.3.0...v1.3.1) (2025-12-13)
 
 ### Bug Fixes
