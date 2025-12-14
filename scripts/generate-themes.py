@@ -436,17 +436,29 @@ def generate_theme_json(palette: dict, variant: str) -> dict:  # noqa: PLR0915
 
     theme["ui"] = flatten_to_nested(ui_colors)
 
-    # === Icon color palette for SVG action icons ===
-    # Maps default icon colors to Monokai palette colors
+    # === Tab insets (must be added after flattening to preserve dot notation) ===
+    # Negative top/bottom for taller tabs, positive left/right for spacing
+    theme["ui"]["EditorTabs"]["tabInsets"] = "-10,6,-10,6"
+    theme["ui"]["EditorTabs"]["tabInsets.compact"] = "-5,4,-5,4"
+    theme["ui"]["EditorTabs"]["verticalTabInsets"] = "-3,8,-3,8"
+    theme["ui"]["EditorTabs"]["verticalTabInsets.compact"] = "-2,6,-2,6"
+
+    # Icon color palette for SVG action icons.
+    # Maps default icon colors to Monokai palette colors.
     theme["icons"] = {
         "ColorPalette": {
             # Remap default blue/cyan to dark for high contrast on cyan buttons
-            # Note: This affects ALL blue icons globally
             "#3592C4": palette["dark1"],  # Default blue -> dark (for cyan button icons)
             "#40B6E0": palette["dark1"],  # Default cyan -> dark (for cyan button icons)
+            # Standard action icon colors -> Monokai palette
             "#59A869": palette["accent4"],  # Green -> Monokai green
             "#DB5860": palette["accent1"],  # Red -> Monokai pink/red
             "#F4AF3D": palette["accent3"],  # Yellow -> Monokai yellow
+            # Named keys for action icons (more targeted than hex colors)
+            # Fix: checkmark icon on cyan Apply button needs dark color for contrast
+            "Actions.Grey": palette["dark1"],  # Gray action icons -> dark
+            "Actions.GreyInline": palette["dimmed2"],  # Inline gray -> medium gray
+            "Actions.GreyInline.Dark": palette["dimmed1"],  # Inline gray dark variant
         }
     }
 

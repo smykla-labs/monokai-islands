@@ -162,7 +162,11 @@
       "borderColor": "tab_active_border",
       "hoverBackground": "dimmed5",
       "inactiveBackground": "background",
-      "inactiveForeground": "dimmed2"
+      "inactiveForeground": "dimmed2",
+      "tabInsets": "-10,6,-10,6",
+      "tabInsets.compact": "-5,4,-5,4",
+      "verticalTabInsets": "-3,8,-3,8",
+      "verticalTabInsets.compact": "-2,6,-2,6"
     },
     "Island": {
       "borderColor": "background",
@@ -531,7 +535,10 @@
       "#40B6E0": "#19181a",
       "#59A869": "#a9dc76",
       "#DB5860": "#ff6188",
-      "#F4AF3D": "#ffd866"
+      "#F4AF3D": "#ffd866",
+      "Actions.Grey": "#19181a",
+      "Actions.GreyInline": "#939293",
+      "Actions.GreyInline.Dark": "#c1c0c0"
     }
   }
 }

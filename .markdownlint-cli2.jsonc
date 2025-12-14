@@ -18,6 +18,7 @@
     "**/.git/**",
     "**/.gradle/**",
     "**/.claude/sessions/**",
+    "**/.venv/**",
     "**/build/**",
     "**/tmp/**"
   ]
