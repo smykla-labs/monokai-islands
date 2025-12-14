@@ -4,18 +4,18 @@
 
 <h1 align="center">Monokai Islands Theme</h1>
 
+<!-- Plugin description -->
+<p align="center">
+  A dark theme for JetBrains IDEs combining the <b>Monokai</b> color palette with the modern <b>Islands</b> UI.
+</p>
+<!-- Plugin description end -->
+
 <p align="center">
   <a href="https://plugins.jetbrains.com/plugin/29325-monokai-islands-theme"><img src="https://img.shields.io/jetbrains/plugin/v/29325?label=JetBrains%20Marketplace&logo=jetbrains" alt="JetBrains Plugin"></a>
   <a href="https://plugins.jetbrains.com/plugin/29325-monokai-islands-theme"><img src="https://img.shields.io/jetbrains/plugin/d/29325" alt="Downloads"></a>
   <a href="https://plugins.jetbrains.com/plugin/29325-monokai-islands-theme"><img src="https://img.shields.io/jetbrains/plugin/r/rating/29325" alt="Rating"></a>
   <a href="LICENSE"><img src="https://img.shields.io/github/license/smykla-labs/monokai-islands" alt="License"></a>
 </p>
-
-<!-- Plugin description -->
-<p align="center">
-  A dark theme for JetBrains IDEs combining the iconic <b>Monokai</b> color palette with the modern <b>Islands</b> UI design language.
-</p>
-<!-- Plugin description end -->
 
 ---
 
