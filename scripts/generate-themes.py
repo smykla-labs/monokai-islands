@@ -200,6 +200,7 @@ def generate_theme_json(palette: dict, variant: str) -> dict:  # noqa: PLR0915
         "List.selectionInactiveBackground": "selection_inactive",
         # Project tree and file lists (with subtle transparency)
         "Tree.background": "background",
+        "Tree.hash": "dimmed5",  # Indent guide lines color (very subtle)
         "ProjectViewTree.selectionBackground": "list_selection",
         "ProjectViewTree.selectionInactiveBackground": "selection_inactive",
         "FileChooser.selectionInactiveBackground": "input_bg",

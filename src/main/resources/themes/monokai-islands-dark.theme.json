@@ -177,7 +177,8 @@
       "selectionBackground": "list_selection_alpha",
       "selectionForeground": "tree_selection_fg",
       "selectionInactiveBackground": "selection_inactive",
-      "background": "background"
+      "background": "background",
+      "hash": "dimmed5"
     },
     "List": {
       "foreground": "text",
