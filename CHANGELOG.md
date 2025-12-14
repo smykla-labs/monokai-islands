@@ -2,6 +2,17 @@
 
 All notable changes to the Monokai Islands Theme will be documented in this file.
 
+## [1.4.0](https://github.com/smykla-labs/monokai-islands/compare/v1.3.2...v1.4.0) (2025-12-14)
+
+### Features
+
+* **theme:** add icon colors and tab insets ([#44](https://github.com/smykla-labs/monokai-islands/issues/44)) ([e46b2e6](https://github.com/smykla-labs/monokai-islands/commit/e46b2e6400251bc2a31a04d7e30c2f2027cadc2f))
+* **theme:** add tree indent guides support ([#42](https://github.com/smykla-labs/monokai-islands/issues/42)) ([3d0e7d5](https://github.com/smykla-labs/monokai-islands/commit/3d0e7d5d7e21a38586f09d3c51823170128e6fd6)), closes [#403e41](https://github.com/smykla-labs/monokai-islands/issues/403e41)
+
+### Bug Fixes
+
+* **deps:** revert python to 3.14.2 ([d83496f](https://github.com/smykla-labs/monokai-islands/commit/d83496f486f049f234ee78145b1feacd966f83eb))
+
 ## [1.3.2](https://github.com/smykla-labs/monokai-islands/compare/v1.3.1...v1.3.2) (2025-12-14)
 
 ### Bug Fixes
