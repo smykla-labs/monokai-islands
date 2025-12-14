@@ -254,7 +254,7 @@ tasks {
                 </application>
             """.trimIndent())
 
-            // UI settings: tabs at bottom, UI font size (default font at size 15)
+            // UI settings: tabs at bottom, UI font size (default font at size 15), tree indent guides
             configDir.resolve("ui.lnf.xml").writeText("""
                 <application>
                     <component name="UISettings">
@@ -262,6 +262,7 @@ tasks {
                         <option name="HIDE_TOOL_STRIPES" value="false" />
                         <option name="SHOW_MAIN_TOOLBAR" value="true" />
                         <option name="overrideLafFonts" value="true" />
+                        <option name="showTreeIndentGuides" value="true" />
                     </component>
                 </application>
             """.trimIndent())
