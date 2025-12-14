@@ -266,12 +266,53 @@ export RUNIDE_FILES="../project1/main.go"
 - **Islands inheritance**: Override only specific properties. Parent theme provides base styling. Excessive overrides break Islands aesthetic.
 - **Dev mode flag**: Always use `-PdevMode` when running dev tasks, otherwise production features will block hot reload.
 
+## Known Limitations
+
+### Vertical Tab Gap (NOT Themeable)
+
+**Problem**: Gap/spacing between vertical tabs cannot be controlled via theme JSON.
+
+**Root cause** (from intellij-community source):
+
+```kotlin
+// JBTabsImpl.kt:3284-3285
+val tabHGap: Int
+  get() = -tabBorder.thickness
+
+// JBTabsBorder.kt:13-14
+val thickness: Int
+  get() = tabs.tabPainter.getTabTheme().topBorderThickness
+```
+
+- `tabHGap` (used for BOTH horizontal and vertical layouts) = negative of border thickness
+- No separate `tabVGap` property exists
+- `topBorderThickness` defaults to `JBUI.scale(1)` — hardcoded, not theme-configurable
+
+**What IS themeable**:
+
+- `EditorTabs.verticalTabInsets` — padding INSIDE each tab (not gap between)
+- `Island.arc` — corner radius (default 10)
+- `Island.borderWidth` — border around islands (default 4)
+
+**Workarounds**:
+
+- Accept default spacing (JetBrains design decision)
+- Use [Material Theme UI plugin](https://plugins.jetbrains.com/plugin/8006-material-theme-ui) for more tab customization
+- File feature request on [YouTrack IJPL-174976](https://youtrack.jetbrains.com/issue/IJPL-174976)
+
+**Source files** (intellij-community):
+
+- `platform/platform-api/src/com/intellij/ui/tabs/impl/JBTabsImpl.kt`
+- `platform/platform-api/src/com/intellij/ui/tabs/JBTabsBorder.kt`
+- `platform/platform-api/src/com/intellij/ui/tabs/impl/themes/TabTheme.kt`
+
 ## References
 
 ### UI Theme Structure
 
 - [Supporting Islands Theme](https://plugins.jetbrains.com/docs/intellij/supporting-islands-theme.html)
 - [Theme Structure](https://plugins.jetbrains.com/docs/intellij/themes-metadata.html)
+- [Icons and ColorPalette](https://plugins.jetbrains.com/docs/intellij/themes-customize.html)
 - [Platform Theme Colors](https://plugins.jetbrains.com/docs/intellij/platform-theme-colors.html)
 - [WCAG Contrast Guidelines](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html)
 - Monokai color palette: `palettes/monokai-dark.json` (canonical)
