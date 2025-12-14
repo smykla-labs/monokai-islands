@@ -17,8 +17,6 @@
   <a href="LICENSE"><img src="https://img.shields.io/github/license/smykla-labs/monokai-islands" alt="License"></a>
 </p>
 
----
-
 ## Features
 
 - **Monokai Colors** - Classic warm palette with pink keywords, green functions, yellow strings, and purple constants
