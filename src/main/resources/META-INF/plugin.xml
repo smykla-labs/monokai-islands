@@ -57,6 +57,10 @@
           instance="com.github.smykla.monokaiislands.settings.MonokaiIslandsConfigurable"
           id="com.github.smykla.monokaiislands.settings.MonokaiIslandsConfigurable"
           displayName="Monokai Islands"/>
+        <notificationGroup
+                id="Monokai Islands Theme Test"
+                displayType="BALLOON"
+                isLogByDefault="false"/>
     </extensions>
 
     <applicationListeners>

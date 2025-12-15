@@ -16,30 +16,29 @@ class MonokaiIslandsConfigurable : SearchableConfigurable {
     private var themeTestingComponent: ThemeTestingComponent? = null
     private val devSectionGap = JBUI.scale(16)
 
-    override fun getId(): String =
-        "com.github.smykla.monokaiislands.settings.MonokaiIslandsConfigurable"
+    override fun getId(): String = ID
 
-    override fun getDisplayName(): String = "Monokai Islands"
+    override fun getDisplayName(): String = DISPLAY_NAME
 
     override fun createComponent(): JComponent {
-        if (settingsComponent == null) {
-            settingsComponent = MonokaiIslandsSettingsComponent()
-        }
+        val component = settingsComponent ?: MonokaiIslandsSettingsComponent().also { settingsComponent = it }
+        val settingsPanel = component.panel
 
-        if (!DevModeDetector.isDevMode()) {
-            return settingsComponent?.panel
-                ?: error("settingsComponent should not be null after initialization")
+        return if (DevModeDetector.isDevMode()) {
+            createDevModePanel(settingsPanel)
+        } else {
+            settingsPanel
         }
+    }
 
-        if (themeTestingComponent == null) {
-            themeTestingComponent = ThemeTestingComponent()
-        }
+    private fun createDevModePanel(settingsPanel: JPanel): JComponent {
+        val testingComponent = themeTestingComponent ?: ThemeTestingComponent().also { themeTestingComponent = it }
 
         val stacked = JPanel().apply {
             layout = BoxLayout(this, BoxLayout.Y_AXIS)
-            add(settingsComponent?.panel)
+            add(settingsPanel)
             add(Box.createVerticalStrut(devSectionGap))
-            add(themeTestingComponent?.panel)
+            add(testingComponent.panel)
         }
 
         return JBScrollPane(stacked).apply { border = null }
@@ -68,5 +67,10 @@ class MonokaiIslandsConfigurable : SearchableConfigurable {
     override fun disposeUIResources() {
         settingsComponent = null
         themeTestingComponent = null
+    }
+
+    companion object {
+        const val ID = "com.github.smykla.monokaiislands.settings.MonokaiIslandsConfigurable"
+        const val DISPLAY_NAME = "Monokai Islands"
     }
 }

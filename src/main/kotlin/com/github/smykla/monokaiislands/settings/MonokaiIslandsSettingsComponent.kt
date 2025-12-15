@@ -1,7 +1,8 @@
 package com.github.smykla.monokaiislands.settings
 
 import com.intellij.ui.components.JBCheckBox
-import com.intellij.util.ui.FormBuilder
+import com.intellij.ui.dsl.builder.BottomGap
+import com.intellij.ui.dsl.builder.panel
 import javax.swing.JPanel
 
 class MonokaiIslandsSettingsComponent {
@@ -10,10 +11,13 @@ class MonokaiIslandsSettingsComponent {
         "Enable custom Markdown preview styling (when Monokai Islands theme is active)"
     )
 
-    val panel: JPanel = FormBuilder.createFormBuilder()
-        .addComponent(enableMarkdownCssCheckBox)
-        .addComponentFillVertically(JPanel(), 0)
-        .panel
+    val panel: JPanel = panel {
+        group("General") {
+            row {
+                cell(enableMarkdownCssCheckBox)
+            }
+        }.bottomGap(BottomGap.NONE)
+    }
 
     var enableMarkdownCss: Boolean
         get() = enableMarkdownCssCheckBox.isSelected

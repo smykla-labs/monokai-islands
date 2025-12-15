@@ -9,8 +9,8 @@ import com.intellij.util.xmlb.XmlSerializerUtil
 
 @Service
 @State(
-    name = "com.github.smykla.monokaiislands.settings.MonokaiIslandsSettings",
-    storages = [Storage("monokai-islands.xml")]
+    name = MonokaiIslandsSettings.SERVICE_NAME,
+    storages = [Storage(MonokaiIslandsSettings.STORAGE_FILE)]
 )
 class MonokaiIslandsSettings : PersistentStateComponent<MonokaiIslandsSettings> {
 
@@ -23,6 +23,8 @@ class MonokaiIslandsSettings : PersistentStateComponent<MonokaiIslandsSettings> 
     }
 
     companion object {
+        const val SERVICE_NAME = "com.github.smykla.monokaiislands.settings.MonokaiIslandsSettings"
+        const val STORAGE_FILE = "monokai-islands.xml"
 
         fun getInstance(): MonokaiIslandsSettings =
             ApplicationManager.getApplication().getService(MonokaiIslandsSettings::class.java)
