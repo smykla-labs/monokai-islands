@@ -1,4 +1,4 @@
-package com.github.smykla.monokaiislands.utils
+package com.github.smykla.monokaiislands.ui.components
 
 import java.awt.Container
 import java.awt.Dimension
