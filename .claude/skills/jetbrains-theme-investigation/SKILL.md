@@ -67,6 +67,7 @@ For specific subsystems, see:
 - **Tab system**: [tab-system.md](tab-system.md) - Tab gaps, insets, layouts
 - **Islands theme**: [islands-theme.md](islands-theme.md) - Islands-specific properties
 - **Known limitations**: [limitations.md](limitations.md) - What is NOT themeable
+- **Theme testing panel**: [theme-testing-panel.md](theme-testing-panel.md) - Dev-mode UI testing panel
 
 ## Determining if Themeable
 

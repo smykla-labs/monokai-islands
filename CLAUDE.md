@@ -34,22 +34,24 @@ python3 scripts/validate-contrast.py      # Check WCAG compliance
 **Recommended workflow:**
 
 ```bash
-./gradlew dev
-# or
-./scripts/dev.sh
+./gradlew runIde -PdevMode
 ```
 
 **What happens:**
 
-1. Starts sandbox IDE with `-PdevMode` flag (produces pure theme JAR, no Kotlin classes)
-2. Starts palette file watcher (auto-runs `generate-themes.py` on changes)
-3. Starts continuous build watcher (auto-runs `buildPlugin` on changes)
-4. Edit `palettes/monokai-dark.json` → theme regenerates + rebuilds automatically
-5. **Manual IDE restart required** to see theme changes (Cmd+Q, then re-run script)
+1. Builds plugin with `-PdevMode` flag (produces pure theme JAR, no Kotlin classes)
+2. Starts sandbox IDE with the plugin
+3. **Manual IDE restart required** to see theme changes after edits
+
+For continuous development, run in separate terminals:
+
+- `./gradlew runIde -PdevMode` — Start IDE
+- Edit `palettes/monokai-dark.json` then `python3 scripts/generate-themes.py && ./gradlew buildPlugin -PdevMode`
+- Restart IDE to see changes (Cmd+Q, then re-run)
 
 **First-time setup (one-time per sandbox):**
 
-1. Run `./gradlew dev`
+1. Run `./gradlew runIde -PdevMode`
 2. IDE opens with default "Islands Dark" theme (plugin loads but theme not auto-selected)
 3. Go to Settings → Appearance & Behavior → Appearance
 4. Select "Monokai Islands Dark" from Theme dropdown
@@ -62,9 +64,6 @@ python3 scripts/validate-contrast.py      # Check WCAG compliance
 - **Dev mode** (`-PdevMode` flag): Comments out `postStartupActivity` and `applicationListeners` in plugin.xml, strips Kotlin classes/metadata from JAR → produces pure 9.9K theme-only JAR
 - **Production mode**: Includes all features (Markdown CSS customization via ThemeChangeListener)
 - **Why hot reload fails**: Theme resources cached in Swing UIDefaults hold classloader references; even theme-only plugins cannot be unloaded by GC
-- Cross-platform stat detection: handles BSD `stat`, GNU `gstat`, Linux `stat`
-- Three concurrent processes: runIde (bg), palette watcher (bg), buildPlugin --continuous (fg)
-- Cleanup on Ctrl+C kills all processes
 
 ## Architecture
 
