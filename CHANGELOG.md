@@ -2,6 +2,12 @@
 
 All notable changes to the Monokai Islands Theme will be documented in this file.
 
+## [1.4.1](https://github.com/smykla-labs/monokai-islands/compare/v1.4.0...v1.4.1) (2025-12-15)
+
+### Bug Fixes
+
+* **theme:** fix checkmark contrast on cyan buttons ([#51](https://github.com/smykla-labs/monokai-islands/issues/51)) ([d6cd6df](https://github.com/smykla-labs/monokai-islands/commit/d6cd6dfda4bec6e1344a095ea4962cc5b836b323)), closes [#19181a](https://github.com/smykla-labs/monokai-islands/issues/19181a) [#78dce8](https://github.com/smykla-labs/monokai-islands/issues/78dce8) [#78dce8](https://github.com/smykla-labs/monokai-islands/issues/78dce8)
+
 ## [1.4.0](https://github.com/smykla-labs/monokai-islands/compare/v1.3.2...v1.4.0) (2025-12-14)
 
 ### Features
