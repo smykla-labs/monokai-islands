@@ -37,8 +37,15 @@ From HighContrast.theme.json:
 
 **Checkboxes:**
 
-- `Checkbox.Background.Default.Dark`, `Checkbox.Border.Default.Dark`
-- `Checkbox.Foreground.Selected.Dark`, `Checkbox.Focus.Wide.Dark`
+**IMPORTANT:** For new UI themes (Islands, expUI), use base keys WITHOUT `.Dark` suffix:
+
+- `Checkbox.Foreground.Selected` - checkmark color (NOT `.Dark` for Islands/expUI)
+- `Checkbox.Background.Selected` - background when selected
+- `Checkbox.Border.Selected` - border when selected
+- `Checkbox.Focus.Wide` - focus ring color
+
+Old-style dark themes used `.Dark` suffix, but this is deprecated for Islands/expUI themes.
+Build warnings will indicate: "Checkbox.Foreground.Selected.Dark is deprecated for new UI themes"
 
 ## Standard Stroke Colors (from stroke.kt)
 
@@ -67,12 +74,62 @@ icon = toStrokeIcon(icon, JBUI.CurrentTheme.Button.defaultButtonForeground())
 
 Dialog buttons don't use this - icons display with original colors. Fix via ColorPalette hex mapping.
 
+## SVG Icon Structure
+
+SVG icons use `id` attributes that map to ColorPalette keys:
+
+```xml
+<!-- Example: checkBoxSelected.svg -->
+<svg>
+  <rect id="Checkbox.Background.Selected_Checkbox.Border.Selected"
+        fill="#3574F0" stroke="#3574F0"/>
+  <path id="Checkbox.Foreground.Selected"
+        stroke="white" stroke-width="2"/>
+</svg>
+```
+
+The `id` attribute determines which ColorPalette key controls the color. Default colors in SVG
+(e.g., `stroke="white"`) get replaced by ColorPalette values when defined in theme JSON.
+
 ## Finding Icon Colors
 
 ```bash
 # Find what color an icon uses
-cat $INTELLIJ_COMMUNITY/platform/icons/src/expui/actions/checked_dark.svg | grep -o 'stroke="[^"]*"\|fill="[^"]*"'
+cat ../../JetBrains/intellij-community/platform/icons/src/expui/actions/checked_dark.svg | grep -o 'stroke="[^"]*"\|fill="[^"]*"'
+
+# View checkbox icon structure
+cat ../../JetBrains/intellij-community/platform/platform-resources/src/themes/expUI/icons/dark/checkBoxSelected.svg
 
 # Find all icons using a specific color
-find $INTELLIJ_COMMUNITY/platform/icons -name "*.svg" | xargs grep -l "#CED0D6"
+find ../../JetBrains/intellij-community/platform/icons -name "*.svg" | xargs grep -l "#CED0D6"
 ```
+
+## Debugging Icon Color Issues
+
+1. **Check the SVG source** - view the icon file to see what `id` attributes and default colors it uses
+2. **Look at build warnings** - `buildSearchableOptions` task shows deprecated ColorPalette keys
+3. **Test in reference themes** - check HighContrast or expUI themes for working examples
+4. **Verify key names** - Islands/expUI use base keys (no `.Dark` suffix), older themes use `.Dark`
+
+## Common Issue: Checkmark on Colored Button Backgrounds
+
+**Problem:** Checkmark icon on default button (light/colored background) has poor contrast.
+
+**Cause:** Checkbox icons default to white checkmark, designed for dark backgrounds. When button
+has light/colored background (e.g., cyan `#78dce8`), white checkmark is barely visible.
+
+**Solution:** Set `Checkbox.Foreground.Selected` to a dark color in ColorPalette:
+
+```python
+# In generate-themes.py
+theme["icons"] = {
+    "ColorPalette": {
+        # Dark checkmark for contrast on light colored buttons
+        "Checkbox.Foreground.Selected": palette["dark1"],  # e.g., #19181a
+        "Checkbox.Background.Selected": palette["accent5"],  # Match button background
+        "Checkbox.Border.Selected": palette["accent5"],
+    }
+}
+```
+
+**Testing:** Look for dialogs with Apply/OK buttons, Settings changes requiring confirmation, etc.
