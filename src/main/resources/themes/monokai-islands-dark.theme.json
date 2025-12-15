@@ -538,7 +538,10 @@
       "#F4AF3D": "#ffd866",
       "Actions.Grey": "#19181a",
       "Actions.GreyInline": "#939293",
-      "Actions.GreyInline.Dark": "#c1c0c0"
+      "Actions.GreyInline.Dark": "#c1c0c0",
+      "Checkbox.Foreground.Selected": "#19181a",
+      "Checkbox.Background.Selected": "#78dce8",
+      "Checkbox.Border.Selected": "#78dce8"
     }
   }
 }

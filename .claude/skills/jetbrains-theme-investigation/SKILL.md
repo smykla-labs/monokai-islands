@@ -9,16 +9,19 @@ Investigate theme properties in the IntelliJ Platform source code to determine w
 
 ## Prerequisites
 
-First check if intellij-community is already cloned:
+IntelliJ Platform source code must be available at:
 
-```bash
-find ~/Projects -type d -name "intellij-community" -maxdepth 4 2>/dev/null | head -1
+```text
+../../JetBrains/intellij-community
 ```
 
-Then set `$INTELLIJ_COMMUNITY` to the found path (or clone it first if not found):
+(Relative to current project directory)
+
+If not cloned yet:
 
 ```bash
-export INTELLIJ_COMMUNITY="/path/to/intellij-community"
+cd ~/Projects/github.com/JetBrains
+git clone https://github.com/JetBrains/intellij-community
 ```
 
 ## Quick Investigation Workflow
@@ -26,25 +29,25 @@ export INTELLIJ_COMMUNITY="/path/to/intellij-community"
 1. **Search theme metadata first** (what properties exist):
 
    ```bash
-   grep -i "PropertyName" $INTELLIJ_COMMUNITY/platform/platform-resources/src/themes/metadata/*.json
+   grep -i "PropertyName" ../../JetBrains/intellij-community/platform/platform-resources/src/themes/metadata/*.json
    ```
 
 2. **Check reference themes** (how properties are used):
 
    ```bash
-   grep -r "PropertyName" $INTELLIJ_COMMUNITY/platform/platform-resources/src/themes/ --include="*.json"
+   grep -r "PropertyName" ../../JetBrains/intellij-community/platform/platform-resources/src/themes/ --include="*.json"
    ```
 
 3. **Search JBUI.java** for programmatic color access:
 
    ```bash
-   grep -A3 "namedColor.*PropertyName" $INTELLIJ_COMMUNITY/platform/util/ui/src/com/intellij/util/ui/JBUI.java
+   grep -A3 "namedColor.*PropertyName" ../../JetBrains/intellij-community/platform/util/ui/src/com/intellij/util/ui/JBUI.java
    ```
 
 4. **Search source for hardcoded values** if not found above:
 
    ```bash
-   grep -rn "propertyName\|PROPERTY_NAME" $INTELLIJ_COMMUNITY/platform/platform-*/src --include="*.kt" --include="*.java"
+   grep -rn "propertyName\|PROPERTY_NAME" ../../JetBrains/intellij-community/platform/platform-*/src --include="*.kt" --include="*.java"
    ```
 
 ## Key Directories

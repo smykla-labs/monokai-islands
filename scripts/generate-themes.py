@@ -459,6 +459,10 @@ def generate_theme_json(palette: dict, variant: str) -> dict:  # noqa: PLR0915
             "Actions.Grey": palette["dark1"],  # Gray action icons -> dark
             "Actions.GreyInline": palette["dimmed2"],  # Inline gray -> medium gray
             "Actions.GreyInline.Dark": palette["dimmed1"],  # Inline gray dark variant
+            # Checkbox colors - dark checkmark for light colored buttons (new UI)
+            "Checkbox.Foreground.Selected": palette["dark1"],  # Dark checkmark on light buttons
+            "Checkbox.Background.Selected": palette["accent5"],  # Cyan background (matches button)
+            "Checkbox.Border.Selected": palette["accent5"],  # Cyan border (matches button)
         }
     }
 
