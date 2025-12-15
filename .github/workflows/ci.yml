@@ -49,6 +49,7 @@ jobs:
               - 'build.gradle.kts'
             python:
               - 'scripts/**/*.py'
+              - 'tools/**/*.py'
               - 'ruff.toml'
             markdown:
               - '**/*.md'
