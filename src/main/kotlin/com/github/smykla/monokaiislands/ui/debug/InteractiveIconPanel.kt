@@ -272,13 +272,16 @@ class InteractiveIconPanel : JPanel() {
         }
         textField.document.addDocumentListener(object : DocumentListener {
             override fun insertUpdate(e: DocumentEvent?) {
-                onTextChanged(textField.text); updateExtensions(textField, clearExtension)
+                onTextChanged(textField.text)
+                updateExtensions(textField, clearExtension)
             }
             override fun removeUpdate(e: DocumentEvent?) {
-                onTextChanged(textField.text); updateExtensions(textField, clearExtension)
+                onTextChanged(textField.text)
+                updateExtensions(textField, clearExtension)
             }
             override fun changedUpdate(e: DocumentEvent?) {
-                onTextChanged(textField.text); updateExtensions(textField, clearExtension)
+                onTextChanged(textField.text)
+                updateExtensions(textField, clearExtension)
             }
         })
 

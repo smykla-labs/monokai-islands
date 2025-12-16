@@ -8,7 +8,7 @@ Dev-mode-only UI panel for visually testing theme changes in real-time. Displays
 
 Settings → Appearance & Behavior → Appearance → **Theme Testing** (dev mode only)
 
-**Dev Mode Detection**: Panel only appears when `idea.is.internal=true` (automatically set when running via `./gradlew runIde` or `./scripts/dev.sh`)
+**Dev Mode Detection**: Panel only appears when `idea.is.internal=true` (automatically set when running via `./gradlew runIde -PdevMode`)
 
 ## UI Components
 
@@ -107,8 +107,7 @@ val panel = panel {
 ### Step 3: Test in Sandbox
 
 ```bash
-./gradlew dev
-# Or: ./scripts/dev.sh
+./gradlew runIde -PdevMode
 ```
 
 Wait for IDE to open, then:
@@ -128,8 +127,8 @@ Wait for IDE to open, then:
 1. Open Settings → Appearance → Theme Testing
 2. Locate "Default Button" (cyan accent with checkmark)
 3. Edit `palettes/monokai-dark.json` to change `accent5` color
-4. Theme auto-regenerates (if using `./scripts/dev.sh`)
-5. Restart IDE (Cmd+Q, then re-run `./gradlew dev`)
+4. Manually regenerate the theme by running `python3 scripts/generate-themes.py && ./gradlew buildPlugin -PdevMode`
+5. Restart IDE (Cmd+Q, then re-run `./gradlew runIde -PdevMode`)
 6. Verify checkmark contrast in testing panel
 
 ### Testing Selection Colors
@@ -172,9 +171,8 @@ Wait for IDE to open, then:
 
 **When `true`** (dev mode):
 
-- Running via `./gradlew runIde`
-- Running via `./scripts/dev.sh`
-- `idea.is.internal=true` set in sandbox config (build.gradle.kts:385)
+- Running via `./gradlew runIde -PdevMode`
+- `idea.is.internal=true` set in sandbox config (see `idea.properties` or build script)
 
 **When `false`** (production):
 
@@ -188,32 +186,31 @@ Wait for IDE to open, then:
 
 - `DevModeDetector.kt` - Runtime dev mode detection utility
 - `ThemeTestingComponent.kt` - UI component with test elements
-- `ThemeTestingConfigurable.kt` - Settings panel registration
-- `ThemeTestingConfigurableProvider.kt` - Conditional provider (returns `null` in production)
-- `plugin.xml` - Registers `configurableProvider` extension
+- `MonokaiIslandsConfigurable.kt` - Integrates the theme testing panel directly into the existing configurable
+- `plugin.xml` - Registers the configurable as usual
 
-**Pattern**: Runtime registration via `ConfigurableProvider`
+**Pattern**: Direct integration with runtime dev mode check
 
-- Provider always registered in plugin.xml
-- Returns configurable only if `DevModeDetector.isDevMode()` is `true`
-- Zero overhead in production (provider returns `null`, panel doesn't instantiate)
+- The theme testing panel is part of the main configurable UI
+- `DevModeDetector.isDevMode()` is used to conditionally show the testing panel only in dev mode
+- In production, the panel is not shown and has zero overhead
 
 ### Dynamic Icon Grid Implementation
 
-**File**: `ThemeTestingComponent.kt:169-266`
+**File**: `InteractiveIconPanel.kt`
 
-**Mechanism**: Uses `ResponsiveFlowLayout` custom layout manager for automatic grid wrapping without manual resize handling.
+**Mechanism**: Uses `WrapLayout` custom layout manager for automatic grid wrapping without manual resize handling.
 
 **Architecture**:
 
-1. **ResponsiveFlowLayout** (`utils/ResponsiveFlowLayout.kt`):
+1. **WrapLayout** (`ui/components/WrapLayout.kt`):
    - Extends `FlowLayout` with preferred size calculation that accounts for wrapped rows
    - Overrides `preferredLayoutSize()` to simulate layout and calculate actual wrapped dimensions
    - Handles wrapping automatically based on available container width
    - No ComponentListener needed - layout manager recalculates on every layout pass
 
 2. **Grid Panel Structure**:
-   - Single `JPanel(ResponsiveFlowLayout(FlowLayout.LEFT, 5, 5))`
+   - Single `JPanel(WrapLayout(FlowLayout.LEFT, 5, 5))`
    - No manual grid rebuilding or resize detection
    - Icon buttons added once during initialization
    - Layout manager handles all wrapping automatically
@@ -230,11 +227,11 @@ Wait for IDE to open, then:
    - "None" button (no icon) + all icon buttons in single flat list
    - Selection border: custom `AbstractBorder` with rounded rectangle and cyan color
 
-**Why ResponsiveFlowLayout vs JetBrains APIs**:
+**Why WrapLayout vs JetBrains APIs**:
 
 - **Kotlin UI DSL V2** (`com.intellij.ui.dsl.builder`): Form-oriented, row/cell paradigm doesn't fit icon grid pattern
 - **ActionToolbar** with `WRAP_LAYOUT_POLICY`: Experimental, designed for toolbars not button grids, requires converting icons to Actions
-- **ResponsiveFlowLayout**: Simple, proven Swing pattern (based on 2008 WrapLayout), solves exact problem (FlowLayout's preferred size doesn't account for wrapping)
+- **WrapLayout**: Simple, proven Swing pattern (based on 2008 WrapLayout), solves exact problem (FlowLayout's preferred size doesn't account for wrapping)
 
 **Performance**:
 
@@ -316,7 +313,7 @@ The panel uses **Kotlin UI DSL V2** (`com.intellij.ui.dsl.builder`) for layout s
 - `JBUI.Panels.simplePanel()` - Simple panel with border layout (for custom components)
 - `BoxLayout` - Vertical or horizontal box layout (for custom components)
 - `FlowLayout` - Left-to-right flow layout (for custom components)
-- `ResponsiveFlowLayout` - Flow layout with automatic wrapping (custom utility)
+- `WrapLayout` - Flow layout with automatic wrapping (custom utility)
 
 ## Troubleshooting
 
@@ -346,10 +343,9 @@ The panel uses **Kotlin UI DSL V2** (`com.intellij.ui.dsl.builder`) for layout s
 **Workflow**:
 
 1. Edit `palettes/monokai-dark.json`
-2. Run `python3 scripts/generate-themes.py` (or wait for `./scripts/dev.sh` watcher)
-3. Rebuild with `./gradlew buildPlugin`
-4. **Restart IDE** (theme resources cached, hot reload doesn't work)
-5. Verify changes in testing panel
+2. Run `python3 scripts/generate-themes.py && ./gradlew buildPlugin -PdevMode` to regenerate theme
+3. **Restart IDE** (theme resources cached, hot reload doesn't work)
+4. Verify changes in testing panel
 
 ## References
 

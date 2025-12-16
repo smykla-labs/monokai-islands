@@ -29,6 +29,11 @@ class WrapLayout(
 
     override fun minimumLayoutSize(target: Container): Dimension {
         val minimum = layoutSize(target, false)
+        // Subtract hgap + 1 to match the behavior of FlowLayout's minimumLayoutSize,
+        // which is slightly smaller than preferredLayoutSize. This adjustment ensures
+        // that the minimum width does not include the extra gap that would otherwise
+        // cause unnecessary horizontal scrolling or layout issues. See WrapLayout
+        // (Rob Camick) and FlowLayout source for details.
         minimum.width -= hgap + 1
         return minimum
     }
