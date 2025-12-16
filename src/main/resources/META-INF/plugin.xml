@@ -57,6 +57,13 @@
           instance="com.github.smykla.monokaiislands.settings.MonokaiIslandsConfigurable"
           id="com.github.smykla.monokaiislands.settings.MonokaiIslandsConfigurable"
           displayName="Monokai Islands"/>
+        <toolWindow
+                id="Theme Testing"
+                anchor="right"
+                icon="AllIcons.Toolwindows.ToolWindowPalette"
+                factoryClass="com.github.smykla.monokaiislands.toolwindow.ThemeTestingToolWindowFactory"
+                canCloseContents="false"
+                secondary="true"/>
         <notificationGroup
                 id="Monokai Islands Theme Test"
                 displayType="BALLOON"
