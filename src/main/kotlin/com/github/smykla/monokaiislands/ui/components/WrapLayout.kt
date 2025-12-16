@@ -11,6 +11,11 @@ import javax.swing.SwingUtilities
  *
  * Based on Rob Camick's WrapLayout from https://tips4java.wordpress.com/2008/11/06/wrap-layout/
  *
+ * License: The original code from tips4java.wordpress.com does not explicitly state a license.
+ * However, the site is commonly understood to provide code examples for educational and reuse
+ * purposes. This Kotlin adaptation retains the original algorithm and behavior while adapting
+ * to Kotlin idioms and IntelliJ Platform APIs.
+ *
  * The standard FlowLayout has a flaw: preferredLayoutSize() assumes all components fit in one row,
  * but layoutContainer() wraps them. This causes invisible components when the container
  * is constrained.

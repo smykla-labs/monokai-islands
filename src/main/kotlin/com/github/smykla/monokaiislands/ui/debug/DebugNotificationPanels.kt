@@ -23,12 +23,6 @@ import javax.swing.JComponent
 import javax.swing.JPanel
 import javax.swing.JProgressBar
 
-// Note: PROGRESS_WIDTH, PROGRESS_HEIGHT, PROGRESS_DEFAULT_VALUE are duplicated from DebugDisplayPanels.kt
-// These are used locally here for notification panel sizing. Consider extracting shared constants
-// if these values need to be updated together in the future.
-private const val PROGRESS_WIDTH = 200
-private const val PROGRESS_HEIGHT = 20
-private const val PROGRESS_DEFAULT_VALUE = 65
 private const val NOTIFICATION_BTN_GAP = 10
 private const val NOTIFICATION_BTN_VGAP = 5
 private const val BALLOON_FADEOUT_TIME = 5000L

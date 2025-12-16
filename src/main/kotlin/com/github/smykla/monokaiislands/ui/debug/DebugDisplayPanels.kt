@@ -35,11 +35,7 @@ import javax.swing.tree.DefaultTreeModel
 private const val LIST_PANEL_HEIGHT = 120
 private const val TABLE_WIDTH = 420
 private const val TABLE_HEIGHT = 90
-private const val PROGRESS_WIDTH = 200
-private const val PROGRESS_HEIGHT = 20
 private const val PROGRESS_INDETERMINATE_WIDTH = 150
-private const val PROGRESS_DEFAULT_VALUE = 65
-const val PROGRESS_MAX_VALUE = 100
 private const val ASYNC_ICON_WIDTH = 32
 private const val ASYNC_ICON_HEIGHT = 16
 private const val SPLITTER_PROPORTION = 0.35f

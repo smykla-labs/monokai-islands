@@ -23,6 +23,7 @@ class ScrollableWrapPanel : JPanel(), Scrollable {
 
     private var lastWindowWidth = 0
     private var windowListener: ComponentAdapter? = null
+    private var attachedWindow: java.awt.Window? = null
 
     override fun addNotify() {
         super.addNotify()
@@ -57,14 +58,15 @@ class ScrollableWrapPanel : JPanel(), Scrollable {
             }
         }
         window.addComponentListener(windowListener)
+        attachedWindow = window
     }
 
     private fun detachWindowListener() {
         windowListener?.let { listener ->
-            val window = SwingUtilities.getWindowAncestor(this)
-            window?.removeComponentListener(listener)
+            attachedWindow?.removeComponentListener(listener)
         }
         windowListener = null
+        attachedWindow = null
     }
 
     /**
