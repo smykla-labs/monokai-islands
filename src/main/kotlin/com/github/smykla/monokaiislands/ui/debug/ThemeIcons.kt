@@ -16,7 +16,6 @@ object ThemeIcons {
         "Cancel" to AllIcons.Actions.Cancel,
         "Refresh" to AllIcons.Actions.Refresh,
         "Search" to AllIcons.Actions.Search,
-        "Find" to AllIcons.Actions.Find,
         "Edit" to AllIcons.Actions.Edit,
         "Close" to AllIcons.Actions.Close,
         "StartDebugger" to AllIcons.Actions.StartDebugger,
