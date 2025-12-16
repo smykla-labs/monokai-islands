@@ -207,6 +207,12 @@ tasks {
         dependsOn("generateThemes")
     }
 
+    clean {
+        doLast {
+            delete("build/idea-sandbox")
+        }
+    }
+
     test {
         useJUnitPlatform()
         // Exclude IntelliJ Platform test session listener to avoid conflicts with JUnit 5
