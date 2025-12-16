@@ -61,10 +61,6 @@ object ThemeIcons {
     )
 
     private fun getDebuggerIcons() = listOf(
-        "StartDebugger" to AllIcons.Actions.StartDebugger,
-        "Resume" to AllIcons.Actions.Resume,
-        "Pause" to AllIcons.Actions.Pause,
-        "Restart" to AllIcons.Actions.Restart,
         "TraceOver" to AllIcons.Actions.TraceOver,
         "TraceInto" to AllIcons.Actions.TraceInto,
         "StepOut" to AllIcons.Actions.StepOut
