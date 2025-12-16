@@ -11,6 +11,7 @@ import com.github.smykla.monokaiislands.ui.debug.toolbarAndSplitterGroup
 import com.github.smykla.monokaiislands.ui.debug.treeListGalleryGroup
 import com.github.smykla.monokaiislands.ui.debug.validationFeedbackGroup
 import com.intellij.ui.dsl.builder.panel
+import com.intellij.util.ui.JBUI
 
 class ThemeTestingComponent {
 
@@ -36,5 +37,7 @@ class ThemeTestingComponent {
         notificationDemoGroup()
         bordersAndSeparatorsGroup()
         statusIndicatorsGroup()
+    }.apply {
+        border = JBUI.Borders.empty(0, 12)
     }
 }
