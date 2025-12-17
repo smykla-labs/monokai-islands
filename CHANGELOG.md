@@ -2,6 +2,13 @@
 
 All notable changes to the Monokai Islands Theme will be documented in this file.
 
+## [1.5.1](https://github.com/smykla-labs/monokai-islands/compare/v1.5.0...v1.5.1) (2025-12-17)
+
+### Bug Fixes
+
+* **terminal:** add ANSI color definitions ([#58](https://github.com/smykla-labs/monokai-islands/issues/58)) ([2cfce40](https://github.com/smykla-labs/monokai-islands/commit/2cfce408fd600b290caeb0061a726ce0a6bef031))
+* **toolwindow:** remove deprecated XML attributes ([#57](https://github.com/smykla-labs/monokai-islands/issues/57)) ([3c0ace9](https://github.com/smykla-labs/monokai-islands/commit/3c0ace9cc9532717c0b49ea4bbfc1276999246e9))
+
 ## [1.5.0](https://github.com/smykla-labs/monokai-islands/compare/v1.4.1...v1.5.0) (2025-12-17)
 
 ### Features
