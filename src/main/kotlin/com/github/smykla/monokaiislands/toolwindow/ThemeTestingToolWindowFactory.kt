@@ -14,7 +14,12 @@ import com.intellij.ui.content.ContentFactory
  *
  * This tool window provides visual testing components for theme development.
  * It is only available when running in dev mode (idea.is.internal=true).
+ *
+ * Note: This class is excluded from production builds via conditional compilation.
+ * It's only included when building with -PdevMode flag. The @Suppress annotations
+ * silence warnings about Kotlin compiler-generated bridge methods in dev builds.
  */
+@Suppress("DEPRECATION", "UnstableApiUsage")
 class ThemeTestingToolWindowFactory : ToolWindowFactory, DumbAware {
 
     /**

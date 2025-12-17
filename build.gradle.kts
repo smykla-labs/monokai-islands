@@ -198,6 +198,23 @@ fun parseChangelogToHtml(version: String): String {
         .trim()
 }
 
+/**
+ * Dev mode detection: Determines if we're building for development or production.
+ * Dev mode includes tool window and debug features. Production builds are minimal (theme-only).
+ *
+ * Dev mode is enabled when:
+ * - Task name contains "Dev" (e.g., buildPluginDev)
+ * - Task is runIde or prepareSandbox (development tasks)
+ * - Project property 'devMode' is set (-PdevMode)
+ */
+val isDevBuild = project.hasProperty("devMode") ||
+    gradle.startParameter.taskNames.any {
+        it.contains("runIde") ||
+        it.contains("prepareSandbox") ||
+        it.contains("Dev", ignoreCase = true) ||
+        it.contains("buildPluginDev")
+    }
+
 tasks {
     register("generateThemes", Exec::class) {
         commandLine("python3", "scripts/generate-themes.py")
@@ -205,6 +222,62 @@ tasks {
 
     buildPlugin {
         dependsOn("generateThemes")
+    }
+
+    // Conditionally strip dev features from plugin.xml for production builds
+    processResources {
+        doLast {
+            val pluginXml = layout.buildDirectory.file("resources/main/META-INF/plugin.xml").get().asFile
+            if (pluginXml.exists()) {
+                val content = pluginXml.readText()
+
+                val processedContent = if (isDevBuild) {
+                    println("📦 Dev build: Including tool window and dev features")
+                    // Remove token markers but keep the content
+                    content
+                        .replace("@@DEV_FEATURES_START@@\n", "")
+                        .replace("\n        @@DEV_FEATURES_END@@", "")
+                        .replace("@@DEV_FEATURES_START@@", "")
+                        .replace("@@DEV_FEATURES_END@@", "")
+                } else {
+                    println("📦 Production build: Excluding tool window and dev features")
+                    // Remove everything between markers (including markers)
+                    content.replace(
+                        Regex("""@@DEV_FEATURES_START@@.*?@@DEV_FEATURES_END@@""", RegexOption.DOT_MATCHES_ALL),
+                        ""
+                    )
+                }
+
+                pluginXml.writeText(processedContent)
+            }
+        }
+    }
+
+    // Post-process JAR to remove dev-only classes in production builds
+    // Exclude dev-only code at JAR creation time
+    named<Zip>("composedJar") {
+        if (!isDevBuild) {
+            println("🗑️  Excluding dev-only classes from production JAR")
+            exclude("**/toolwindow/**")
+            exclude("**/settings/ThemeTestingComponent*.class")
+            exclude("**/ui/debug/**")
+            exclude("**/ui/components/**")
+        } else {
+            println("📦 Dev build: Including all classes in JAR")
+        }
+    }
+
+    // Development build: Use -PdevMode property to include dev features
+    // Production build: ./gradlew clean buildPlugin (excludes tool window)
+    // Dev build: ./gradlew clean buildPlugin -PdevMode (includes tool window)
+    register("buildPluginDev") {
+        group = "build"
+        description = "Build plugin with development features. Use: ./gradlew clean buildPlugin -PdevMode"
+
+        doLast {
+            println("🔧 To build with dev features, use: ./gradlew clean buildPlugin -PdevMode")
+            println("📦 To build for production, use: ./gradlew clean buildPlugin")
+        }
     }
 
     clean {
