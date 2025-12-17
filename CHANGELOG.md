@@ -2,6 +2,12 @@
 
 All notable changes to the Monokai Islands Theme will be documented in this file.
 
+## [1.6.1](https://github.com/smykla-labs/monokai-islands/compare/v1.6.0...v1.6.1) (2025-12-17)
+
+### Bug Fixes
+
+* **compat:** correct min version to 252 (2025.2) ([#60](https://github.com/smykla-labs/monokai-islands/issues/60)) ([e1979a5](https://github.com/smykla-labs/monokai-islands/commit/e1979a5bd4b56db8e1a67c3c752160a5fd813ce3))
+
 ## [1.6.0](https://github.com/smykla-labs/monokai-islands/compare/v1.5.1...v1.6.0) (2025-12-17)
 
 ### Features
