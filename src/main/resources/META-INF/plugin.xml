@@ -12,7 +12,7 @@
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
     <vendor url="https://github.com/smykla-labs" email="bart.smykla@konghq.com">Bart Smykla</vendor>
 
-    <idea-version since-build="253"/>
+    <idea-version since-build="242"/>
 
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
       Guidelines: https://plugins.jetbrains.com/docs/marketplace/best-practices-for-listing.html#plugin-description -->
@@ -37,7 +37,7 @@
             <li><b>Purple</b> - Constants, struct fields</li>
         </ul>
 
-        <p>Designed for <b>GoLand 2025.3+</b> with full support for the Islands theme system.</p>
+        <p>Bringing classic Monokai warmth to the modern Islands UI aesthetic, compatible with all JetBrains IDEs.</p>
     ]]></description>
 
     <!-- Change notes are injected by Gradle from CHANGELOG.md via patchPluginXml -->
