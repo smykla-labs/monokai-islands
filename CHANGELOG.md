@@ -2,6 +2,12 @@
 
 All notable changes to the Monokai Islands Theme will be documented in this file.
 
+## [1.5.0](https://github.com/smykla-labs/monokai-islands/compare/v1.4.1...v1.5.0) (2025-12-17)
+
+### Features
+
+* **settings:** add dev-mode theme testing panel ([#53](https://github.com/smykla-labs/monokai-islands/issues/53)) ([330cb14](https://github.com/smykla-labs/monokai-islands/commit/330cb140507ad585211191f3892a07df95de9eb0))
+
 ## [1.4.1](https://github.com/smykla-labs/monokai-islands/compare/v1.4.0...v1.4.1) (2025-12-15)
 
 ### Bug Fixes
