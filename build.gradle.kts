@@ -72,7 +72,7 @@ intellijPlatform {
         description = provider { extractPluginDescription() }
 
         ideaVersion {
-            sinceBuild = "242"
+            sinceBuild = "252"
             untilBuild = provider { null }
         }
 
