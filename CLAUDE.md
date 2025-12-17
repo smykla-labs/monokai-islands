@@ -1,6 +1,6 @@
 # Monokai Islands Theme Plugin
 
-JetBrains GoLand theme plugin combining Monokai color palette with Islands UI aesthetics. Gradle-based IntelliJ Platform plugin (since build 242, GoLand 2025.2+). Dark variant with automated generation from JSON palette definition.
+JetBrains GoLand theme plugin combining Monokai color palette with Islands UI aesthetics. Gradle-based IntelliJ Platform plugin (since build 252, GoLand 2025.2+). Dark variant with automated generation from JSON palette definition.
 
 ## Project Structure
 
@@ -125,7 +125,7 @@ tasks {
 **src/main/resources/META-INF/plugin.xml**:
 
 - `id`: `com.github.smykla.monokai-islands`
-- `since-build`: `242` (GoLand 2025.2+)
+- `since-build`: `252` (GoLand 2025.2+)
 - `themeProvider` declaration for dark variant
 
 ## Changelog & Release Notes

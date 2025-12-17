@@ -111,7 +111,7 @@ When enabled, the Markdown preview will use Monokai-themed colors for code block
 
 ## Compatibility
 
-- **IDE Version**: 2025.3+ (build 253+)
+- **IDE Version**: 2025.2+ (build 252+)
 - **Supported IDEs**: All JetBrains IDEs (GoLand, IntelliJ IDEA, WebStorm, PyCharm, etc.)
 
 ## Development
