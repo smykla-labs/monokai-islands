@@ -78,7 +78,7 @@
       "description": "Smyklot action managed by sync-smyklot workflow",
       "enabled": false,
       "matchManagers": ["github-actions"],
-      "matchPackageNames": ["smykla-labs/smyklot"]
+      "matchPackageNames": ["smykla-skalski/smyklot"]
     },
     {
       "description": "Disable mise manager for Java (handled by customManager for temurin)",

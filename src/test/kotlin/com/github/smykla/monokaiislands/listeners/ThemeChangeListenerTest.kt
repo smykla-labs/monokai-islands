@@ -17,7 +17,7 @@ class ThemeChangeListenerTest {
 
     @Test
     fun `THEME_ID constant is correct`() {
-        ThemeChangeListener.THEME_ID shouldBe "com.github.smykla-labs.monokai-islands-dark"
+        ThemeChangeListener.THEME_ID shouldBe "com.github.smykla-skalski.monokai-islands-dark"
     }
 
     @Test

@@ -14,7 +14,7 @@
   <a href="https://plugins.jetbrains.com/plugin/29325-monokai-islands-theme"><img src="https://img.shields.io/jetbrains/plugin/v/29325?label=JetBrains%20Marketplace&logo=jetbrains" alt="JetBrains Plugin"></a>
   <a href="https://plugins.jetbrains.com/plugin/29325-monokai-islands-theme"><img src="https://img.shields.io/jetbrains/plugin/d/29325" alt="Downloads"></a>
   <a href="https://plugins.jetbrains.com/plugin/29325-monokai-islands-theme"><img src="https://img.shields.io/jetbrains/plugin/r/rating/29325" alt="Rating"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/smykla-labs/monokai-islands" alt="License"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/smykla-skalski/monokai-islands" alt="License"></a>
 </p>
 
 ## Features
@@ -36,7 +36,7 @@
 
 ### Manual Installation
 
-1. Download the latest release from [Releases](https://github.com/smykla-labs/monokai-islands/releases)
+1. Download the latest release from [Releases](https://github.com/smykla-skalski/monokai-islands/releases)
 2. Go to **Settings** → **Plugins** → **⚙️** → **Install Plugin from Disk...**
 3. Select the downloaded `.zip` file
 4. Restart the IDE

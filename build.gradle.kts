@@ -11,7 +11,7 @@ kotlin {
     jvmToolchain(21)
 }
 
-group = "com.github.smykla-labs"
+group = "com.github.smykla-skalski"
 version = project.property("version") as String
 
 repositories {
@@ -64,7 +64,7 @@ intellijPlatform {
     buildSearchableOptions = true
 
     pluginConfiguration {
-        id = "com.github.smykla-labs.monokai-islands"
+        id = "com.github.smykla-skalski.monokai-islands"
         name = "Monokai Islands Theme"
         version = project.property("version") as String
 
@@ -153,7 +153,7 @@ fun extractPluginDescription(): String {
 fun parseChangelogToHtml(version: String): String {
     val changelogFile = file("CHANGELOG.md")
     if (!changelogFile.exists()) {
-        return "<p>See <a href=\"https://github.com/smykla-labs/monokai-islands/releases\">GitHub Releases</a></p>"
+        return "<p>See <a href=\"https://github.com/smykla-skalski/monokai-islands/releases\">GitHub Releases</a></p>"
     }
 
     val content = changelogFile.readText()
@@ -328,7 +328,7 @@ tasks {
             configDir.resolve("laf.xml").writeText("""
                 <application>
                     <component name="LafManager" autodetect="false">
-                        <laf themeId="com.github.smykla-labs.monokai-islands-dark" />
+                        <laf themeId="com.github.smykla-skalski.monokai-islands-dark" />
                     </component>
                 </application>
             """.trimIndent())
@@ -475,7 +475,7 @@ intellijPlatformTesting {
             version = "2025.3"
             task {
                 jvmArgumentProviders += CommandLineArgumentProvider {
-                    listOf("-Didea.theme.id=com.github.smykla-labs.monokai-islands-dark")
+                    listOf("-Didea.theme.id=com.github.smykla-skalski.monokai-islands-dark")
                 }
             }
         }
@@ -485,7 +485,7 @@ intellijPlatformTesting {
             version = "2025.3"
             task {
                 jvmArgumentProviders += CommandLineArgumentProvider {
-                    listOf("-Didea.theme.id=com.github.smykla-labs.monokai-islands-dark")
+                    listOf("-Didea.theme.id=com.github.smykla-skalski.monokai-islands-dark")
                 }
             }
         }
@@ -495,7 +495,7 @@ intellijPlatformTesting {
             version = "2025.3"
             task {
                 jvmArgumentProviders += CommandLineArgumentProvider {
-                    listOf("-Didea.theme.id=com.github.smykla-labs.monokai-islands-dark")
+                    listOf("-Didea.theme.id=com.github.smykla-skalski.monokai-islands-dark")
                 }
             }
         }
@@ -505,7 +505,7 @@ intellijPlatformTesting {
             version = "2025.3"
             task {
                 jvmArgumentProviders += CommandLineArgumentProvider {
-                    listOf("-Didea.theme.id=com.github.smykla-labs.monokai-islands-dark")
+                    listOf("-Didea.theme.id=com.github.smykla-skalski.monokai-islands-dark")
                 }
             }
         }
@@ -515,7 +515,7 @@ intellijPlatformTesting {
             version = "2025.3"
             task {
                 jvmArgumentProviders += CommandLineArgumentProvider {
-                    listOf("-Didea.theme.id=com.github.smykla-labs.monokai-islands-dark")
+                    listOf("-Didea.theme.id=com.github.smykla-skalski.monokai-islands-dark")
                 }
             }
         }

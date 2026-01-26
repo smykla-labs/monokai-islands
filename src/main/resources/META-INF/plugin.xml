@@ -1,7 +1,7 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin require-restart="true">
     <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
-    <id>com.github.smykla-labs.monokai-islands</id>
+    <id>com.github.smykla-skalski.monokai-islands</id>
     <version>1.0.1</version>
 
     <!-- Public plugin name should be written in Title Case.
@@ -10,7 +10,7 @@
     <category>UI</category>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor url="https://github.com/smykla-labs" email="bart.smykla@konghq.com">Bart Smykla</vendor>
+    <vendor url="https://github.com/smykla-skalski" email="bart.smykla@konghq.com">Bart Smykla</vendor>
 
     <idea-version since-build="252"/>
 
@@ -48,7 +48,7 @@
     <depends optional="true" config-file="markdown.xml">org.intellij.plugins.markdown</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <themeProvider id="com.github.smykla-labs.monokai-islands-dark" path="/themes/monokai-islands-dark.theme.json"/>
+        <themeProvider id="com.github.smykla-skalski.monokai-islands-dark" path="/themes/monokai-islands-dark.theme.json"/>
         <bundledColorScheme path="/editor-schemes/monokai-islands-dark"/>
         <postStartupActivity implementation="com.github.smykla.monokaiislands.listeners.ThemeProjectActivity"/>
         <applicationService serviceImplementation="com.github.smykla.monokaiislands.settings.MonokaiIslandsSettings"/>

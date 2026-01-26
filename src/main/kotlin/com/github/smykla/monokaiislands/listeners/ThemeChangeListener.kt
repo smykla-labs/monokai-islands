@@ -21,7 +21,7 @@ class ThemeChangeListener : LafManagerListener {
 
         private val LOG = logger<ThemeChangeListener>()
 
-        const val THEME_ID = "com.github.smykla-labs.monokai-islands-dark"
+        const val THEME_ID = "com.github.smykla-skalski.monokai-islands-dark"
 
         fun isMonokaiThemeActive(): Boolean =
             LafManager.getInstance().currentUIThemeLookAndFeel?.id == THEME_ID
